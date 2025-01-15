@@ -1,4 +1,6 @@
-class StartMenu extends Screen {
+import { Button } from './button.js';
+
+export class StartMenu extends Screen {
 
     private startButton: Button;
     private howToPlayButton: Button;
