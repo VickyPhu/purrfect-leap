@@ -1,4 +1,5 @@
 import { Button } from './button.js';
+import { Screen } from './screen.js';
 
 export class StartMenu extends Screen {
 
