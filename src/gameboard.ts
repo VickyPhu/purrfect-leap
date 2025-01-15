@@ -1,4 +1,4 @@
-class gameBoard {
+class GameBoard {
     public backgroundImage: string;
     private backgroundMusic: string;
     private gameEntity: GameEntity[];
