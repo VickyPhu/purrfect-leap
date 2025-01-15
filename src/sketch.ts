@@ -22,7 +22,7 @@ function preload() {
  * in the draw function belows
  */
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1400, 700);
   frameRate(60);
   music.mystery.setVolume(0.8);
 
@@ -37,11 +37,4 @@ function setup() {
 function draw() {
   game.update();
   game.draw();
-}
-
-/**
- *  Built in windowResize listener function in P5
- */
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
 }
