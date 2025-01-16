@@ -11,7 +11,7 @@ class Game {
   }
 
   public draw() {
-    background("lightblue");
+    background("#F0DEB5");
     this.startMenu.draw();
   }
   
