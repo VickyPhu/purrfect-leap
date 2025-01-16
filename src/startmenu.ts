@@ -1,7 +1,4 @@
-import { Button } from './button.js';
-import { Screen } from './screen.js';
-
-export class StartMenu implements Screen {
+class StartMenu implements Screen {
     private startButton: Button;
     private howToPlayButton: Button;
 
@@ -10,10 +7,23 @@ export class StartMenu implements Screen {
         this.howToPlayButton = new Button('HOW TO PLAY', '#F0AB63', 100, 50, 750, 400);
     }
 
-    private drawButtons() {}
-    private drawTitle() {}
+    private drawButtons() {
+        this.startButton.draw();
+        this.howToPlayButton.draw();
+    }
+
+    private drawTitle() {
+        fill('#000');
+        stroke('#FFF')
+        textFont('Arial', 30) //test, should be Fredroka One
+        textAlign('center');
+        text('PURRFECT LEAP', 750, 150);
+    }
 
     public update() {}
 
-    public draw() {}
+    public draw() {
+        this.drawTitle();
+        this.drawButtons();
+    }
 }

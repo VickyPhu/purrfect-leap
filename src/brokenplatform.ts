@@ -1,3 +1,5 @@
-class Brokenplatform extends GameEntity {
-    public breakApart();
+/// <reference path="gameentity.ts" />
+
+class BrokenPlatform extends GameEntity {
+    public breakApart() {}
 }
