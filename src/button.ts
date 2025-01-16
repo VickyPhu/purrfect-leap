@@ -1,10 +1,12 @@
 class Button {
-    private text: string;
-    private color: string;
-    private width: number;
-    private height: number;
-    private posX: number;
-    private posY: number;
+  private text: string;
+  private color: string;
+  private width: number;
+  private height: number;
+  private posX: number;
+  private posY: number;
 
-    public draw();
+  public draw() {
+    // med p5 rita ut knappen
+  }
 }

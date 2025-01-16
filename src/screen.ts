@@ -1,4 +1,4 @@
-interface Screen {
-    public update(): void;
-    public draw(): void;
+interface IScreen {
+  update(): void;
+  draw(): void;
 }

@@ -1,8 +1,26 @@
-class HowToPlay extends Screen {
-    private returnButton: Button;
+class HowToPlay implements IScreen {
+  private returnButton: Button;
 
-    private drawTitle() {}
-    private drawText() {}
-    private drawButtons() {}
-    private drawInstructionImage() {}
+  constructor() {
+    this.returnButton = new Button();
+  }
+
+  public update() {}
+
+  public draw() {
+    this.drawTitle();
+    this.drawText();
+    this.drawButtons();
+    this.drawInstructionImage();
+  }
+
+  private drawTitle() {}
+
+  private drawText() {}
+
+  private drawButtons() {
+    this.returnButton.draw();
+  }
+
+  private drawInstructionImage() {}
 }
