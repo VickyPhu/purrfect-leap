@@ -25,12 +25,13 @@ class Button {
   public draw() {
     //Button
     fill(this.color);
-    //create button
+    noStroke();
+    rect(this.posX, this.posY, this.width, this.height, 20);
 
     //Text in button
     fill("#000");
-    textFont("20px Arial"); //test, should be Fredrika One
-    textAlign("center");
-    text(this.text, this.posY + this.width / 2, this.posY + this.height / 2);
+    textFont("Fredoka", 45);
+    textAlign("center","center");
+    text(this.text, this.posX + this.width / 2, this.posY + this.height / 2);
   }
 }
