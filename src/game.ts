@@ -1,18 +1,14 @@
 class Game {
-  private startMenu: StartMenu;
 
   constructor() {
-    this.startMenu = new StartMenu();
   }
 
   public update() {
-      this.startMenu.update();
 
   }
 
   public draw() {
     background("#F0DEB5");
-    this.startMenu.draw();
   }
   
 
