@@ -1,27 +1,22 @@
 class Game {
-  public update() {
-    this.position.set(mouseX, mouseY);
-    this.isCircleVisible = mouseIsPressed;
+  private startMenu: StartMenu;
 
-    if (mouseIsPressed) {
-      if (!music.mystery.isPlaying()) {
-        music.mystery.loop();
-      }
-    } else {
-      music.mystery.pause();
-    }
+  constructor() {
+    this.startMenu = new StartMenu();
+  }
+
+  public update() {
+      this.startMenu.update();
+
   }
 
   public draw() {
-    background("black");
-    this.drawText();
-
-    if (this.isCircleVisible) {
-      this.drawCircle();
-    }
+    background("lightblue");
+    this.startMenu.draw();
   }
+  
 
-  public changeScreen(screen) {
-    HEJ!;
+  public changeScreen(screen: any) {
+    
   }
 }
