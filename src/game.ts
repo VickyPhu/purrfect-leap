@@ -1,17 +1,18 @@
 class Game {
-  private startMenu: StartMenu;
+  private playerSelect: PlayerSelect;
 
   constructor() {
-    this.startMenu = new StartMenu();
+    this.playerSelect = new PlayerSelect;
   }
 
   public update() {
-    this.startMenu.update();
+    this.playerSelect.update();
+
   }
 
   public draw() {
     background("#F0DEB5");
-    this.startMenu.draw();
+    this.playerSelect.draw();
   }
   
 
