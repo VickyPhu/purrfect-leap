@@ -1,22 +1,18 @@
 class Game {
-  private startMenu: StartMenu;
+  private GameEnd: GameEnd;
 
   constructor() {
-    this.startMenu = new StartMenu();
+    this.GameEnd = new GameEnd();
   }
 
   public update() {
-      this.startMenu.update();
-
+    this.GameEnd.update();
   }
 
   public draw() {
     background("lightblue");
-    this.startMenu.draw();
+    this.GameEnd.draw();
   }
-  
 
-  public changeScreen(screen: any) {
-    
-  }
+  public changeScreen(screen: any) {}
 }
