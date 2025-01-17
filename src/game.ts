@@ -1,22 +1,18 @@
 class Game {
-  private playerSelect: PlayerSelect;
+  private GameEnd: GameEnd;
 
   constructor() {
-    this.playerSelect = new PlayerSelect;
+    this.GameEnd = new GameEnd();
   }
 
   public update() {
-    this.playerSelect.update();
-
+    this.GameEnd.update();
   }
 
   public draw() {
     background("#F0DEB5");
-    this.playerSelect.draw();
+    this.GameEnd.draw();
   }
-  
 
-  public changeScreen(screen: any) {
-    
-  }
+  public changeScreen(screen: any) {}
 }
