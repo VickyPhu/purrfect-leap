@@ -1,18 +1,18 @@
 class Button {
   private text: string;
   private color: string;
-  private width: number;
-  private height: number;
   private posX: number;
   private posY: number;
+  private width: number;
+  private height: number;
 
   constructor(
     text: string,
     color: string,
+    posX: number,
+    posY: number,
     width: number,
     height: number,
-    posX: number,
-    posY: number
   ) {
     this.text = text;
     this.color = color;
