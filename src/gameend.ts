@@ -6,25 +6,38 @@ class GameEnd implements IScreen {
     this.playAgainButton = new Button(
       "PLAY AGAIN",
       "#c2e1b5",
-      100,
-      50,
+      300,
       500,
-      280
+      300,
+      100
     );
     this.startMenuButton = new Button(
       "MAIN MENU",
       "#f0ab63",
-      100,
-      50,
-      900,
-      280
+      800,
+      500,
+      300,
+      100
     );
   }
 
   public update() {}
 
-  private drawTitle() {}
+  private drawTitle() {
+    push();
+    fill("#8B8985");
+    textFont("Fredoka", 80);
+    textStyle(BOLD);
+    textAlign("center", "center");
+    // text("GAME OVER", 705, 115);
+
+    fill("#F96B6B");
+    text("GAME OVER", 700, 150);
+    pop();
+  }
+
   private drawImage() {}
+
   private drawButtons() {
     this.playAgainButton.draw();
     this.startMenuButton.draw();
