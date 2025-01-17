@@ -7,11 +7,11 @@ class PlayerSelect implements IScreen {
   private gameStartButton: Button;
 
   constructor() {
-    this.playerSelectButton1 = new Button('1 PLAYER', '#F96B6B', 280, 20, 200, 100);
-    this.playerSelectButton2 = new Button('2 PLAYER', '#C2E1B5', 560, 20, 200, 250);
-    this.playerSelectButton3 = new Button('3 PLAYER', '#F0AB63', 840, 20, 200, 250);
-    this.playerSelectButton4 = new Button('4 PLAYER', '#CBA3D2', 1120, 20, 200, 100);
-    this.gameStartButton = new Button('START GAME', '#F96B6B', 550, 400, 350, 150);
+    this.playerSelectButton1 = new Button('1 PLAYER', '#F96B6B', 90, 20, 250, 100);
+    this.playerSelectButton2 = new Button('2 PLAYER', '#C2E1B5', 415, 20, 250, 100);
+    this.playerSelectButton3 = new Button('3 PLAYER', '#F0AB63', 745, 20, 250, 100);
+    this.playerSelectButton4 = new Button('4 PLAYER', '#CBA3D2', 1065, 20, 250, 100);
+    this.gameStartButton = new Button('START GAME', '#F96B6B', 525, 400, 350, 150);
    
   }
 
