@@ -25,6 +25,7 @@ class Button {
   public draw() {
     //Button
     push();
+    rectMode(CENTER);
     fill(this.color);
     noStroke();
     rect(this.posX, this.posY, this.width, this.height, 20);
@@ -34,7 +35,7 @@ class Button {
     textFont("Fredoka", 45);
     textStyle(BOLD);
     textAlign("center","center");
-    text(this.text, this.posX + this.width / 2, this.posY + this.height / 2);
+    text(this.text, this.posX, this.posY);
     pop();
   }
 }
