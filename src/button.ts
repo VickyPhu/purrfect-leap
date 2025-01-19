@@ -5,6 +5,7 @@ class Button {
   private posY: number;
   private width: number;
   private height: number;
+  public buttonIndex: number;
 
   constructor(
     text: string,
@@ -13,6 +14,7 @@ class Button {
     posY: number,
     width: number,
     height: number,
+    buttonIndex: number
   ) {
     this.text = text;
     this.color = color;
@@ -20,9 +22,10 @@ class Button {
     this.posY = posY;
     this.width = width;
     this.height = height;
+    this.buttonIndex = buttonIndex;
   }
 
-  public draw() {
+  public draw(isActive: boolean) {
     //Button
     push();
     rectMode(CENTER);
@@ -34,8 +37,19 @@ class Button {
     fill("#000");
     textFont("Fredoka", 45);
     textStyle(BOLD);
-    textAlign("center","center");
+    textAlign("center", "center");
     text(this.text, this.posX, this.posY);
     pop();
+
+    //If active button
+    if (isActive) {
+      push();
+      rectMode(CENTER);
+      stroke("#449ea1");
+      noFill();
+      strokeWeight(10);
+      rect(this.posX, this.posY, this.width, this.height, 20);
+      pop();
+    }
   }
 }
