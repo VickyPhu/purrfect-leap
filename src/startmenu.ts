@@ -3,8 +3,8 @@ class StartMenu implements IScreen {
     private howToPlayButton: Button;
 
     constructor() {
-        this.startButton = new Button('START', '#F96B6B', 500, 250, 350, 100);
-        this.howToPlayButton = new Button('HOW TO PLAY', '#F0AB63', 500, 380, 350, 100);
+        this.startButton = new Button('START', '#F96B6B', width * 0.5, 280, 350, 100);
+        this.howToPlayButton = new Button('HOW TO PLAY', '#F0AB63', width * 0.5, 410, 350, 100);
     }
 
     private drawButtons() {
@@ -18,10 +18,10 @@ class StartMenu implements IScreen {
         textFont('Fredoka', 80)
         textStyle(BOLD);
         textAlign('center', 'center');
-        text('PURRFECT LEAP', 705, 115);
+        text('PURRFECT LEAP', 705, 105);
 
         fill('#F96B6B');
-        text('PURRFECT LEAP', 700, 110);
+        text('PURRFECT LEAP', 700, 100);
         pop();
     }
 
@@ -29,9 +29,10 @@ class StartMenu implements IScreen {
 
     public draw() {
         push();
+        rectMode(CENTER);
         fill('#C2E1B5')
         noStroke();
-        rect(390, 190, 580, 350, 50);
+        rect(width * 0.5, 350, 580, 340, 50);
         pop();
         this.drawTitle();
         this.drawButtons();
