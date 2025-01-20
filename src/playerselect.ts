@@ -5,6 +5,7 @@ class PlayerSelect implements IScreen {
   private playerSelectButton4: Button;
   private gameStartButton: Button;
   private activeButtonIndex: number;
+  private lastKeyPressed: string | null;
   private playerImage1: p5.Image;
   private playerImage2: p5.Image;
   private playerImage3: p5.Image;
@@ -20,6 +21,7 @@ class PlayerSelect implements IScreen {
     this.gameStartButton = new Button('START GAME', '#F96B6B', 698, 500, 350, 150, 4);
     
     this.activeButtonIndex = 0; 
+    this.lastKeyPressed = null; // Track the last key pressed to control key repetition
     
     this.playerImage1 = loadImage('/assets/images/cats/Player1Head.png');
     this.playerImage2 = loadImage('/assets/images/cats/Player2Head.png');
@@ -68,16 +70,28 @@ private drawPlayerImages() {
     }
   }
 
+
   // Update active button index based on arrow key input
   public update() {
-    if (keyIsDown(LEFT_ARROW)) {
-      this.activeButtonIndex = (this.activeButtonIndex - 1 + 5) % 5; // Cycle left through 5 buttons
-    } else if (keyIsDown(RIGHT_ARROW)) {
-      this.activeButtonIndex = (this.activeButtonIndex + 1) % 5; // Cycle right through 5 buttons
-    } else if (keyIsDown(ENTER)) {
-      this.activateButton(this.activeButtonIndex); // Activate the currently selected button
+   }
+
+    // Handle key presses for navigation (called only once per key press)
+    public keyPressed() {
+      if (keyCode === LEFT_ARROW && this.lastKeyPressed !== 'LEFT') {
+        this.activeButtonIndex = (this.activeButtonIndex - 1 + 5) % 5; // Cycle left through 5 buttons
+        this.lastKeyPressed = 'LEFT'; // Track the key pressed
+      } else if (keyCode === RIGHT_ARROW && this.lastKeyPressed !== 'RIGHT') {
+        this.activeButtonIndex = (this.activeButtonIndex + 1) % 5; // Cycle right through 5 buttons
+        this.lastKeyPressed = 'RIGHT'; // Track the key pressed
+      } else if (keyCode === ENTER) {
+        this.activateButton(this.activeButtonIndex); // Activate the currently selected button
+      }
     }
-  }
+  
+    // Reset the `lastKeyPressed` flag when a key is released
+    public keyReleased() {
+      this.lastKeyPressed = null;
+    }
 
   // Draw everything
   public draw() {

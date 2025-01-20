@@ -5,6 +5,7 @@ let music: {
 };
 let playerImages: p5.Image[] = [];
 let player1: Player;
+let playerSelect: PlayerSelect;
 
 /**
  * Built in preload function in P5
@@ -34,6 +35,7 @@ function setup() {
 
   game = new Game();
   player1 = new Player(100, 200, 50, 50, playerImages, 0);
+  playerSelect = new PlayerSelect();
 }
 
 /**
@@ -45,5 +47,14 @@ function draw() {
   game.update();
   game.draw();
   player1.renderPlayer();
+  playerSelect.draw();
   // player1.leftAndRight();
+}
+
+function keyPressed() {
+  playerSelect.keyPressed();
+}
+
+function keyReleased() {
+  playerSelect.keyReleased();
 }
