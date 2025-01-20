@@ -6,7 +6,6 @@ class Button {
   private width: number;
   private height: number;
   public buttonIndex: number;
-  public buttonIndex: number;
 
   constructor(
     text: string,
@@ -15,8 +14,7 @@ class Button {
     posY: number,
     width: number,
     height: number,
-    buttonIndex: number
-    buttonIndex: number
+    buttonIndex: number,
   ) {
     this.text = text;
     this.color = color;
@@ -28,7 +26,7 @@ class Button {
     this.buttonIndex = buttonIndex;
   }
 
-  public draw(isActive: booleanisActive: boolean) {
+  public draw(isActive: boolean) {
     // Draw button rectangle
     push();
     rectMode(CENTER);

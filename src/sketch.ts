@@ -15,10 +15,10 @@ function preload() {
   music = {
     mystery: loadSound("/assets/music/mystery.mp3"),
   };
-  playerImages.push(loadImage("/assets/images/cats/Purr1.jpg"));
-  playerImages.push(loadImage("/assets/images/cats/Purr2.jpg"));
-  playerImages.push(loadImage("/assets/images/cats/Purr3.jpg"));
-  playerImages.push(loadImage("/assets/images/cats/Purr4.jpg"));
+  // playerImages.push(loadImage("/assets/images/cats/Purr1.jpg"));
+  // playerImages.push(loadImage("/assets/images/cats/Purr2.jpg"));
+  // playerImages.push(loadImage("/assets/images/cats/Purr3.jpg"));
+  // playerImages.push(loadImage("/assets/images/cats/Purr4.jpg"));
 }
 
 /**
