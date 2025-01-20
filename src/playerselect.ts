@@ -95,7 +95,7 @@ private drawPlayerImages() {
 
   // Draw everything
   public draw() {
-    rectMode(CENTER);
+    // rectMode(CENTER);
     fill('#F0DEB5');
     noStroke();
     rect(390, 190, 580, 350, 50);
