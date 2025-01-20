@@ -14,5 +14,23 @@ class Game {
     this.activeScreen.draw();
   }
 
-  public changeScreen(screen: any) {}
+  public changeScreen(screenName: string) {
+    switch (screenName) {
+      case 'StartMenu':
+        this.activeScreen = new StartMenu();
+        break;
+      case 'PlayerSelect':
+        this.activeScreen = new PlayerSelect();
+        break;
+      case 'HowToPlay':
+        this.activeScreen = new HowToPlay();
+        break;
+      case 'GameBoard':
+        this.activeScreen = new GameBoard();
+        break;
+      case 'GameEnd':
+        this.activeScreen = new GameEnd();
+        break;
+    }
+  }
 }
