@@ -1,17 +1,17 @@
 class Game {
-  private GameEnd: GameEnd;
+  private activeScreen: IScreen;
 
   constructor() {
-    this.GameEnd = new GameEnd();
+    this.activeScreen = new StartMenu();
   }
 
   public update() {
-    this.GameEnd.update();
+    this.activeScreen.update();
   }
 
   public draw() {
     background("#F0DEB5");
-    this.GameEnd.draw();
+    this.activeScreen.draw();
   }
 
   public changeScreen(screen: any) {}
