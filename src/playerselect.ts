@@ -5,14 +5,25 @@ class PlayerSelect implements IScreen {
   private playerSelectButton4: Button;
   private gameStartButton: Button;
   private activeButtonIndex: number;
+  private playerImage1: p5.Image;
+  private playerImage2: p5.Image;
+  private playerImage3: p5.Image;
+  private playerImage4: p5.Image;
 
   constructor() {
-    this.playerSelectButton1 = new Button('1 PLAYER', '#F96B6B', 90, 20, 250, 100, 0);
-    this.playerSelectButton2 = new Button('2 PLAYER', '#C2E1B5', 415, 20, 250, 100, 1);
-    this.playerSelectButton3 = new Button('3 PLAYER', '#F0AB63', 745, 20, 250, 100, 2);
-    this.playerSelectButton4 = new Button('4 PLAYER', '#CBA3D2', 1065, 20, 250, 100, 3);
-    this.gameStartButton = new Button('START GAME', '#F96B6B', 525, 450, 350, 150, 4);
+    // Button Initialization
+    this.playerSelectButton1 = new Button('1 PLAYER', '#F96B6B', 210, 80, 250, 100, 0);
+    this.playerSelectButton2 = new Button('2 PLAYER', '#C2E1B5', 535, 80, 250, 100, 1);
+    this.playerSelectButton3 = new Button('3 PLAYER', '#F0AB63', 855, 80, 250, 100, 2);
+    this.playerSelectButton4 = new Button('4 PLAYER', '#CBA3D2', 1185, 80, 250, 100, 3);
+    this.gameStartButton = new Button('START GAME', '#F96B6B', 698, 500, 350, 150, 4);
     this.activeButtonIndex = 0; // Default to the first button
+
+    // Load images for character selection
+    this.playerImage1 = loadImage('/assets/images/cats/Player1Head.png');
+    this.playerImage2 = loadImage('/assets/images/cats/Player2Head.png');
+    this.playerImage3 = loadImage('/assets/images/cats/Player3Head.png');
+    this.playerImage4 = loadImage('/assets/images/cats/Player4Head.png');
   }
 
   // Draw all buttons, highlighting the active one
@@ -23,6 +34,26 @@ class PlayerSelect implements IScreen {
     this.playerSelectButton4.draw(this.activeButtonIndex === 3);
     this.gameStartButton.draw(this.activeButtonIndex === 4);
   }
+
+ // Draw all player images under their respective buttons
+private drawPlayerImages() {
+  // const imageY = 160; // Set y position where images will appear
+
+  // Draw all player images underneath the respective buttons
+  image(this.playerImage1, 160, 160, 120, 100); // 1 PLAYER image
+  
+  image(this.playerImage1, 460, 160, 120, 100); // 2 PLAYER image
+  image(this.playerImage2, 530, 185, 120, 100); // 2 PLAYER image
+  
+  image(this.playerImage1, 780, 160, 120, 100); // 3 PLAYER image
+  image(this.playerImage2, 850, 185, 120, 100); // 3 PLAYER image
+  image(this.playerImage3, 760, 220, 120, 100); // 3 PLAYER image
+  
+  image(this.playerImage1, 1105, 160, 120, 100); // 4 PLAYER image
+  image(this.playerImage2, 1175, 185, 120, 100); // 4 PLAYER image
+  image(this.playerImage3, 1085, 220, 120, 100); // 4 PLAYER image
+  image(this.playerImage4, 1170, 240, 130, 110); // 4 PLAYER image
+}
 
   // Handle button activation (Enter key)
   private activateButton(index: number) {
@@ -52,9 +83,11 @@ class PlayerSelect implements IScreen {
 
   // Draw everything
   public draw() {
+    rectMode(CENTER);
     fill('#F0DEB5');
     noStroke();
     rect(390, 190, 580, 350, 50); // Background rectangle
     this.drawButtons(); // Draw all buttons
+    this.drawPlayerImages(); // Draw the character images
   }
 }
