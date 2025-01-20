@@ -45,5 +45,5 @@ function draw() {
   game.update();
   game.draw();
   player1.renderPlayer();
-  player1.leftAndRight();
+  // player1.leftAndRight();
 }
