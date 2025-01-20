@@ -6,6 +6,7 @@ class Button {
   private width: number;
   private height: number;
   public buttonIndex: number;
+  public buttonIndex: number;
 
   constructor(
     text: string,
@@ -15,6 +16,7 @@ class Button {
     width: number,
     height: number,
     buttonIndex: number
+    buttonIndex: number
   ) {
     this.text = text;
     this.color = color;
@@ -23,11 +25,13 @@ class Button {
     this.width = width;
     this.height = height;
     this.buttonIndex = buttonIndex;
+    this.buttonIndex = buttonIndex;
   }
 
-  public draw(isActive: boolean) {
+  public draw(isActive: booleanisActive: boolean) {
     // Draw button rectangle
     push();
+    rectMode(CENTER);
     rectMode(CENTER);
     fill(this.color);
     noStroke();
@@ -39,6 +43,8 @@ class Button {
     textStyle(BOLD);
     textAlign("center", "center");
     text(this.text, this.posX, this.posY);
+    textAlign("center", "center");
+    text(this.text, this.posX, this.posY);
     pop();
 
     // Draw highlight border if active
@@ -46,6 +52,17 @@ class Button {
       push();
       rectMode(CENTER);
       stroke("#449ea1"); // Highlight border color
+      noFill();
+      strokeWeight(10);
+      rect(this.posX, this.posY, this.width, this.height, 20);
+      pop();
+    }
+
+    //If active button
+    if (isActive) {
+      push();
+      rectMode(CENTER);
+      stroke("#449ea1");
       noFill();
       strokeWeight(10);
       rect(this.posX, this.posY, this.width, this.height, 20);
