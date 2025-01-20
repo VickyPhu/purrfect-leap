@@ -1,8 +1,7 @@
-class GameBoard {
+class GameBoard implements IScreen {
     public backgroundImage: string;
     private backgroundMusic: string;
     private gameEntity: GameEntity[];
-
     
     
     private spawnPlatform() {
@@ -25,4 +24,11 @@ class GameBoard {
         
     }
     
+    public update() {
+
+    }
+
+    public draw() {
+
+    }
 }
