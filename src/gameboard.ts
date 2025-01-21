@@ -12,7 +12,7 @@ class GameBoard implements IScreen {
   private updateTime() {}
 
   private detectHit() {}
-  
+
   public update() {}
 
   public draw() {}
