@@ -20,7 +20,7 @@ class Game {
       | "PlayerSelect"
       | "HowToPlay"
       | "GameBoard"
-      | "GameEnd"
+      | "GameEnd",
   ) {
     switch (screenName) {
       case "StartMenu":
