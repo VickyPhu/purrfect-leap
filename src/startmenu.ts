@@ -30,28 +30,28 @@ class StartMenu implements IScreen {
     pop();
   }
 
-    public update() {
-        if (keyIsDown(DOWN_ARROW)) {
-            this.activeButtonIndex = +1;
-        } else if (keyIsDown(UP_ARROW)) {
-            this.activeButtonIndex = 0;
-        } else if (keyIsDown(ENTER)) {
-            if (this.activeButtonIndex === 0) {
-                game.changeScreen("PlayerSelect");
-            } else if (this.activeButtonIndex === 1) {
-                game.changeScreen("HowToPlay");
-            }
-        }
+  public update() {
+    if (keyIsDown(DOWN_ARROW)) {
+      this.activeButtonIndex = +1;
+    } else if (keyIsDown(UP_ARROW)) {
+      this.activeButtonIndex = 0;
+    } else if (keyIsDown(ENTER)) {
+      if (this.activeButtonIndex === 0) {
+        game.changeScreen("PlayerSelect");
+      } else if (this.activeButtonIndex === 1) {
+        game.changeScreen("HowToPlay");
+      }
     }
+  }
 
-    public draw() {
-        push();
-        rectMode(CENTER);
-        fill("#C2E1B5")
-        noStroke();
-        rect(width * 0.5, 350, 580, 340, 50);
-        pop();
-        this.drawTitle();
-        this.drawButtons();
-    }
+  public draw() {
+    push();
+    rectMode(CENTER);
+    fill("#C2E1B5");
+    noStroke();
+    rect(width * 0.5, 350, 580, 340, 50);
+    pop();
+    this.drawTitle();
+    this.drawButtons();
+  }
 }
