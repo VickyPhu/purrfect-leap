@@ -96,50 +96,49 @@ class PlayerSelect implements IScreen {
   }
 
   // Handle button activation (Enter key)
-private activateButton(index: number) {
-  if (index === 0) {
-    console.log("1 PLAYER selected");
-  } else if (index === 1) {
-    console.log("2 PLAYER selected");
-  } else if (index === 2) {
-    console.log("3 PLAYER selected");
-  } else if (index === 3) {
-    console.log("4 PLAYER selected");
-  } else if (index === 4) {
-    console.log("START GAME selected");
-    game.changeScreen("GameBoard"); 
-  }
-}
-
-public update() {
-  const pressedThisFrame = keyIsPressed && !this.prevIsKeyPressed;
-
-  if (pressedThisFrame) {
-    if (keyCode === LEFT_ARROW && this.lastKeyPressed !== "LEFT") {
-      this.activeButtonIndex = (this.activeButtonIndex - 1 + 4) % 4; // Loop between 0-3
-      this.lastKeyPressed = "LEFT";
-    } else if (keyCode === RIGHT_ARROW && this.lastKeyPressed !== "RIGHT") {
-      this.activeButtonIndex = (this.activeButtonIndex + 1) % 4; // Loop between 0-3
-      this.lastKeyPressed = "RIGHT";
-    } else if (keyCode === ENTER) {
-      if (this.activeButtonIndex !== 4) {
-        // Navigate to "START GAME" button if ENTER is pressed
-        this.activeButtonIndex = 4;
-      } else {
-        // Activate the "START GAME" button if already selected
-        this.activateButton(this.activeButtonIndex);
-      }
+  private activateButton(index: number) {
+    if (index === 0) {
+      console.log("1 PLAYER selected");
+    } else if (index === 1) {
+      console.log("2 PLAYER selected");
+    } else if (index === 2) {
+      console.log("3 PLAYER selected");
+    } else if (index === 3) {
+      console.log("4 PLAYER selected");
+    } else if (index === 4) {
+      console.log("START GAME selected");
+      game.changeScreen("GameBoard");
     }
   }
 
-  if (!keyIsPressed && this.prevIsKeyPressed) {
-    this.lastKeyPressed = null;
+  public update() {
+    const pressedThisFrame = keyIsPressed && !this.prevIsKeyPressed;
+
+    if (pressedThisFrame) {
+      if (keyCode === LEFT_ARROW && this.lastKeyPressed !== "LEFT") {
+        this.activeButtonIndex = (this.activeButtonIndex - 1 + 4) % 4; // Loop between 0-3
+        this.lastKeyPressed = "LEFT";
+      } else if (keyCode === RIGHT_ARROW && this.lastKeyPressed !== "RIGHT") {
+        this.activeButtonIndex = (this.activeButtonIndex + 1) % 4; // Loop between 0-3
+        this.lastKeyPressed = "RIGHT";
+      } else if (keyCode === ENTER) {
+        if (this.activeButtonIndex !== 4) {
+          // Navigate to "START GAME" button if ENTER is pressed
+          this.activeButtonIndex = 4;
+        } else {
+          // Activate the "START GAME" button if already selected
+          this.activateButton(this.activeButtonIndex);
+        }
+      }
+    }
+
+    if (!keyIsPressed && this.prevIsKeyPressed) {
+      this.lastKeyPressed = null;
+    }
+
+    // Update previous key press state
+    this.prevIsKeyPressed = keyIsPressed;
   }
-
-  // Update previous key press state
-  this.prevIsKeyPressed = keyIsPressed;
-}
-
 
   // Draw everything
   public draw() {
