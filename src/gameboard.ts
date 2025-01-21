@@ -1,34 +1,15 @@
-class GameBoard implements IScreen {
-    public backgroundImage: string;
-    private backgroundMusic: string;
-    private gameEntity: GameEntity[];
-    
-    
-    private spawnPlatform() {
-        
-    }
+class GameBoard {
+  public backgroundImage: string;
+  private backgroundMusic: string;
+  private gameEntity: GameEntity[];
 
-    private translateWorld() {
+  private spawnPlatform() {}
 
-    }
+  private translateWorld() {}
 
-    private spawnPlayer() {
+  private spawnPlayer() {}
 
-    }
+  private updateTime() {}
 
-    private updateTime() {
-
-    }
-
-    private detectHit() {
-        
-    }
-    
-    public update() {
-
-    }
-
-    public draw() {
-
-    }
+  private detectHit() {}
 }
