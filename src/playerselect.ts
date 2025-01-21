@@ -13,7 +13,6 @@ class PlayerSelect implements IScreen {
   private prevIsKeyPressed: boolean;
 
   constructor() {
-    // Button Initialization
     this.playerSelectButton1 = new Button(
       "1 PLAYER",
       "#F96B6B",
@@ -50,7 +49,6 @@ class PlayerSelect implements IScreen {
       100,
       3,
     );
-
     this.gameStartButton = new Button(
       "START GAME",
       "#F96B6B",
@@ -62,7 +60,8 @@ class PlayerSelect implements IScreen {
     );
 
     this.activeButtonIndex = 0;
-    this.lastKeyPressed = null; // Track the last key pressed to control key repetition
+    this.lastKeyPressed = null;
+    this.prevIsKeyPressed = false;
 
     this.playerImage1 = loadImage("/assets/images/cats/Player1Head.png");
     this.playerImage2 = loadImage("/assets/images/cats/Player2Head.png");
@@ -113,36 +112,30 @@ class PlayerSelect implements IScreen {
 
   // Update active button index based on arrow key input
   public update() {
-    this.keyPressed();
-
-    this.prevIsKeyPressed = keyIsPressed;
-  }
-
-  // Handle key presses for navigation (called only once per key press)
-  public keyPressed() {
     const pressedThisFrame = keyIsPressed && !this.prevIsKeyPressed;
-    const released = !keyIsPressed && this.prevIsKeyPressed;
 
-    if (keyIsDown(RIGHT_ARROW) && pressedThisFrame)
+    if (pressedThisFrame) {
       if (keyCode === LEFT_ARROW && this.lastKeyPressed !== "LEFT") {
         this.activeButtonIndex = (this.activeButtonIndex - 1 + 5) % 5;
         this.lastKeyPressed = "LEFT";
       } else if (keyCode === RIGHT_ARROW && this.lastKeyPressed !== "RIGHT") {
         this.activeButtonIndex = (this.activeButtonIndex + 1) % 5;
-        this.lastKeyPressed = "RIGHT"; // Track the key pressed
+        this.lastKeyPressed = "RIGHT";
       } else if (keyCode === ENTER) {
-        this.activateButton(this.activeButtonIndex); // Activate the currently selected button
+        this.activateButton(this.activeButtonIndex);
       }
-  }
+    }
 
-  // Reset the `lastKeyPressed` flag when a key is released
-  public keyReleased() {
-    this.lastKeyPressed = null;
+    if (!keyIsPressed && this.prevIsKeyPressed) {
+      this.lastKeyPressed = null;
+    }
+
+    // Update previous key press state
+    this.prevIsKeyPressed = keyIsPressed;
   }
 
   // Draw everything
   public draw() {
-    // rectMode(CENTER);
     fill("#F0DEB5");
     noStroke();
     rect(390, 190, 580, 350, 50);
