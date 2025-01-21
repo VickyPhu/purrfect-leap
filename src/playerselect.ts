@@ -11,6 +11,7 @@ class PlayerSelect implements IScreen {
   private playerImage3: p5.Image;
   private playerImage4: p5.Image;
   private prevIsKeyPressed: boolean;
+  private selectedPlayerIndex: number | null;
 
   constructor() {
     this.playerSelectButton1 = new Button(
@@ -59,7 +60,7 @@ class PlayerSelect implements IScreen {
       4,
     );
 
-    this.activeButtonIndex = 0; // Highlight the "1 PLAYER" button by default
+    this.activeButtonIndex = 0; 
     this.lastKeyPressed = null;
     this.prevIsKeyPressed = keyIsPressed;
 
@@ -67,6 +68,8 @@ class PlayerSelect implements IScreen {
     this.playerImage2 = loadImage("/assets/images/cats/Player2Head.png");
     this.playerImage3 = loadImage("/assets/images/cats/Player3Head.png");
     this.playerImage4 = loadImage("/assets/images/cats/Player4Head.png");
+
+    this.selectedPlayerIndex = null; // No player selected initially
   }
 
   // Draw all buttons, highlighting the active one
@@ -116,17 +119,17 @@ class PlayerSelect implements IScreen {
 
     if (pressedThisFrame) {
       if (keyCode === LEFT_ARROW && this.lastKeyPressed !== "LEFT") {
-        this.activeButtonIndex = (this.activeButtonIndex - 1 + 4) % 4; // Loop between 0-3
+        this.activeButtonIndex = (this.activeButtonIndex - 1 + 4) % 4; 
         this.lastKeyPressed = "LEFT";
       } else if (keyCode === RIGHT_ARROW && this.lastKeyPressed !== "RIGHT") {
-        this.activeButtonIndex = (this.activeButtonIndex + 1) % 4; // Loop between 0-3
+        this.activeButtonIndex = (this.activeButtonIndex + 1) % 4; 
         this.lastKeyPressed = "RIGHT";
       } else if (keyCode === ENTER) {
         if (this.activeButtonIndex !== 4) {
-          // Navigate to "START GAME" button if ENTER is pressed
+          
           this.activeButtonIndex = 4;
         } else {
-          // Activate the "START GAME" button if already selected
+          
           this.activateButton(this.activeButtonIndex);
         }
       }
@@ -136,7 +139,7 @@ class PlayerSelect implements IScreen {
       this.lastKeyPressed = null;
     }
 
-    // Update previous key press state
+    
     this.prevIsKeyPressed = keyIsPressed;
   }
 
