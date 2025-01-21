@@ -1,28 +1,15 @@
 class GameBoard {
-    public backgroundImage: string;
-    private backgroundMusic: string;
-    private gameEntity: GameEntity[];
+  public backgroundImage: string;
+  private backgroundMusic: string;
+  private gameEntity: GameEntity[];
 
-    
-    
-    private spawnPlatform() {
-        
-    }
+  private spawnPlatform() {}
 
-    private translateWorld() {
+  private translateWorld() {}
 
-    }
+  private spawnPlayer() {}
 
-    private spawnPlayer() {
+  private updateTime() {}
 
-    }
-
-    private updateTime() {
-
-    }
-
-    private detectHit() {
-        
-    }
-    
+  private detectHit() {}
 }

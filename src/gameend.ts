@@ -9,7 +9,7 @@ class GameEnd implements IScreen {
       300,
       500,
       300,
-      100
+      100,
     );
     this.startMenuButton = new Button(
       "MAIN MENU",
@@ -17,7 +17,7 @@ class GameEnd implements IScreen {
       800,
       500,
       300,
-      100
+      100,
     );
   }
 

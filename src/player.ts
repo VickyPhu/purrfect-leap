@@ -11,7 +11,7 @@ class Player extends GameEntity {
     posX: number,
     posY: number,
     img: p5.Image[],
-    imageIndex: number
+    imageIndex: number,
   ) {
     super(height, width, posX, posY, img, imageIndex);
 
@@ -46,15 +46,15 @@ class Player extends GameEntity {
     this.bounceAnimation();
   }
 
-  public leftAndRight() {
-    if (keyIsDown(LEFT_ARROW) === true) {
-      this.posX -= 6;
-    }
+  // public leftAndRight() {
+  //   if (keyIsDown(LEFT_ARROW) === true) {
+  //     this.posX -= 6;
+  //   }
 
-    if (keyIsDown(RIGHT_ARROW) === true) {
-      this.posX += 6;
-    }
-  }
+  //   if (keyIsDown(RIGHT_ARROW) === true) {
+  //     this.posX += 6;
+  //   }
+  // }
 
   public die() {}
   public renderPlayer() {
