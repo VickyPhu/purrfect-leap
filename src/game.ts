@@ -4,7 +4,7 @@ class Game {
 
   constructor() {
     // this.GameEnd = new GameEnd();
-    this.playerSelect = new PlayerSelect;
+    this.playerSelect = new PlayerSelect();
   }
 
   public update() {
