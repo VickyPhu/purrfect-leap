@@ -11,8 +11,7 @@ class PlayerSelect implements IScreen {
   private playerImage3: p5.Image;
   private playerImage4: p5.Image;
   private prevIsKeyPressed: boolean;
- 
- 
+
   constructor() {
     this.playerSelectButton1 = new Button(
       "1 PLAYER",
@@ -59,20 +58,17 @@ class PlayerSelect implements IScreen {
       150,
       4,
     );
- 
- 
+
     this.activeButtonIndex = 0;
     this.lastKeyPressed = null;
     this.prevIsKeyPressed = false;
- 
- 
+
     this.playerImage1 = loadImage("/assets/images/cats/Player1Head.png");
     this.playerImage2 = loadImage("/assets/images/cats/Player2Head.png");
     this.playerImage3 = loadImage("/assets/images/cats/Player3Head.png");
     this.playerImage4 = loadImage("/assets/images/cats/Player4Head.png");
   }
- 
- 
+
   // Draw all buttons, highlighting the active one
   private drawButtons() {
     this.playerSelectButton1.draw(this.activeButtonIndex === 0);
@@ -81,29 +77,24 @@ class PlayerSelect implements IScreen {
     this.playerSelectButton4.draw(this.activeButtonIndex === 3);
     this.gameStartButton.draw(this.activeButtonIndex === 4);
   }
- 
- 
+
   // Draw all player images under their respective buttons
   private drawPlayerImages() {
     image(this.playerImage1, 160, 160, 120, 100); // 1 PLAYER
- 
- 
+
     image(this.playerImage1, 460, 160, 120, 100); // 2 PLAYER
     image(this.playerImage2, 530, 185, 120, 100); // 2 PLAYER
- 
- 
+
     image(this.playerImage1, 780, 160, 120, 100); // 3 PLAYER
     image(this.playerImage2, 850, 185, 120, 100); // 3 PLAYER
     image(this.playerImage3, 760, 220, 120, 100); // 3 PLAYER
- 
- 
+
     image(this.playerImage1, 1105, 160, 120, 100); // 4 PLAYER
     image(this.playerImage2, 1175, 185, 120, 100); // 4 PLAYER
     image(this.playerImage3, 1085, 220, 120, 100); // 4 PLAYER
     image(this.playerImage4, 1170, 240, 130, 110); // 4 PLAYER
   }
- 
- 
+
   // Handle button activation (Enter key)
   private activateButton(index: number) {
     if (index === 0) {
@@ -118,13 +109,11 @@ class PlayerSelect implements IScreen {
       console.log("START GAME selected");
     }
   }
- 
- 
+
   // Update active button index based on arrow key input
   public update() {
     const pressedThisFrame = keyIsPressed && !this.prevIsKeyPressed;
- 
- 
+
     if (pressedThisFrame) {
       if (keyCode === LEFT_ARROW && this.lastKeyPressed !== "LEFT") {
         this.activeButtonIndex = (this.activeButtonIndex - 1 + 5) % 5;
@@ -136,18 +125,15 @@ class PlayerSelect implements IScreen {
         this.activateButton(this.activeButtonIndex);
       }
     }
- 
- 
+
     if (!keyIsPressed && this.prevIsKeyPressed) {
       this.lastKeyPressed = null;
     }
- 
- 
+
     // Update previous key press state
     this.prevIsKeyPressed = keyIsPressed;
   }
- 
- 
+
   // Draw everything
   public draw() {
     fill("#F0DEB5");
@@ -156,5 +142,4 @@ class PlayerSelect implements IScreen {
     this.drawButtons();
     this.drawPlayerImages();
   }
- }
- 
+}
