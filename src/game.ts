@@ -2,7 +2,7 @@ class Game {
   private activeScreen: IScreen;
 
   constructor() {
-    this.activeScreen = new HowToPlay();
+    this.activeScreen = new StartMenu();
   }
 
   public setup() {
