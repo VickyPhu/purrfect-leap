@@ -73,6 +73,9 @@ class GameBoard implements IScreen {
   }
 
   public draw() {
+    this.drawBackground();
+    this.players.forEach((player) => player.renderPlayer());
+    
     push();
     fill("#000");
     textAlign(CENTER, CENTER);
@@ -87,9 +90,6 @@ class GameBoard implements IScreen {
       textSize(50);
       text(`Time: ${nf(this.elapsedTime, 1, 1)}sec`, width - 10, 30);
       pop();
-
-      this.drawBackground();
-      this.players.forEach((player) => player.renderPlayer());
     }
   }
 }
