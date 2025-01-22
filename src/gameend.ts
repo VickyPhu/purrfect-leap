@@ -61,4 +61,15 @@ class GameEnd implements IScreen {
     this.drawImage();
     this.drawButtons();
   }
+
+  public setup() {}
+
+  private activateButton(index: number) {
+    if (index === 0) {
+      // Change to GameBoard
+    } else if (index === 1) {
+      // Change to StartMenu
+    }
+  }
+
 }

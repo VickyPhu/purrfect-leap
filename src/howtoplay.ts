@@ -5,6 +5,8 @@ class HowToPlay implements IScreen {
     this.returnButton = new Button();
   }
 
+  public setup() {}
+
   public update() {}
 
   public draw() {
