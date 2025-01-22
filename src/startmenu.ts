@@ -52,6 +52,8 @@ class StartMenu implements IScreen {
     }
   }
 
+  public setup() {}
+
   public draw() {
     push();
     rectMode(CENTER);

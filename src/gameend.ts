@@ -49,6 +49,7 @@ class GameEnd implements IScreen {
     this.drawImage();
     this.drawButtons();
   }
+  public setup() {}
 
   private activateButton(index: number) {
     if (index === 0) {
