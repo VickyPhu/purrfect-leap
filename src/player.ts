@@ -26,40 +26,13 @@ class Player extends GameEntity {
     this.velocity += this.gravity;
 
     this.posY += this.velocity;
-  
+
     if (this.posY + this.height > height) {
       this.posY = height - this.height;
       this.velocity = this.bounceVelocity;
     }
     this.bounceAnimation();
   }
-  
-  private bounceAnimation() {
-
-    if (keyIsDown(RIGHT_ARROW) === true){
-    if (this.velocity < -10) {
-      this.imageIndex = 0;
-    } else if (this.velocity < -3) {
-      this.imageIndex = 1;
-    } else if (this.velocity < 10) {
-      this.imageIndex = 2;
-    } else {
-      this.imageIndex = 3;
-    }
-  } else if (keyIsDown(LEFT_ARROW) === true) {
-    if (this.velocity < -10) {
-      this.imageIndex = 4;
-    } else if (this.velocity < -3) {
-      this.imageIndex = 5;
-    } else if (this.velocity < 10) {
-      this.imageIndex = 6;
-    } else {
-      this.imageIndex = 7;
-    }
-  }
-
-  
-
   private leftAndRight() {
     if (keyIsDown(LEFT_ARROW) === true) {
       this.posX -= 6;
@@ -70,13 +43,35 @@ class Player extends GameEntity {
     }
   }
 
+  private bounceAnimation() {
+    if (keyIsDown(RIGHT_ARROW) === true) {
+      if (this.velocity < -10) {
+        this.imageIndex = 0;
+      } else if (this.velocity < -3) {
+        this.imageIndex = 1;
+      } else if (this.velocity < 10) {
+        this.imageIndex = 2;
+      } else {
+        this.imageIndex = 3;
+      }
+    } else if (keyIsDown(LEFT_ARROW) === true) {
+      if (this.velocity < -10) {
+        this.imageIndex = 4;
+      } else if (this.velocity < -3) {
+        this.imageIndex = 5;
+      } else if (this.velocity < 10) {
+        this.imageIndex = 6;
+      } else {
+        this.imageIndex = 7;
+      }
+    }
+  }
+
   public update() {
     this.automaticBounce();
     this.leftAndRight();
   }
 
   public die() {}
-  public renderPlayer() {
-
-    
-}}
+  public renderPlayer() {}
+}
