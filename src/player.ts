@@ -22,6 +22,18 @@ class Player extends GameEntity {
     this.bounceVelocity = -15;
   }
 
+  private automaticBounce() {
+    this.velocity += this.gravity;
+
+    this.posY += this.velocity;
+  
+    if (this.posY + this.height > height) {
+      this.posY = height - this.height;
+      this.velocity = this.bounceVelocity;
+    }
+    this.bounceAnimation();
+  }
+  
   private bounceAnimation() {
 
     if (keyIsDown(RIGHT_ARROW) === true){
@@ -46,17 +58,6 @@ class Player extends GameEntity {
     }
   }
 
-  private automaticBounce() {
-    this.velocity += this.gravity;
-
-    this.posY += this.velocity;
-  
-    if (this.posY + this.height > height) {
-      this.posY = height - this.height;
-      this.velocity = this.bounceVelocity;
-    }
-    this.bounceAnimation();
-  }
   
 
   private leftAndRight() {
