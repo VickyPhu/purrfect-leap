@@ -6,9 +6,16 @@ class HowToPlay implements IScreen {
 
   constructor() {
     this.enterKeyHasBeenReleased = false;
-    this.returnButton = new Button("RETURN", "#F0AB63", width * 0.5, 625, 200, 70, 0);
-    this.controlImage = loadImage("/assets/images/control-image/keyboard.png"
+    this.returnButton = new Button(
+      "RETURN",
+      "#F0AB63",
+      width * 0.5,
+      625,
+      200,
+      70,
+      0,
     );
+    this.controlImage = loadImage("/assets/images/control-image/keyboard.png");
     this.activeButtonIndex = 0;
   }
 
@@ -21,7 +28,6 @@ class HowToPlay implements IScreen {
     text("HOW TO PLAY", width / 2, 100);
     pop();
   }
-
 
   private drawText() {
     const marginX = 200; // Marginal från vänster och höger
@@ -36,7 +42,7 @@ class HowToPlay implements IScreen {
       "Purrfect leap is a fast-paced single- or multiplayer platform game where up to 4 players take on the roles of adorable cat characters. As the game board scrolls continuously upwards, the players must climb through the blocks by steering the characters to jump left or right with the keyboard. The mission is to avoid falling off the bottom of the screen. Watch out for broken platforms as they will fall apart when jumping on them. You can jump off the game's right or left side and appear on the opposite side to tackle challenging platform jumps. The player who manages to stay in the game the longest without falling becomes the ultimate cat climber.",
       marginX,
       marginY,
-      textWidth
+      textWidth,
     );
     pop();
   }
@@ -45,21 +51,19 @@ class HowToPlay implements IScreen {
     this.returnButton.draw(this.activeButtonIndex === 0);
   }
 
-
-public update() {
-  if (keyIsDown(ENTER)) {
-    if (this.enterKeyHasBeenReleased) {
-      if (this.activeButtonIndex === 0) {
-        game.changeScreen("StartMenu");
-        console.log("Navigerar till StartMenu");
+  public update() {
+    if (keyIsDown(ENTER)) {
+      if (this.enterKeyHasBeenReleased) {
+        if (this.activeButtonIndex === 0) {
+          game.changeScreen("StartMenu");
+          console.log("Navigerar till StartMenu");
+        }
+        this.enterKeyHasBeenReleased = false;
       }
-      this.enterKeyHasBeenReleased = false; 
+    } else {
+      this.enterKeyHasBeenReleased = true;
     }
-  } else {
-    this.enterKeyHasBeenReleased = true;
   }
-}
-
 
   private drawInstructionImage() {
     image(this.controlImage, 320, 275, 800, 325);
@@ -72,6 +76,4 @@ public update() {
   }
 
   public setup() {}
-
-
 }
