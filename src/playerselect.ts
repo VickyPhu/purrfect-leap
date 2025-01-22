@@ -139,7 +139,7 @@ class PlayerSelect implements IScreen {
     // Update previous key press state
     this.prevIsKeyPressed = keyIsPressed;
   }
-
+  public setup() {}
   // Draw everything
   public draw() {
     fill("#F0DEB5");
