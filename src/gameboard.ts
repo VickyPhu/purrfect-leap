@@ -86,9 +86,9 @@ class GameBoard implements IScreen {
       pop();
     } else {
       push();
-      textAlign(RIGHT, CENTER);
+      textAlign(LEFT, CENTER);
       textSize(50);
-      text(`Time: ${nf(this.elapsedTime, 1, 1)}sec`, width - 10, 30);
+      text(`Time: ${nf(this.elapsedTime, 1, 1)}sec`, 0, 30);
       pop();
     }
   }
