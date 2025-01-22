@@ -59,9 +59,9 @@ class PlayerSelect implements IScreen {
       4,
     );
 
-    this.activeButtonIndex = 0;
+    this.activeButtonIndex = 0; // Highlight the "1 PLAYER" button by default
     this.lastKeyPressed = null;
-    this.prevIsKeyPressed = false;
+    this.prevIsKeyPressed = keyIsPressed;
 
     this.playerImage1 = loadImage("/assets/images/cats/Player1Head.png");
     this.playerImage2 = loadImage("/assets/images/cats/Player2Head.png");
@@ -107,22 +107,28 @@ class PlayerSelect implements IScreen {
       console.log("4 PLAYER selected");
     } else if (index === 4) {
       console.log("START GAME selected");
+      game.changeScreen("GameBoard");
     }
   }
 
-  // Update active button index based on arrow key input
   public update() {
     const pressedThisFrame = keyIsPressed && !this.prevIsKeyPressed;
 
     if (pressedThisFrame) {
       if (keyCode === LEFT_ARROW && this.lastKeyPressed !== "LEFT") {
-        this.activeButtonIndex = (this.activeButtonIndex - 1 + 5) % 5;
+        this.activeButtonIndex = (this.activeButtonIndex - 1 + 4) % 4; // Loop between 0-3
         this.lastKeyPressed = "LEFT";
       } else if (keyCode === RIGHT_ARROW && this.lastKeyPressed !== "RIGHT") {
-        this.activeButtonIndex = (this.activeButtonIndex + 1) % 5;
+        this.activeButtonIndex = (this.activeButtonIndex + 1) % 4; // Loop between 0-3
         this.lastKeyPressed = "RIGHT";
       } else if (keyCode === ENTER) {
-        this.activateButton(this.activeButtonIndex);
+        if (this.activeButtonIndex !== 4) {
+          // Navigate to "START GAME" button if ENTER is pressed
+          this.activeButtonIndex = 4;
+        } else {
+          // Activate the "START GAME" button if already selected
+          this.activateButton(this.activeButtonIndex);
+        }
       }
     }
 
