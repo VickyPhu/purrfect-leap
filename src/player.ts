@@ -22,27 +22,6 @@ class Player extends GameEntity {
     this.bounceVelocity = -15;
   }
 
-  private automaticBounce() {
-    this.velocity += this.gravity;
-
-    this.posY += this.velocity;
-
-    if (this.posY + this.height > height) {
-      this.posY = height - this.height;
-      this.velocity = this.bounceVelocity;
-    }
-    this.bounceAnimation();
-  }
-  private leftAndRight() {
-    if (keyIsDown(LEFT_ARROW) === true) {
-      this.posX -= 6;
-    }
-
-    if (keyIsDown(RIGHT_ARROW) === true) {
-      this.posX += 6;
-    }
-  }
-
   private bounceAnimation() {
     if (keyIsDown(RIGHT_ARROW) === true) {
       if (this.velocity < -10) {
@@ -67,11 +46,44 @@ class Player extends GameEntity {
     }
   }
 
+  private automaticBounce() {
+    this.velocity += this.gravity;
+
+    this.posY += this.velocity;
+
+    if (this.posY + this.height > height) {
+      this.posY = height - this.height;
+      this.velocity = this.bounceVelocity;
+    }
+    this.bounceAnimation();
+  }
+
+  private leftAndRight() {
+    if (keyIsDown(LEFT_ARROW) === true) {
+      this.posX -= 6;
+    }
+
+    if (keyIsDown(RIGHT_ARROW) === true) {
+      this.posX += 6;
+    }
+  }
+
+  private wallJumper() {
+    if (this.posX > 1350) {
+      this.posX = 0;
+    } else if (this.posX < -50) {
+      this.posX = 1340;
+    }
+  }
+
   public update() {
     this.automaticBounce();
     this.leftAndRight();
+    this.wallJumper();
   }
 
   public die() {}
-  public renderPlayer() {}
+  public renderPlayer() {
+    super.draw();
+  }
 }
