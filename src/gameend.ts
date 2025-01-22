@@ -2,8 +2,10 @@ class GameEnd implements IScreen {
   private buttons: Button[];
   private activeButtonIndex: number;
   private deadCat: p5.Image;
+  private enterKeyHasBeenReleased: boolean;
 
   constructor() {
+    this.enterKeyHasBeenReleased = false;
     this.buttons = [
       new Button("PLAY AGAIN", "#c2e1b5", 450, 500, 300, 100, 0),
       new Button("MAIN MENU", "#f0ab63", 950, 500, 300, 100, 1),
@@ -13,12 +15,22 @@ class GameEnd implements IScreen {
   }
 
   public update() {
+    if (keyIsDown(ENTER) && this.enterKeyHasBeenReleased) {
+      if (this.activeButtonIndex === 0) {
+        game.changeScreen("GameBoard");
+      } else if (this.activeButtonIndex === 1) {
+        game.changeScreen("StartMenu");
+      }
+    }
+
     if (keyIsDown(RIGHT_ARROW)) {
       this.activeButtonIndex = +1;
     } else if (keyIsDown(LEFT_ARROW)) {
       this.activeButtonIndex = 0;
-    } else if (keyIsDown(ENTER)) {
-      this.activateButton(this.activeButtonIndex);
+    }
+
+    if (!keyIsDown(ENTER)) {
+      this.enterKeyHasBeenReleased = true;
     }
   }
 
@@ -49,13 +61,6 @@ class GameEnd implements IScreen {
     this.drawImage();
     this.drawButtons();
   }
-  public setup() {}
 
-  private activateButton(index: number) {
-    if (index === 0) {
-      // Change to GameBoard
-    } else if (index === 1) {
-      // Change to StartMenu
-    }
-  }
+  public setup() {}
 }
