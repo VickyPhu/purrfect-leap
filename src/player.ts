@@ -23,6 +23,8 @@ class Player extends GameEntity {
   }
 
   private bounceAnimation() {
+
+    if (keyIsDown(RIGHT_ARROW) === true){
     if (this.velocity < -10) {
       this.imageIndex = 0;
     } else if (this.velocity < -3) {
@@ -31,6 +33,16 @@ class Player extends GameEntity {
       this.imageIndex = 2;
     } else {
       this.imageIndex = 3;
+    }
+  } else if (keyIsDown(LEFT_ARROW) === true) {
+    if (this.velocity < -10) {
+      this.imageIndex = 4;
+    } else if (this.velocity < -3) {
+      this.imageIndex = 5;
+    } else if (this.velocity < 10) {
+      this.imageIndex = 6;
+    } else {
+      this.imageIndex = 7;
     }
   }
 
@@ -46,19 +58,23 @@ class Player extends GameEntity {
     this.bounceAnimation();
   }
 
-  // public leftAndRight() {
-  //   if (keyIsDown(LEFT_ARROW) === true) {
-  //     this.posX -= 6;
-  //   }
+  private leftAndRight() {
+    if (keyIsDown(LEFT_ARROW) === true) {
+      this.posX -= 6;
+    }
 
-  //   if (keyIsDown(RIGHT_ARROW) === true) {
-  //     this.posX += 6;
-  //   }
-  // }
+    if (keyIsDown(RIGHT_ARROW) === true) {
+      this.posX += 6;
+    }
+  }
+
+  public update() {
+    this.automaticBounce();
+    this.leftAndRight();
+  }
 
   public die() {}
   public renderPlayer() {
-    this.automaticBounce();
     super.draw();
   }
 }
