@@ -50,13 +50,14 @@ class Player extends GameEntity {
     this.velocity += this.gravity;
 
     this.posY += this.velocity;
-
+  
     if (this.posY + this.height > height) {
       this.posY = height - this.height;
       this.velocity = this.bounceVelocity;
     }
     this.bounceAnimation();
   }
+  
 
   private leftAndRight() {
     if (keyIsDown(LEFT_ARROW) === true) {
@@ -75,6 +76,6 @@ class Player extends GameEntity {
 
   public die() {}
   public renderPlayer() {
-    super.draw();
-  }
-}
+
+    
+}}
