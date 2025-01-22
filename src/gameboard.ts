@@ -57,6 +57,7 @@ class GameBoard implements IScreen {
   private spawnPlayer() {
     this.players.push(new Player(150, 200, 200, 300, this.playerImages, 0));
   }
+
   public setup() {
     this.spawnPlayer();
   }
