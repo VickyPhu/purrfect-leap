@@ -1,23 +1,23 @@
 class Game {
   private activeScreen: IScreen;
-
+ 
   constructor() {
-    this.activeScreen = new GameEnd();
+    this.activeScreen = new HowToPlay();
   }
-
+ 
   public setup() {
     this.activeScreen.setup();
   }
-
+ 
   public update() {
     this.activeScreen.update();
   }
-
+ 
   public draw() {
     background("#F0DEB5");
     this.activeScreen.draw();
   }
-
+ 
   public changeScreen(
     screenName:
       | "StartMenu"
