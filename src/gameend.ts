@@ -18,7 +18,11 @@ class GameEnd implements IScreen {
     } else if (keyIsDown(LEFT_ARROW)) {
       this.activeButtonIndex = 0;
     } else if (keyIsDown(ENTER)) {
-      this.activateButton(this.activeButtonIndex);
+      if (this.activeButtonIndex === 0) {
+        game.changeScreen("GameBoard");
+      } else if (this.activeButtonIndex === 1) {
+        game.changeScreen("StartMenu");
+      }
     }
   }
 
@@ -50,11 +54,5 @@ class GameEnd implements IScreen {
     this.drawButtons();
   }
 
-  private activateButton(index: number) {
-    if (index === 0) {
-      // Change to GameBoard
-    } else if (index === 1) {
-      // Change to StartMenu
-    }
-  }
+
 }
