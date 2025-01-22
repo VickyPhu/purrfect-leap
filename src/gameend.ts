@@ -4,7 +4,6 @@ class GameEnd implements IScreen {
   private deadCat: p5.Image;
   private enterKeyHasBeenReleased: boolean;
 
-
   constructor() {
     this.enterKeyHasBeenReleased = false;
     this.buttons = [
@@ -62,6 +61,4 @@ class GameEnd implements IScreen {
     this.drawImage();
     this.drawButtons();
   }
-
-
 }
