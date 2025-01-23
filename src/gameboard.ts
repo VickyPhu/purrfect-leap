@@ -106,16 +106,16 @@ class GameBoard implements IScreen {
   
   private drawTimerBorder() {
   // Example: Line across the top of the screen under the timer
-    stroke(255); 
-    strokeWeight(5); 
-    line(0, 60, 1400, 50); 
+    // stroke(255); 
+    // strokeWeight(5); 
+    // line(0, 60, 1400, 50); 
  
   // Example: Border around the timer area
-  // noFill(); 
-  // rectMode(CORNER);
-  // stroke(255); 
-  // strokeWeight(5); 
-  // rect(2, 2, 1396, 55); 
+  noFill(); 
+  rectMode(CORNER);
+  stroke(255); 
+  strokeWeight(5); 
+  rect(2, 1, 1396, 55); 
 }  
 
   public draw() {
@@ -123,12 +123,12 @@ class GameBoard implements IScreen {
     this.players.forEach((player) => player.renderPlayer());
     this.time.drawCountdown();
     this.time.drawTimer();
-    this.drawTimerBorder();
     if (this.startPlatform) {
       this.startPlatform.spawnPlatform();
     }
     translate(0, 5);
     push();
+    this.drawTimerBorder();
     this.translateY += 2;
     translate(0, this.translateY);
     this.platforms.forEach((platform) => platform.renderPlatform());
