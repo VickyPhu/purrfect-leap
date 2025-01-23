@@ -1,12 +1,12 @@
 class GameBoard implements IScreen {
-  private backgroundImage: p5.Image;
+  private backgroundImage!: p5.Image;
   private playerImages: p5.Image[];
   private players: Player[];
   private platforms: Platform[];
   private platformSpawnTimer: number;
   private platformSpawnInterval: number;
   private translateY: number;
-  private backgroundMusic: string;
+  private backgroundMusic?: string;
   private time: Time;
   private startPlatform: Platform | null;
   private startPlatformSpawnTime: number;
@@ -19,11 +19,12 @@ class GameBoard implements IScreen {
     this.platformSpawnTimer = millis();
     this.platformSpawnInterval = 2000;
     this.translateY = 0;
-    this.loadImages();
     this.time = new Time();
     this.startPlatform = null;
     this.startPlatformSpawnTime = 0;
     this.startPlatformSpawned = false;
+    this.loadImages();
+    this.spawnPlayer();
   }
 
   private loadImages() {
@@ -42,10 +43,38 @@ class GameBoard implements IScreen {
     this.playerImages[9] = loadImage(
       "/assets/images/platforms/starting-platform.png",
     );
-    this.spawnPlayer();
   }
 
-  private detectHit() {}
+  private detectHit() {
+    for (const player of this.players) {
+      for (const platform of this.platforms) {
+        const playerLeft = player.posX;
+        const playerRight = player.posX + player.width;
+        const platformLeft = platform.posX;
+        const platformRight = platform.posX + platform.width;
+
+        const playerTop = player.posY;
+        const playerBottom = player.posY + player.height;
+        const platformTop = platform.posY + this.translateY;
+        const platformBottom =
+          platform.posY + platform.height + this.translateY;
+
+        if (
+          playerLeft < platformRight &&
+          playerRight > platformLeft &&
+          playerTop < platformBottom &&
+          playerBottom > platformTop
+        ) {
+          // if (gameObject instanceof Platform) {
+          // Avgör om man föll ner på plattformen först
+          // 1. flytta spelaren till ovanpå platformen
+          // 2. trigga stuts
+          // 3. spela ljud
+          // }
+        }
+      }
+    }
+  }
 
   private drawBackground() {
     image(this.backgroundImage, 0, 0, 1400, 700);
@@ -86,7 +115,6 @@ class GameBoard implements IScreen {
       this.spawnPlatform();
     }
     if (!this.startPlatformSpawned) {
-      this.spawnStartPlatform();
       this.startPlatformSpawned = true;
     }
 
@@ -95,21 +123,24 @@ class GameBoard implements IScreen {
     }
 
     this.players.forEach((player) => player.update());
+
+    this.translateY += 2;
+
+    this.detectHit();
   }
 
   public draw() {
+    push();
     this.drawBackground();
-    this.players.forEach((player) => player.renderPlayer());
+    this.players.forEach((player) => player.draw());
     this.time.drawCountdown();
     this.time.drawTimer();
     if (this.startPlatform) {
       this.startPlatform.spawnPlatform();
     }
-    translate(0, 5);
-    push();
-    this.translateY += 2;
+
     translate(0, this.translateY);
-    this.platforms.forEach((platform) => platform.renderPlatform());
+    this.platforms.forEach((platform) => platform.draw());
     pop();
   }
 }

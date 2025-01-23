@@ -83,7 +83,4 @@ class Player extends GameEntity {
   }
 
   public die() {}
-  public renderPlayer() {
-    super.draw();
-  }
 }
