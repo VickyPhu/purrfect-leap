@@ -70,6 +70,7 @@ class GameBoard implements IScreen {
           // 1. flytta spelaren till ovanpå platformen
           // 2. trigga stuts
           // 3. spela ljud
+          //4.
           // }
         }
       }
@@ -114,6 +115,7 @@ class GameBoard implements IScreen {
       this.time.updateTimer();
       this.spawnPlatform();
     }
+
     if (!this.startPlatformSpawned) {
       this.spawnStartPlatform();
       this.startPlatformSpawned = true;
