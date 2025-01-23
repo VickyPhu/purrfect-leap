@@ -7,11 +7,7 @@ class GameBoard implements IScreen {
   private platformSpawnInterval: number;
   private translateY: number;
   private backgroundMusic: string;
-  private startTime: number;
-  private elapsedTime: number;
-  private countdownTime: number;
-  private countdownEnd: boolean;
-  private countdownValue: number;
+  private time: Time;
 
   constructor() {
     this.playerImages = [];
@@ -21,10 +17,7 @@ class GameBoard implements IScreen {
     this.platformSpawnInterval = 2000;
     this.translateY = 0;
     this.loadImages();
-    this.elapsedTime = 0;
-    this.countdownTime = millis();
-    this.countdownValue = 3;
-    this.countdownEnd = false;
+    this.time = new Time();
   }
 
   private loadImages() {
@@ -41,25 +34,6 @@ class GameBoard implements IScreen {
     this.playerImages[7] = loadImage("/assets/images/cats/Player14M.png");
     this.playerImages[8] = loadImage("/assets/images/platforms/Platform.png");
     this.spawnPlayer();
-  }
-
-  private updateCountdown() {
-    // count passed time since countdown and update the countdown value
-    const timePassed = Math.floor((millis() - this.countdownTime) / 1000);
-    this.countdownValue = 3 - timePassed;
-
-    // when countdown is finished start timer for the game
-    if (this.countdownValue <= 0) {
-      this.countdownEnd = true;
-      this.startTime = millis();
-    }
-  }
-
-  private updateTime() {
-    // update the games time
-    if (this.countdownEnd) {
-      this.elapsedTime = (millis() - this.startTime) / 1000;
-    }
   }
 
   private detectHit() {}
@@ -90,10 +64,11 @@ class GameBoard implements IScreen {
   }
 
   public update() {
-    if (!this.countdownEnd) {
-      this.updateCountdown();
+    // Updates the countdown and when countdown is over runs the else condition (starts timer)
+    if (!this.time.countdownEnd) {
+      this.time.updateCountdown();
     } else {
-      this.updateTime();
+      this.time.updateTimer();
       this.spawnPlatform();
     }
 
@@ -103,27 +78,13 @@ class GameBoard implements IScreen {
   public draw() {
     this.drawBackground();
     this.players.forEach((player) => player.renderPlayer());
+    this.time.drawCountdown();
+    this.time.drawTimer();
     translate(0, 5);
     push();
     this.translateY += 2;
     translate(0, this.translateY);
     this.platforms.forEach((platform) => platform.renderPlatform());
     pop();
-
-    push();
-    fill("#000");
-    textAlign(CENTER, CENTER);
-    textFont("Fredoka", 300);
-
-    if (!this.countdownEnd) {
-      text(this.countdownValue, width * 0.5, height * 0.5);
-      pop();
-    } else {
-      push();
-      textAlign(LEFT, CENTER);
-      textSize(50);
-      text(`Time: ${nf(this.elapsedTime, 1, 1)}sec`, 0, 30);
-      pop();
-    }
   }
 }
