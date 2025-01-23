@@ -8,6 +8,9 @@ class GameBoard implements IScreen {
   private translateY: number;
   private backgroundMusic: string;
   private time: Time;
+  private startPlatform: Platform | null;
+  private startPlatformSpawnTime: number;
+  private startPlatformSpawned: boolean;
 
   constructor() {
     this.playerImages = [];
@@ -18,6 +21,9 @@ class GameBoard implements IScreen {
     this.translateY = 0;
     this.loadImages();
     this.time = new Time();
+    this.startPlatform = null;
+    this.startPlatformSpawnTime = 0;
+    this.startPlatformSpawned = false;
   }
 
   private loadImages() {
@@ -33,6 +39,9 @@ class GameBoard implements IScreen {
     this.playerImages[6] = loadImage("/assets/images/cats/Player13M.png");
     this.playerImages[7] = loadImage("/assets/images/cats/Player14M.png");
     this.playerImages[8] = loadImage("/assets/images/platforms/Platform.png");
+    this.playerImages[9] = loadImage(
+      "/assets/images/platforms/starting-platform.png",
+    );
     this.spawnPlayer();
   }
 
@@ -59,6 +68,11 @@ class GameBoard implements IScreen {
     }
   }
 
+  private spawnStartPlatform() {
+    this.startPlatform = new Platform(100, 900, 250, 600, this.playerImages, 9);
+    this.startPlatformSpawnTime = millis();
+  }
+
   private spawnPlayer() {
     this.players.push(new Player(150, 200, 200, 300, this.playerImages, 0));
   }
@@ -70,6 +84,14 @@ class GameBoard implements IScreen {
     } else {
       this.time.updateTimer();
       this.spawnPlatform();
+    }
+    if (!this.startPlatformSpawned) {
+      this.spawnStartPlatform();
+      this.startPlatformSpawned = true;
+    }
+
+    if (this.startPlatform && millis() - this.startPlatformSpawnTime > 5000) {
+      this.startPlatform = null;
     }
 
     this.players.forEach((player) => player.update());
@@ -87,6 +109,9 @@ class GameBoard implements IScreen {
     this.players.forEach((player) => player.renderPlayer());
     this.time.drawCountdown();
     this.time.drawTimer();
+    if (this.startPlatform) {
+      this.startPlatform.spawnPlatform();
+    }
     translate(0, 5);
     push();
     this.translateY += 2;
