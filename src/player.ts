@@ -5,6 +5,7 @@ class Player extends GameEntity {
   private bounceVelocity: number;
   private soundFX: string;
   private keyReleased: boolean;
+  private lastDirection: string;
 
   constructor(
     height: number,
@@ -22,12 +23,14 @@ class Player extends GameEntity {
     this.soundFX = "";
     this.bounceVelocity = -15;
     this.keyReleased = false;
+    this.lastDirection = "right";
   }
 
   private bounceAnimation() {
     this.keyReleased = false;
     if (keyIsDown(RIGHT_ARROW) === true) {
       this.keyReleased = true;
+      this.lastDirection = "right";
       if (this.velocity < -10) {
         this.imageIndex = 0;
       } else if (this.velocity < -3) {
@@ -39,6 +42,7 @@ class Player extends GameEntity {
       }
     } else if (keyIsDown(LEFT_ARROW) === true) {
       this.keyReleased = true;
+      this.lastDirection = "left";
       if (this.velocity < -10) {
         this.imageIndex = 4;
       } else if (this.velocity < -3) {
@@ -49,8 +53,13 @@ class Player extends GameEntity {
         this.imageIndex = 7;
       }
     }
+    // If player is not moving continue animation based on last direction (left or right)
     if (!this.keyReleased) {
-      this.imageIndex = Math.floor((frameCount / 10) % 4);
+      if (this.lastDirection === "right") {
+        this.imageIndex = Math.floor((frameCount / 10) % 4);
+      } else if (this.lastDirection === "left") {
+        this.imageIndex = 4 + Math.floor((frameCount / 10) % 4); // +4 to use imageIndex 4-7
+      }
     }
   }
 
