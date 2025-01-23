@@ -115,6 +115,7 @@ class GameBoard implements IScreen {
       this.spawnPlatform();
     }
     if (!this.startPlatformSpawned) {
+      this.spawnStartPlatform();
       this.startPlatformSpawned = true;
     }
 
@@ -133,23 +134,24 @@ class GameBoard implements IScreen {
 
   private removeOffScreenPlatforms() {
     // Filter platforms, keeping only those within the visible screen in game
-    this.platforms = this.platforms.filter((platform) => platform.posY < 700 + this.translateY);
-
+    this.platforms = this.platforms.filter(
+      (platform) => platform.posY < 700 + this.translateY,
+    );
   }
-  
+
   private drawTimerBorder() {
-  // Example: Line across the top of the screen under the timer
-    // stroke(255); 
-    // strokeWeight(5); 
-    // line(0, 60, 1400, 50); 
- 
-  // Example: Border around the timer area
-  noFill(); 
-  rectMode(CORNER);
-  stroke(255); 
-  strokeWeight(5); 
-  rect(2, 1, 1396, 55); 
-}  
+    // Example: Line across the top of the screen under the timer
+    // stroke(255);
+    // strokeWeight(5);
+    // line(0, 60, 1400, 50);
+
+    // Example: Border around the timer area
+    noFill();
+    rectMode(CORNER);
+    stroke(255);
+    strokeWeight(5);
+    rect(2, 1, 1396, 55);
+  }
 
   public draw() {
     push();
@@ -167,5 +169,4 @@ class GameBoard implements IScreen {
     this.platforms.forEach((platform) => platform.draw());
     pop();
   }
-
 }
