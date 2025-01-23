@@ -19,8 +19,4 @@ class Platform extends GameEntity {
       this.height,
     );
   }
-
-  public renderPlatform() {
-    super.draw();
-  }
 }
