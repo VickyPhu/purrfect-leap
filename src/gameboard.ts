@@ -29,7 +29,7 @@ class GameBoard implements IScreen {
 
   private loadImages() {
     this.backgroundImage = loadImage(
-      "/assets/images/background/purrfectLeap Background.jpg",
+      "/assets/images/background/purrfectLeapBackground.jpg",
     );
     this.playerImages[0] = loadImage("/assets/images/cats/Player11.png");
     this.playerImages[1] = loadImage("/assets/images/cats/Player12.png");
@@ -127,7 +127,29 @@ class GameBoard implements IScreen {
     this.translateY += 2;
 
     this.detectHit();
+
+    this.removeOffScreenPlatforms();
   }
+
+  private removeOffScreenPlatforms() {
+    // Filter platforms, keeping only those within the visible screen in game
+    this.platforms = this.platforms.filter((platform) => platform.posY < 700 + this.translateY);
+
+  }
+  
+  private drawTimerBorder() {
+  // Example: Line across the top of the screen under the timer
+    // stroke(255); 
+    // strokeWeight(5); 
+    // line(0, 60, 1400, 50); 
+ 
+  // Example: Border around the timer area
+  noFill(); 
+  rectMode(CORNER);
+  stroke(255); 
+  strokeWeight(5); 
+  rect(2, 1, 1396, 55); 
+}  
 
   public draw() {
     push();
@@ -139,8 +161,11 @@ class GameBoard implements IScreen {
       this.startPlatform.spawnPlatform();
     }
 
+    this.drawTimerBorder();
+
     translate(0, this.translateY);
     this.platforms.forEach((platform) => platform.draw());
     pop();
   }
+
 }
