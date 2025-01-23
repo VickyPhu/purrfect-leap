@@ -4,6 +4,7 @@ class Player extends GameEntity {
   private gravity: number;
   private bounceVelocity: number;
   private soundFX: string;
+  private keyReleased: boolean;
 
   constructor(
     height: number,
@@ -20,10 +21,13 @@ class Player extends GameEntity {
     this.gravity = 0.5;
     this.soundFX = "";
     this.bounceVelocity = -15;
+    this.keyReleased = false;
   }
 
   private bounceAnimation() {
+    this.keyReleased = false;
     if (keyIsDown(RIGHT_ARROW) === true) {
+      this.keyReleased = true;
       if (this.velocity < -10) {
         this.imageIndex = 0;
       } else if (this.velocity < -3) {
@@ -34,6 +38,7 @@ class Player extends GameEntity {
         this.imageIndex = 3;
       }
     } else if (keyIsDown(LEFT_ARROW) === true) {
+      this.keyReleased = true;
       if (this.velocity < -10) {
         this.imageIndex = 4;
       } else if (this.velocity < -3) {
@@ -43,6 +48,9 @@ class Player extends GameEntity {
       } else {
         this.imageIndex = 7;
       }
+    }
+    if (!this.keyReleased) {
+      this.imageIndex = Math.floor((frameCount / 10) % 4);
     }
   }
 
