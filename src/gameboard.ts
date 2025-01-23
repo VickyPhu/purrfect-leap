@@ -78,7 +78,7 @@ class GameBoard implements IScreen {
   }
 
   private removeOffScreenPlatforms() {
-    // Filter platforms, keeping only those within the visible screen
+    // Filter platforms, keeping only those within the visible screen in game
     this.platforms = this.platforms.filter((platform) => platform.posY < 700 + this.translateY);
   }
 
