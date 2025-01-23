@@ -61,6 +61,4 @@ class GameEnd implements IScreen {
     this.drawImage();
     this.drawButtons();
   }
-
-  public setup() {}
 }
