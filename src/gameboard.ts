@@ -3,13 +3,19 @@ class GameBoard implements IScreen {
   private playerImages: p5.Image[];
   private players: Player[];
   private platforms: Platform[];
+  private platformSpawnTimer: number;
+  private platformSpawnInterval: number;
+  private translateY: number;
   private backgroundMusic: string;
   private time: Time;
 
-  constructor(playerImages: p5.Image[]) {
-    this.playerImages = playerImages;
+  constructor() {
+    this.playerImages = [];
     this.players = [];
     this.platforms = [];
+    this.platformSpawnTimer = millis();
+    this.platformSpawnInterval = 2000;
+    this.translateY = 0;
     this.loadImages();
     this.time = new Time();
   }
@@ -18,6 +24,16 @@ class GameBoard implements IScreen {
     this.backgroundImage = loadImage(
       "/assets/images/background/purrfectLeap Background.jpg",
     );
+    this.playerImages[0] = loadImage("/assets/images/cats/Player11.png");
+    this.playerImages[1] = loadImage("/assets/images/cats/Player12.png");
+    this.playerImages[2] = loadImage("/assets/images/cats/Player13.png");
+    this.playerImages[3] = loadImage("/assets/images/cats/Player14.png");
+    this.playerImages[4] = loadImage("/assets/images/cats/Player11M.png");
+    this.playerImages[5] = loadImage("/assets/images/cats/Player12M.png");
+    this.playerImages[6] = loadImage("/assets/images/cats/Player13M.png");
+    this.playerImages[7] = loadImage("/assets/images/cats/Player14M.png");
+    this.playerImages[8] = loadImage("/assets/images/platforms/Platform.png");
+    this.spawnPlayer();
   }
 
   private detectHit() {}
@@ -26,14 +42,25 @@ class GameBoard implements IScreen {
     image(this.backgroundImage, 0, 0, 1400, 700);
   }
 
-  private spawnPlatform() {}
+  private spawnPlatform() {
+    if (millis() - this.platformSpawnTimer > this.platformSpawnInterval) {
+      const newPlatform = new Platform(
+        50,
+        200,
+        random(50, 1350),
+        50 - this.translateY,
+        this.playerImages,
+        8,
+      );
+      this.platforms.push(newPlatform);
+
+      // Reset timer
+      this.platformSpawnTimer = millis();
+    }
+  }
 
   private spawnPlayer() {
     this.players.push(new Player(150, 200, 200, 300, this.playerImages, 0));
-  }
-
-  public setup() {
-    this.spawnPlayer();
   }
 
   public update() {
@@ -42,6 +69,7 @@ class GameBoard implements IScreen {
       this.time.updateCountdown();
     } else {
       this.time.updateTimer();
+      this.spawnPlatform();
     }
 
     this.players.forEach((player) => player.update());
@@ -52,5 +80,11 @@ class GameBoard implements IScreen {
     this.players.forEach((player) => player.renderPlayer());
     this.time.drawCountdown();
     this.time.drawTimer();
+    translate(0, 5);
+    push();
+    this.translateY += 2;
+    translate(0, this.translateY);
+    this.platforms.forEach((platform) => platform.renderPlatform());
+    pop();
   }
 }

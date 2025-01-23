@@ -64,7 +64,7 @@ class PlayerSelect implements IScreen {
     this.activeButtonIndex = 0;
     this.lastKeyPressed = null;
     this.prevIsKeyPressed = keyIsPressed;
-    this.lastPlayerButtonIndex = null; 
+    this.lastPlayerButtonIndex = null;
     // this.isStartGameHighlighted = false;
 
     this.playerImage1 = loadImage("/assets/images/cats/Player1Head.png");
@@ -75,20 +75,19 @@ class PlayerSelect implements IScreen {
 
   private drawButtons() {
     this.playerSelectButton1.draw(
-      this.activeButtonIndex === 0 || this.lastPlayerButtonIndex === 0
+      this.activeButtonIndex === 0 || this.lastPlayerButtonIndex === 0,
     );
     this.playerSelectButton2.draw(
-      this.activeButtonIndex === 1 || this.lastPlayerButtonIndex === 1
+      this.activeButtonIndex === 1 || this.lastPlayerButtonIndex === 1,
     );
     this.playerSelectButton3.draw(
-      this.activeButtonIndex === 2 || this.lastPlayerButtonIndex === 2
+      this.activeButtonIndex === 2 || this.lastPlayerButtonIndex === 2,
     );
     this.playerSelectButton4.draw(
-      this.activeButtonIndex === 3 || this.lastPlayerButtonIndex === 3
+      this.activeButtonIndex === 3 || this.lastPlayerButtonIndex === 3,
     );
     this.gameStartButton.draw(this.activeButtonIndex === 4);
   }
-  
 
   private drawPlayerImages() {
     image(this.playerImage1, 160, 160, 120, 100);
@@ -120,14 +119,14 @@ class PlayerSelect implements IScreen {
 
   public update() {
     const pressedThisFrame = keyIsPressed && !this.prevIsKeyPressed;
-  
+
     if (pressedThisFrame) {
       if (keyCode === LEFT_ARROW && this.lastKeyPressed !== "LEFT") {
         if (this.activeButtonIndex !== 4) {
           this.activeButtonIndex = (this.activeButtonIndex - 1 + 4) % 4;
         }
         this.lastKeyPressed = "LEFT";
-      } else if (keyCode === RIGHT_ARROW && this.lastKeyPressed !== "RIGHT") {   
+      } else if (keyCode === RIGHT_ARROW && this.lastKeyPressed !== "RIGHT") {
         if (this.activeButtonIndex !== 4) {
           this.activeButtonIndex = (this.activeButtonIndex + 1) % 4;
         }
@@ -135,22 +134,19 @@ class PlayerSelect implements IScreen {
       } else if (keyCode === ENTER) {
         if (this.activeButtonIndex !== 4) {
           this.lastPlayerButtonIndex = this.activeButtonIndex;
-          this.activeButtonIndex = 4; 
+          this.activeButtonIndex = 4;
         } else {
-          
           this.activateButton(this.activeButtonIndex);
         }
       }
     }
-  
+
     if (!keyIsPressed && this.prevIsKeyPressed) {
       this.lastKeyPressed = null;
     }
-  
+
     this.prevIsKeyPressed = keyIsPressed;
   }
-  
-  public setup() {}
 
   public draw() {
     fill("#F0DEB5");

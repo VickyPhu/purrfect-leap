@@ -74,6 +74,4 @@ class HowToPlay implements IScreen {
     this.drawButtons();
     this.drawInstructionImage();
   }
-
-  public setup() {}
 }
