@@ -2,11 +2,7 @@ class Game {
   private activeScreen: IScreen;
 
   constructor() {
-    this.activeScreen = new HowToPlay();
-  }
-
-  public setup() {
-    this.activeScreen.setup();
+    this.activeScreen = new StartMenu();
   }
 
   public update() {
@@ -37,7 +33,7 @@ class Game {
         this.activeScreen = new HowToPlay();
         break;
       case "GameBoard":
-        this.activeScreen = new GameBoard(playerImages);
+        this.activeScreen = new GameBoard();
         break;
       case "GameEnd":
         this.activeScreen = new GameEnd();
