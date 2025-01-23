@@ -22,7 +22,7 @@ class GameBoard implements IScreen {
 
   private loadImages() {
     this.backgroundImage = loadImage(
-      "/assets/images/background/purrfectLeap Background.jpg",
+      "/assets/images/background/purrfectLeapBackground.jpg",
     );
     this.playerImages[0] = loadImage("/assets/images/cats/Player11.png");
     this.playerImages[1] = loadImage("/assets/images/cats/Player12.png");
@@ -73,6 +73,13 @@ class GameBoard implements IScreen {
     }
 
     this.players.forEach((player) => player.update());
+
+    this.removeOffScreenPlatforms();
+  }
+
+  private removeOffScreenPlatforms() {
+    // Filter platforms, keeping only those within the visible screen in game
+    this.platforms = this.platforms.filter((platform) => platform.posY < 700 + this.translateY);
   }
 
   public draw() {
