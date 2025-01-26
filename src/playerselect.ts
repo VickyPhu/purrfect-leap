@@ -113,7 +113,7 @@ class PlayerSelect implements IScreen {
       console.log("4 PLAYER selected");
     } else if (index === 4) {
       console.log("START GAME selected");
-      game.changeScreen("GameBoard");
+      game.changeScreen(new GameBoard());
     }
   }
 
