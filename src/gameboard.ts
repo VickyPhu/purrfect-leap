@@ -1,13 +1,16 @@
 class GameBoard implements IScreen {
-  private backgroundImage: p5.Image;
+  private backgroundImage!: p5.Image;
   private playerImages: p5.Image[];
   private players: Player[];
   private platforms: Platform[];
   private platformSpawnTimer: number;
   private platformSpawnInterval: number;
   private translateY: number;
-  private backgroundMusic: string;
+  private backgroundMusic?: string;
   private time: Time;
+  private startPlatform: Platform | null;
+  private startPlatformSpawnTime: number;
+  private startPlatformSpawned: boolean;
 
   constructor() {
     this.playerImages = [];
@@ -16,13 +19,17 @@ class GameBoard implements IScreen {
     this.platformSpawnTimer = millis();
     this.platformSpawnInterval = 2000;
     this.translateY = 0;
-    this.loadImages();
     this.time = new Time();
+    this.startPlatform = null;
+    this.startPlatformSpawnTime = 0;
+    this.startPlatformSpawned = false;
+    this.loadImages();
+    this.spawnPlayer();
   }
 
   private loadImages() {
     this.backgroundImage = loadImage(
-      "/assets/images/background/purrfectLeap Background.jpg",
+      "/assets/images/background/purrfectLeapBackground.jpg",
     );
     this.playerImages[0] = loadImage("/assets/images/cats/Player11.png");
     this.playerImages[1] = loadImage("/assets/images/cats/Player12.png");
@@ -33,10 +40,42 @@ class GameBoard implements IScreen {
     this.playerImages[6] = loadImage("/assets/images/cats/Player13M.png");
     this.playerImages[7] = loadImage("/assets/images/cats/Player14M.png");
     this.playerImages[8] = loadImage("/assets/images/platforms/Platform.png");
-    this.spawnPlayer();
+    this.playerImages[9] = loadImage(
+      "/assets/images/platforms/starting-platform.png",
+    );
   }
 
-  private detectHit() {}
+  private detectHit() {
+    for (const player of this.players) {
+      for (const platform of this.platforms) {
+        const playerLeft = player.posX;
+        const playerRight = player.posX + player.width;
+        const platformLeft = platform.posX;
+        const platformRight = platform.posX + platform.width;
+
+        const playerTop = player.posY;
+        const playerBottom = player.posY + player.height;
+        const platformTop = platform.posY + this.translateY;
+        const platformBottom =
+          platform.posY + platform.height + this.translateY;
+
+        if (
+          playerLeft < platformRight &&
+          playerRight > platformLeft &&
+          playerTop < platformBottom &&
+          playerBottom > platformTop
+        ) {
+          // if (gameObject instanceof Platform) {
+          // Avgör om man föll ner på plattformen först
+          // 1. flytta spelaren till ovanpå platformen
+          // 2. trigga stuts
+          // 3. spela ljud
+          //4.
+          // }
+        }
+      }
+    }
+  }
 
   private drawBackground() {
     image(this.backgroundImage, 0, 0, 1400, 700);
@@ -59,6 +98,11 @@ class GameBoard implements IScreen {
     }
   }
 
+  private spawnStartPlatform() {
+    this.startPlatform = new Platform(100, 900, 250, 600, this.playerImages, 9);
+    this.startPlatformSpawnTime = millis();
+  }
+
   private spawnPlayer() {
     this.players.push(new Player(150, 200, 200, 300, this.playerImages, 0));
   }
@@ -72,19 +116,59 @@ class GameBoard implements IScreen {
       this.spawnPlatform();
     }
 
+    if (!this.startPlatformSpawned) {
+      this.spawnStartPlatform();
+      this.startPlatformSpawned = true;
+    }
+
+    if (this.startPlatform && millis() - this.startPlatformSpawnTime > 5000) {
+      this.startPlatform = null;
+    }
+
     this.players.forEach((player) => player.update());
+
+    this.translateY += 2;
+
+    this.detectHit();
+
+    this.removeOffScreenPlatforms();
+  }
+
+  private removeOffScreenPlatforms() {
+    // Filter platforms, keeping only those within the visible screen in game
+    this.platforms = this.platforms.filter(
+      (platform) => platform.posY < 700 + this.translateY,
+    );
+  }
+
+  private drawTimerBorder() {
+    // Example: Line across the top of the screen under the timer
+    // stroke(255);
+    // strokeWeight(5);
+    // line(0, 60, 1400, 50);
+
+    // Example: Border around the timer area
+    noFill();
+    rectMode(CORNER);
+    stroke(255);
+    strokeWeight(5);
+    rect(2, 1, 1396, 55);
   }
 
   public draw() {
+    push();
     this.drawBackground();
-    this.players.forEach((player) => player.renderPlayer());
+    this.players.forEach((player) => player.draw());
     this.time.drawCountdown();
     this.time.drawTimer();
-    translate(0, 5);
-    push();
-    this.translateY += 2;
+    if (this.startPlatform) {
+      this.startPlatform.spawnPlatform();
+    }
+
+    this.drawTimerBorder();
+
     translate(0, this.translateY);
-    this.platforms.forEach((platform) => platform.renderPlatform());
+    this.platforms.forEach((platform) => platform.draw());
     pop();
   }
 }
