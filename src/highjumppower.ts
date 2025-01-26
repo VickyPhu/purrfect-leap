@@ -14,5 +14,9 @@ class HighJumpPower extends GameEntity {
     this.name = "highJump";
   }
 
+  public update() {}
+
+  public draw() {}
+
   private executePower() {}
 }

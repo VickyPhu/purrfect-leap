@@ -14,5 +14,9 @@ class ThrowYarnPower extends GameEntity {
     this.name = "ThrowYarn";
   }
 
+  public update() {}
+
+  public draw() {}
+
   private executePower() {}
 }

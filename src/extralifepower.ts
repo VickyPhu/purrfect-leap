@@ -13,6 +13,9 @@ class ExtraLifePower extends GameEntity {
     super(height, width, posX, posY, img, imageIndex);
     this.name = "extraLife";
   }
+  public update() {}
+
+  public draw() {}
 
   private executePower() {}
 }
