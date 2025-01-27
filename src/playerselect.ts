@@ -155,7 +155,7 @@ class PlayerSelect implements IScreen {
 
   public update() {
     const pressedThisFrame = keyIsPressed && !this.prevIsKeyPressed;
-
+  
     if (pressedThisFrame) {
       if (keyCode === LEFT_ARROW && this.lastKeyPressed !== "LEFT") {
         if (this.activeButtonIndex !== 4) {
@@ -168,21 +168,24 @@ class PlayerSelect implements IScreen {
         }
         this.lastKeyPressed = "RIGHT";
       } else if (keyCode === ENTER) {
+        // Always activate the button, regardless of the index
+        this.activateButton(this.activeButtonIndex);
+  
+        // If the active button is not the START GAME button, move to it after activation
         if (this.activeButtonIndex !== 4) {
           this.lastPlayerButtonIndex = this.activeButtonIndex;
           this.activeButtonIndex = 4;
-        } else {
-          this.activateButton(this.activeButtonIndex);
         }
       }
     }
-
+  
     if (!keyIsPressed && this.prevIsKeyPressed) {
       this.lastKeyPressed = null;
     }
-
+  
     this.prevIsKeyPressed = keyIsPressed;
   }
+  
 
   public draw() {
     fill("#F0DEB5");
