@@ -170,7 +170,7 @@ class PlayerSelect implements IScreen {
             new Player(
               150,
               200,
-              200,
+              (width - this.selectedPlayers * 250) / 2 + i * 250,
               300,
               playerImages[i],
               playerImages[i],
