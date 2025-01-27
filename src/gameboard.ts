@@ -12,9 +12,9 @@ class GameBoard implements IScreen {
   private startPlatformSpawnTime: number;
   private startPlatformSpawned: boolean;
 
-  constructor() {
+  constructor(players: Player[]) {
     this.playerImages = [];
-    this.players = [];
+    this.players = players;
     this.platforms = [];
     this.platformSpawnTimer = millis();
     this.platformSpawnInterval = 2000;
@@ -24,23 +24,14 @@ class GameBoard implements IScreen {
     this.startPlatformSpawnTime = 0;
     this.startPlatformSpawned = false;
     this.loadImages();
-    this.spawnPlayer();
   }
 
   private loadImages() {
     this.backgroundImage = loadImage(
       "/assets/images/background/purrfectLeapBackground.jpg",
     );
-    this.playerImages[0] = loadImage("/assets/images/cats/Player11.png");
-    this.playerImages[1] = loadImage("/assets/images/cats/Player12.png");
-    this.playerImages[2] = loadImage("/assets/images/cats/Player13.png");
-    this.playerImages[3] = loadImage("/assets/images/cats/Player14.png");
-    this.playerImages[4] = loadImage("/assets/images/cats/Player11M.png");
-    this.playerImages[5] = loadImage("/assets/images/cats/Player12M.png");
-    this.playerImages[6] = loadImage("/assets/images/cats/Player13M.png");
-    this.playerImages[7] = loadImage("/assets/images/cats/Player14M.png");
-    this.playerImages[8] = loadImage("/assets/images/platforms/Platform.png");
-    this.playerImages[9] = loadImage(
+    this.playerImages[100] = loadImage("/assets/images/platforms/Platform.png");
+    this.playerImages[101] = loadImage(
       "/assets/images/platforms/starting-platform.png",
     );
   }
@@ -89,7 +80,7 @@ class GameBoard implements IScreen {
         random(50, 1350),
         50 - this.translateY,
         this.playerImages,
-        8,
+        100,
       );
       this.platforms.push(newPlatform);
 
@@ -99,12 +90,8 @@ class GameBoard implements IScreen {
   }
 
   private spawnStartPlatform() {
-    this.startPlatform = new Platform(100, 900, 250, 600, this.playerImages, 9);
+    this.startPlatform = new Platform(100, 900, 250, 600, this.playerImages, 101);
     this.startPlatformSpawnTime = millis();
-  }
-
-  private spawnPlayer() {
-    this.players.push(new Player(150, 200, 200, 300, this.playerImages, 0));
   }
 
   public update() {
