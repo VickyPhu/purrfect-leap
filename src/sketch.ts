@@ -31,8 +31,8 @@ function preload() {
 function setup() {
  createCanvas(1400, 700);
  frameRate(60);
- sound.chooseSound.setVolume(0.8);
- sound.enterSound.setVolume(0.8);
+ sound.chooseSound.setVolume(0.5);
+ sound.enterSound.setVolume(0.5);
  game = new Game();
 }
 

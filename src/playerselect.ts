@@ -15,10 +15,6 @@ class PlayerSelect implements IScreen {
   // private isStartGameHighlighted: boolean;
 
   constructor() {
-    console.log("chooseSound:", sound.chooseSound);
-    console.log("enterSound:", sound.enterSound);
- 
- 
     this.playerSelectButton1 = new Button(
       "1 PLAYER",
       "#F96B6B",
