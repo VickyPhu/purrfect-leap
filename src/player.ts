@@ -109,17 +109,5 @@ class Player extends GameEntity {
     this.wallJumper();
   }
 
-  public draw() {
-    if (this.playerImages && this.playerImages.length > 0) {
-      image(
-        this.playerImages[this.imageIndex],
-        this.posX,
-        this.posY,
-        this.width,
-        this.height,
-      );
-      // rita ut entitet med p5 metoder
-    }
-  }
   public die() {}
 }
