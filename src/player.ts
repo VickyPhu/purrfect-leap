@@ -121,7 +121,13 @@ class Player extends GameEntity {
     this.bounceAnimation();
     this.leftAndRight();
     this.wallJumper();
+
+    if (this.posY > height) {
+      this.die();
+    }
   }
 
-  public die() {}
+  public die() {
+    game.changeScreen(new GameEnd());
+  }
 }
