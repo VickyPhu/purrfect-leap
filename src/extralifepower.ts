@@ -1,5 +1,5 @@
 class ExtraLifePower extends GameEntity {
-  private name: string;
+  // private name: string;
   //   private soundFX: string;
 
   constructor(
@@ -11,11 +11,21 @@ class ExtraLifePower extends GameEntity {
     imageIndex: number,
   ) {
     super(height, width, posX, posY, img, imageIndex);
-    this.name = "extraLife";
+    // this.name = "extraLife";
   }
   public update() {}
 
-  public draw() {}
+  public draw() {
+    if (this.img && this.img[this.imageIndex]) {
+      image(
+        this.img[this.imageIndex],
+        this.posX,
+        this.posY,
+        this.width,
+        this.height,
+      );
+    }
+  }
 
   // private executePower() {}
 }

@@ -16,7 +16,17 @@ class ThrowYarnPower extends GameEntity {
 
   public update() {}
 
-  public draw() {}
+  public draw() {
+    if (this.img && this.img[this.imageIndex]) {
+      image(
+        this.img[this.imageIndex],
+        this.posX,
+        this.posY,
+        this.width,
+        this.height,
+      );
+    }
+  }
 
   // private executePower() {}
 }

@@ -12,7 +12,7 @@ class GameBoard implements IScreen {
   private startPlatformSpawnTime: number;
   private startPlatformSpawned: boolean;
   private powerUpImages: p5.Image[];
-  private powerUps: GameEntity[];
+  private powerUps: (HighJumpPower | ExtraLifePower | ThrowYarnPower)[] = [];
 
   constructor() {
     this.playerImages = [];
@@ -29,6 +29,7 @@ class GameBoard implements IScreen {
     this.powerUps = [];
     this.loadImages();
     this.spawnPlayer();
+    this.spawnPowerUps();
   }
 
   private loadImages() {
@@ -131,6 +132,35 @@ class GameBoard implements IScreen {
     this.players.push(new Player(75, 100, 200, 300, this.playerImages, 0));
   }
 
+  private spawnPowerUps() {
+    this.powerUps = [
+      new ExtraLifePower(
+        50,
+        50,
+        random(100, 1300),
+        random(100, 600),
+        this.powerUpImages,
+        1,
+      ),
+      new HighJumpPower(
+        50,
+        50,
+        random(100, 1300),
+        random(100, 600),
+        this.powerUpImages,
+        0,
+      ),
+      new ThrowYarnPower(
+        50,
+        50,
+        random(100, 1300),
+        random(100, 600),
+        this.powerUpImages,
+        2,
+      ),
+    ];
+  }
+
   public update() {
     // Updates the countdown and when countdown is over runs the else condition (starts timer)
     if (!this.time.countdownEnd) {
@@ -193,6 +223,7 @@ class GameBoard implements IScreen {
 
     translate(0, this.translateY);
     this.platforms.forEach((platform) => platform.draw());
+    this.powerUps.forEach((powerUp) => powerUp.draw());
     pop();
   }
 }
