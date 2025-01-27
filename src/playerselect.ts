@@ -15,6 +15,10 @@ class PlayerSelect implements IScreen {
   // private isStartGameHighlighted: boolean;
 
   constructor() {
+    console.log("chooseSound:", sound.chooseSound);
+    console.log("enterSound:", sound.enterSound);
+ 
+ 
     this.playerSelectButton1 = new Button(
       "1 PLAYER",
       "#F96B6B",
@@ -23,6 +27,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       0,
+      sound.chooseSound // Use preloaded sound
     );
     this.playerSelectButton2 = new Button(
       "2 PLAYER",
@@ -32,6 +37,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       1,
+      sound.chooseSound
     );
     this.playerSelectButton3 = new Button(
       "3 PLAYER",
@@ -41,6 +47,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       2,
+      sound.chooseSound
     );
     this.playerSelectButton4 = new Button(
       "4 PLAYER",
@@ -50,6 +57,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       3,
+      sound.chooseSound
     );
     this.gameStartButton = new Button(
       "START GAME",
@@ -59,7 +67,9 @@ class PlayerSelect implements IScreen {
       350,
       150,
       4,
+      sound.enterSound // Use a different sound for the start button
     );
+ 
 
     this.activeButtonIndex = 0;
     this.lastKeyPressed = null;
@@ -102,18 +112,48 @@ class PlayerSelect implements IScreen {
     image(this.playerImage4, 1170, 240, 130, 110);
   }
 
+  // private activateButton(index: number) {
+  //   if (index === 0) {
+  //     console.log("1 PLAYER selected");
+  //   } else if (index === 1) {
+  //     console.log("2 PLAYER selected");
+  //   } else if (index === 2) {
+  //     console.log("3 PLAYER selected");
+  //   } else if (index === 3) {
+  //     console.log("4 PLAYER selected");
+  //   } else if (index === 4) {
+  //     console.log("START GAME selected");
+  //     game.changeScreen(new GameBoard());
+  //   }
+  // }
+
   private activateButton(index: number) {
-    if (index === 0) {
-      console.log("1 PLAYER selected");
-    } else if (index === 1) {
-      console.log("2 PLAYER selected");
-    } else if (index === 2) {
-      console.log("3 PLAYER selected");
-    } else if (index === 3) {
-      console.log("4 PLAYER selected");
-    } else if (index === 4) {
-      console.log("START GAME selected");
-      game.changeScreen(new GameBoard());
+    switch (index) {
+      case 0:
+        this.playerSelectButton1.handleActivate();
+        console.log("1 PLAYER selected");
+        break;
+      case 1:
+        this.playerSelectButton2.handleActivate();
+        console.log("2 PLAYER selected");
+        break;
+      case 2:
+        this.playerSelectButton3.handleActivate();
+        console.log("3 PLAYER selected");
+        break;
+      case 3:
+        this.playerSelectButton4.handleActivate();
+        console.log("4 PLAYER selected");
+        break;
+      case 4:
+        this.gameStartButton.handleActivate();
+        console.log("START GAME selected");
+  
+        // Trigger the start game logic here (if any)
+        game.changeScreen(new GameBoard); // Ensure this logic is implemented
+        break;
+      default:
+        console.error("Invalid button index");
     }
   }
 
