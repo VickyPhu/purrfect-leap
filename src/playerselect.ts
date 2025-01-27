@@ -12,7 +12,7 @@ class PlayerSelect implements IScreen {
   private playerImage4: p5.Image;
   private prevIsKeyPressed: boolean;
   private lastPlayerButtonIndex: number | null;
-  // private isStartGameHighlighted: boolean;
+  private selectedPlayers: number;
 
   constructor() {
     this.playerSelectButton1 = new Button(
@@ -65,7 +65,7 @@ class PlayerSelect implements IScreen {
     this.lastKeyPressed = null;
     this.prevIsKeyPressed = keyIsPressed;
     this.lastPlayerButtonIndex = null;
-    // this.isStartGameHighlighted = false;
+    this.selectedPlayers = 0;
 
     this.playerImage1 = loadImage("/assets/images/cats/Player1Head.png");
     this.playerImage2 = loadImage("/assets/images/cats/Player2Head.png");
@@ -104,16 +104,75 @@ class PlayerSelect implements IScreen {
 
   private activateButton(index: number) {
     if (index === 0) {
-      console.log("1 PLAYER selected");
+      this.selectedPlayers = 1;
     } else if (index === 1) {
-      console.log("2 PLAYER selected");
+      this.selectedPlayers = 2;
     } else if (index === 2) {
-      console.log("3 PLAYER selected");
+      this.selectedPlayers = 3;
     } else if (index === 3) {
-      console.log("4 PLAYER selected");
+      this.selectedPlayers = 4;
     } else if (index === 4) {
-      console.log("START GAME selected");
-      game.changeScreen(new GameBoard());
+
+      if (this.selectedPlayers > 0) {
+        const playerImages: p5.Image[][] = [
+          [
+            loadImage("/assets/images/cats/Player11.png"),
+            loadImage("/assets/images/cats/Player12.png"),
+            loadImage("/assets/images/cats/Player13.png"),
+            loadImage("/assets/images/cats/Player14.png"),
+            loadImage("/assets/images/cats/Player11M.png"),
+            loadImage("/assets/images/cats/Player12M.png"),
+            loadImage("/assets/images/cats/Player13M.png"),
+            loadImage("/assets/images/cats/Player14M.png"),
+          ],
+          [
+            loadImage("/assets/images/cats/Player21.png"),
+            loadImage("/assets/images/cats/Player22.png"),
+            loadImage("/assets/images/cats/Player23.png"),
+            loadImage("/assets/images/cats/Player24.png"),
+            loadImage("/assets/images/cats/Player21M.png"),
+            loadImage("/assets/images/cats/Player22M.png"),
+            loadImage("/assets/images/cats/Player23M.png"),
+            loadImage("/assets/images/cats/Player24M.png"),
+          ],
+          [
+            loadImage("/assets/images/cats/Player31.png"),
+            loadImage("/assets/images/cats/Player32.png"),
+            loadImage("/assets/images/cats/Player33.png"),
+            loadImage("/assets/images/cats/Player34.png"),
+            loadImage("/assets/images/cats/Player31M.png"),
+            loadImage("/assets/images/cats/Player32M.png"),
+            loadImage("/assets/images/cats/Player33M.png"),
+            loadImage("/assets/images/cats/Player34M.png"),
+          ],
+          // add images for player 4
+        ];
+
+        const controls = [
+          { left: 37, right: 39, action: 38 }, // LeftArrow, RightArrow, UpArrow
+          { left: 81, right: 69, action: 87 }, // Q, E, W
+          { left: 73, right: 80, action: 79 }, // I, P, O
+          { left: 90, right: 67, action: 88 }, // Z, C, X
+        ];
+
+        const players: Player[] = [];
+        for (let i = 0; i < this.selectedPlayers; i++) {
+          players.push(
+            new Player(
+              150,
+              200,
+              200,
+              300,
+              playerImages[i],
+              playerImages[i],
+              0,
+              controls[i],
+            ),
+          );
+        }
+        const gameBoard = new GameBoard(players);
+        game.changeScreen(gameBoard);
+      } 
     }
   }
 
@@ -133,10 +192,15 @@ class PlayerSelect implements IScreen {
         this.lastKeyPressed = "RIGHT";
       } else if (keyCode === ENTER) {
         if (this.activeButtonIndex !== 4) {
+          // activeIndexButton has values 0-3 for the players, this sets the selectedPlayers based on which option is selected, + 1 cause selectedPlayers starts with 0 and for each player its + 1
+          this.selectedPlayers = this.activeButtonIndex + 1;
           this.lastPlayerButtonIndex = this.activeButtonIndex;
           this.activeButtonIndex = 4;
         } else {
-          this.activateButton(this.activeButtonIndex);
+          // Start game with the amount of chosen players
+          if (this.selectedPlayers > 0) {
+            this.activateButton(4);
+          } 
         }
       }
     }
