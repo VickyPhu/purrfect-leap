@@ -96,12 +96,16 @@ class PlayerSelect implements IScreen {
   }
 
   private drawPlayerImages() {
+    // 1 player
     image(this.playerImage1, 160, 160, 120, 100);
+    // 2 player
     image(this.playerImage1, 460, 160, 120, 100);
     image(this.playerImage2, 530, 185, 120, 100);
+    // 3 player
     image(this.playerImage1, 780, 160, 120, 100);
     image(this.playerImage2, 850, 185, 120, 100);
     image(this.playerImage3, 760, 220, 120, 100);
+    // 4 player
     image(this.playerImage1, 1105, 160, 120, 100);
     image(this.playerImage2, 1175, 185, 120, 100);
     image(this.playerImage3, 1085, 220, 120, 100);
