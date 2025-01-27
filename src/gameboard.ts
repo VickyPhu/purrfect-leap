@@ -11,6 +11,8 @@ class GameBoard implements IScreen {
   private startPlatform: Platform | null;
   private startPlatformSpawnTime: number;
   private startPlatformSpawned: boolean;
+  private powerUpImages: p5.Image[];
+  private powerUps: GameEntity[];
 
   constructor() {
     this.playerImages = [];
@@ -23,6 +25,8 @@ class GameBoard implements IScreen {
     this.startPlatform = null;
     this.startPlatformSpawnTime = 0;
     this.startPlatformSpawned = false;
+    this.powerUpImages = [];
+    this.powerUps = [];
     this.loadImages();
     this.spawnPlayer();
   }
@@ -43,6 +47,13 @@ class GameBoard implements IScreen {
     this.playerImages[9] = loadImage(
       "/assets/images/platforms/starting-platform.png",
     );
+    this.powerUpImages[0] = loadImage(
+      "/assets/images/powerups/catnip-power.png",
+    );
+    this.powerUpImages[1] = loadImage(
+      "/assets/images/powerups/extralife-power.png",
+    );
+    this.powerUpImages[2] = loadImage("/assets/images/powerups/yarnpower.png");
   }
 
   private detectHit() {

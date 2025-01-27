@@ -18,5 +18,5 @@ class ThrowYarnPower extends GameEntity {
 
   public draw() {}
 
-  private executePower() {}
+  // private executePower() {}
 }
