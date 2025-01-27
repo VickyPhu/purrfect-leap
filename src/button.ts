@@ -29,20 +29,20 @@ class Button {
     this.buttonIndex = buttonIndex;
     this.sound = sound; // Assign the sound file
   }
-   private playSound(): void {
-    if (this.sound instanceof p5.SoundFile) {
+
+  private playSound(): void {
+    console.log(`Attempting to play sound for button: ${this.text}`);
+    if (this.sound) {
       if (this.sound.isLoaded()) {
         this.sound.play();
       } else {
         console.error(`Sound file not loaded for button: ${this.text}`);
       }
     } else {
-      console.error(
-        `Invalid sound object for button: ${this.text}. Got:`,
-        this.sound
-      );
+      console.error(`No sound assigned for button: ${this.text}`);
     }
   }
+
    public handleActivate() {
     this.playSound(); // Play sound on activation
     console.log(`Button activated: ${this.text}`);

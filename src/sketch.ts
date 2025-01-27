@@ -1,6 +1,9 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
-let sound: { chooseSound: p5.SoundFile; enterSound: p5.SoundFile };
+let sound: { 
+  chooseSound: p5.SoundFile; 
+  enterSound: p5.SoundFile 
+};
 // let playerImages: p5.Image[];
 let playerSelect: PlayerSelect;
 
@@ -12,14 +15,15 @@ let playerSelect: PlayerSelect;
 */
 function preload() {
  sound = {
-   chooseSound: loadSound("/assets/sounds/boing.mp3", () =>
-     console.log("Choose sound loaded!")
+   chooseSound: loadSound("/assets/sounds/button-pressed.mp3", () =>
+   console.log('Choose sound loaded:', sound.chooseSound.isLoaded())
    ),
    enterSound: loadSound("/assets/sounds/boing.mp3", () =>
-     console.log("Enter sound loaded!")
+   console.log('Enter sound loaded:', sound.enterSound.isLoaded())
    ),
  };
 }
+
 
 
 /**

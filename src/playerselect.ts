@@ -145,13 +145,13 @@ class PlayerSelect implements IScreen {
         this.gameStartButton.handleActivate();
         console.log("START GAME selected");
   
-        // Trigger the start game logic here (if any)
-        game.changeScreen(new GameBoard); // Ensure this logic is implemented
+        game.changeScreen(new GameBoard());
         break;
       default:
         console.error("Invalid button index");
     }
   }
+  
 
   public update() {
     const pressedThisFrame = keyIsPressed && !this.prevIsKeyPressed;
