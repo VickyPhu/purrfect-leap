@@ -168,8 +168,8 @@ class PlayerSelect implements IScreen {
         for (let i = 0; i < this.selectedPlayers; i++) {
           players.push(
             new Player(
-              150,
-              200,
+              75,
+              100,
               (width - this.selectedPlayers * 250) / 2 + i * 250,
               300,
               playerImages[i],
