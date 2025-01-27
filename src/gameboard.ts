@@ -103,8 +103,20 @@ class GameBoard implements IScreen {
   }
 
   private spawnStartPlatform() {
-    this.startPlatform = new Platform(100, 900, 250, 600, this.playerImages, 101);
+    this.startPlatform = new Platform(
+      100,
+      900,
+      250,
+      600,
+      this.playerImages,
+      101,
+    );
     this.startPlatformSpawnTime = millis();
+  }
+
+  private playersAreDead() {
+    // checks if all the players are dead
+    return this.players.every((player) => player.isDead);
   }
 
   public update() {
@@ -125,7 +137,17 @@ class GameBoard implements IScreen {
       this.startPlatform = null;
     }
 
-    this.players.forEach((player) => player.update());
+    this.players.forEach((player) => {
+      player.update();
+      // when player falls off the screen they die, player.die in player class = true
+      if (player.posY > height) {
+        player.die();
+      }
+    });
+    // if all players are dead change screen to GameEnd
+    if (this.playersAreDead()) {
+      game.changeScreen(new GameEnd());
+    }
 
     this.translateY += 2;
 
