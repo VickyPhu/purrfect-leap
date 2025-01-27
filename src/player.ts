@@ -33,10 +33,6 @@ class Player extends GameEntity {
   }
 
   private bounceAnimation() {
-    if (typeof this.controls.right !== "number" || typeof this.controls.left !== "number") {
-      console.error("Invalid controls detected:", this.controls);
-      return;
-    }
     this.keyReleased = false;
     if (keyIsDown(this.controls.right) === true) {
       this.keyReleased = true;
