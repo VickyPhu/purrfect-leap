@@ -145,7 +145,16 @@ class PlayerSelect implements IScreen {
             loadImage("/assets/images/cats/Player33M.png"),
             loadImage("/assets/images/cats/Player34M.png"),
           ],
-          // add images for player 4
+          [
+            loadImage("assets/images/cats/Player41.png"),
+            loadImage("assets/images/cats/Player42.png"),
+            loadImage("assets/images/cats/Player43.png"),
+            loadImage("assets/images/cats/Player44.png"),
+            loadImage("assets/images/cats/Player41M.png"),
+            loadImage("assets/images/cats/Player42M.png"),
+            loadImage("assets/images/cats/Player43M.png"),
+            loadImage("assets/images/cats/Player44M.png"),
+          ]
         ];
 
         const controls = [
