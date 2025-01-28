@@ -7,8 +7,8 @@ class GameEnd implements IScreen {
   constructor() {
     this.enterKeyHasBeenReleased = false;
     this.buttons = [
-      new Button("PLAY AGAIN", "#c2e1b5", 450, 500, 300, 100, 0),
-      new Button("MAIN MENU", "#f0ab63", 950, 500, 300, 100, 1),
+      new Button("PLAY AGAIN", "#c2e1b5", 450, 500, 300, 100, 0, sound.retrySound),
+      new Button("MAIN MENU", "#f0ab63", 950, 500, 300, 100, 1, sound.menuSound),   
     ];
     this.activeButtonIndex = 0;
     this.deadCat = loadImage("/assets/images/cats/skeletonHead.png");
@@ -16,19 +16,21 @@ class GameEnd implements IScreen {
 
   public update() {
     if (keyIsDown(ENTER) && this.enterKeyHasBeenReleased) {
+      this.enterKeyHasBeenReleased = false;
+      // Play the sound for the active button
+      const activeButton = this.buttons[this.activeButtonIndex];
+      activeButton.handleActivate();
       if (this.activeButtonIndex === 0) {
-        game.changeScreen(new PlayerSelect());
+        game.changeScreen(new PlayerSelect()); 
       } else if (this.activeButtonIndex === 1) {
-        game.changeScreen(new StartMenu());
+        game.changeScreen(new StartMenu()); 
       }
     }
-
     if (keyIsDown(RIGHT_ARROW)) {
-      this.activeButtonIndex = +1;
+      this.activeButtonIndex = 1; 
     } else if (keyIsDown(LEFT_ARROW)) {
-      this.activeButtonIndex = 0;
+      this.activeButtonIndex = 0; 
     }
-
     if (!keyIsDown(ENTER)) {
       this.enterKeyHasBeenReleased = true;
     }
