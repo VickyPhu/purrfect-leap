@@ -6,6 +6,9 @@ class Player extends GameEntity {
   private soundFX: string;
   private keyReleased: boolean;
   private lastDirection: string;
+  public playerImages: p5.Image[];
+  public controls: { left: number; right: number; action: number; };
+  public isDead: boolean;
 
   constructor(
     height: number,
@@ -13,7 +16,9 @@ class Player extends GameEntity {
     posX: number,
     posY: number,
     img: p5.Image[],
+    playerImages: p5.Image[],
     imageIndex: number,
+    controls: { left: number; right: number; action: number; },
   ) {
     super(height, width, posX, posY, img, imageIndex);
 
@@ -24,11 +29,14 @@ class Player extends GameEntity {
     this.bounceVelocity = -15;
     this.keyReleased = false;
     this.lastDirection = "right";
+    this.playerImages = playerImages;
+    this.controls = controls;
+    this.isDead = false;
   }
 
   private bounceAnimation() {
     this.keyReleased = false;
-    if (keyIsDown(RIGHT_ARROW) === true) {
+    if (keyIsDown(this.controls.right) === true) {
       this.keyReleased = true;
       this.lastDirection = "right";
       if (this.velocity < -10) {
@@ -40,7 +48,7 @@ class Player extends GameEntity {
       } else {
         this.imageIndex = 3;
       }
-    } else if (keyIsDown(LEFT_ARROW) === true) {
+    } else if (keyIsDown(this.controls.left) === true) {
       this.keyReleased = true;
       this.lastDirection = "left";
       if (this.velocity < -10) {
@@ -98,11 +106,11 @@ class Player extends GameEntity {
   }
 
   private leftAndRight() {
-    if (keyIsDown(LEFT_ARROW) === true) {
+    if (keyIsDown(this.controls.left) === true) {
       this.posX -= 6;
     }
 
-    if (keyIsDown(RIGHT_ARROW) === true) {
+    if (keyIsDown(this.controls.right) === true) {
       this.posX += 6;
     }
   }
@@ -121,13 +129,9 @@ class Player extends GameEntity {
     this.bounceAnimation();
     this.leftAndRight();
     this.wallJumper();
-
-    if (this.posY > height) {
-      this.die();
-    }
   }
 
   public die() {
-    game.changeScreen(new GameEnd());
+    this.isDead = true;
   }
 }
