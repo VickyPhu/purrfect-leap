@@ -60,11 +60,12 @@ class GameBoard implements IScreen {
             platform.posY + platform.height + this.translateY;
 
           if (
-            player.velocity > 0 &&
+            player.velocity > 2 &&
             playerLeft < platformRight &&
             playerRight > platformLeft &&
-            playerTop < platformBottom &&
-            playerBottom > platformTop
+            playerBottom >= platformTop &&
+            playerBottom < platformBottom &&
+            playerTop < platformTop
           ) {
             player.automaticBounce(platformTop);
 
