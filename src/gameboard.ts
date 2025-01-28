@@ -120,6 +120,31 @@ class GameBoard implements IScreen {
     this.players.push(new Player(75, 100, 200, 300, this.playerImages, 0));
   }
 
+  private checkForWinner() {
+    console.log("Players:", this.players);
+    console.log(
+      "Alive players:",
+      this.players.filter((player) => player.isAlive),
+    );
+
+    if (this.players.length === 0) {
+      console.log("No players initialized yet.");
+      return;
+    }
+
+    const alivePlayers = this.players.filter((player) => player.isAlive);
+
+    if (alivePlayers.length === 1) {
+      const winnerIndex = this.players.indexOf(alivePlayers[0]);
+      console.log("Winner detected:", winnerIndex);
+
+      game.changeScreen(new GameEnd(winnerIndex));
+    } else if (alivePlayers.length === 0) {
+      console.log("Game Over: All players are dead.");
+      game.changeScreen(new GameEnd(null));
+    }
+  }
+
   public update() {
     // Updates the countdown and when countdown is over runs the else condition (starts timer)
     if (!this.time.countdownEnd) {
@@ -145,6 +170,8 @@ class GameBoard implements IScreen {
     this.detectHit();
 
     this.removeOffScreenPlatforms();
+
+    this.checkForWinner();
   }
 
   private removeOffScreenPlatforms() {

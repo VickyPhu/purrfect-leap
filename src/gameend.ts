@@ -3,8 +3,11 @@ class GameEnd implements IScreen {
   private activeButtonIndex: number;
   private deadCat: p5.Image;
   private enterKeyHasBeenReleased: boolean;
+  private winnerCats: p5.Image[];
+  private winnerPlayerIndex: number | null;
 
-  constructor() {
+  constructor(winnerPlayerIndex: number | null) {
+    this.winnerPlayerIndex = winnerPlayerIndex;
     this.enterKeyHasBeenReleased = false;
     this.buttons = [
       new Button("PLAY AGAIN", "#c2e1b5", 450, 500, 300, 100, 0),
@@ -12,6 +15,12 @@ class GameEnd implements IScreen {
     ];
     this.activeButtonIndex = 0;
     this.deadCat = loadImage("/assets/images/cats/skeletonHead.png");
+    this.winnerCats = [
+      loadImage("/assets/images/cats/Player1Winner.png"),
+      loadImage("/assets/images/cats/Player2Winner.png"),
+      loadImage("/assets/images/cats/Player3Winner.png"),
+      loadImage("/assets/images/cats/Player4Winner.png"),
+    ];
   }
 
   public update() {
@@ -47,7 +56,11 @@ class GameEnd implements IScreen {
   }
 
   private drawImage() {
-    image(this.deadCat, 600, 250, 200, 150);
+    if (this.winnerPlayerIndex !== null) {
+      image(this.winnerCats[this.winnerPlayerIndex], 600, 250, 200, 150);
+    } else {
+      image(this.deadCat, 600, 250, 200, 150);
+    }
   }
 
   private drawButtons() {

@@ -6,6 +6,7 @@ class Player extends GameEntity {
   private soundFX: string;
   private keyReleased: boolean;
   private lastDirection: string;
+  public isAlive: boolean;
 
   constructor(
     height: number,
@@ -16,6 +17,7 @@ class Player extends GameEntity {
     imageIndex: number,
   ) {
     super(height, width, posX, posY, img, imageIndex);
+    this.isAlive = true;
 
     this.name = "Player1";
     this.velocity = 0;
@@ -128,6 +130,7 @@ class Player extends GameEntity {
   }
 
   public die() {
-    game.changeScreen(new GameEnd());
+    // game.changeScreen(new GameEnd());
+    this.isAlive = false;
   }
 }
