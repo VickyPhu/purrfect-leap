@@ -24,7 +24,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       0,
-      sound.chooseSound 
+      sound.catSound1 
     );
     this.playerSelectButton2 = new Button(
       "2 PLAYER",
@@ -34,7 +34,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       1,
-      sound.chooseSound
+      sound.catSound2
     );
     this.playerSelectButton3 = new Button(
       "3 PLAYER",
@@ -44,7 +44,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       2,
-      sound.chooseSound
+      sound.catSound3
     );
     this.playerSelectButton4 = new Button(
       "4 PLAYER",
@@ -54,7 +54,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       3,
-      sound.chooseSound
+      sound.catSound4
     );
     this.gameStartButton = new Button(
       "START GAME",
