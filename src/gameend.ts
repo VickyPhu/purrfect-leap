@@ -44,22 +44,64 @@ class GameEnd implements IScreen {
   }
 
   private drawTitle() {
-    push();
-    fill("#8B8985");
-    textFont("Fredoka", 80);
-    textStyle(BOLD);
-    textAlign("center", "center");
+    if (this.winnerPlayerIndex === 0) {
+      push();
+      fill("#8B8985");
+      textFont("Fredoka", 80);
+      textStyle(BOLD);
+      textAlign("center", "center");
 
-    fill("#F96B6B");
-    text("GAME OVER", 700, 150);
-    pop();
+      fill("#F96B6B");
+      text("Player 1 Wins!", 700, 150);
+      pop();
+    } else if (this.winnerPlayerIndex === 1) {
+      push();
+      fill("#8B8985");
+      textFont("Fredoka", 80);
+      textStyle(BOLD);
+      textAlign("center", "center");
+
+      fill("#F96B6B");
+      text("Player 2 Wins!", 700, 150);
+      pop();
+    } else if (this.winnerPlayerIndex === 2) {
+      push();
+      fill("#8B8985");
+      textFont("Fredoka", 80);
+      textStyle(BOLD);
+      textAlign("center", "center");
+
+      fill("#F96B6B");
+      text("Player 3 Wins!", 700, 150);
+      pop();
+    } else if (this.winnerPlayerIndex === 3) {
+      push();
+      fill("#8B8985");
+      textFont("Fredoka", 80);
+      textStyle(BOLD);
+      textAlign("center", "center");
+
+      fill("#F96B6B");
+      text("Player 4 Wins!", 700, 150);
+      pop();
+    } else {
+      push();
+      fill("#8B8985");
+      textFont("Fredoka", 80);
+      textStyle(BOLD);
+      textAlign("center", "center");
+
+      fill("#F96B6B");
+      text("GAME OVER", 700, 150);
+      pop();
+    }
   }
 
   private drawImage() {
     if (this.winnerPlayerIndex !== null) {
-      image(this.winnerCats[this.winnerPlayerIndex], 600, 250, 200, 150);
+      image(this.winnerCats[this.winnerPlayerIndex], 600, 200, 200, 250);
     } else {
-      image(this.deadCat, 600, 250, 200, 150);
+      image(this.deadCat, 600, 200, 200, 250);
     }
   }
 

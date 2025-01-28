@@ -8,7 +8,8 @@ class Player extends GameEntity {
   private lastDirection: string;
   public playerImages: p5.Image[];
   public controls: { left: number; right: number; action: number };
-  public isDead: boolean;
+  public isAlive: boolean;
+  public onDeath: (() => void) | null = null;
 
   constructor(
     height: number,
@@ -32,7 +33,7 @@ class Player extends GameEntity {
     this.lastDirection = "right";
     this.playerImages = playerImages;
     this.controls = controls;
-    this.isDead = false;
+    this.isAlive = true;
   }
 
   private bounceAnimation() {
@@ -135,5 +136,8 @@ class Player extends GameEntity {
   public die() {
     // game.changeScreen(new GameEnd());
     this.isAlive = false;
+    if (this.onDeath) {
+      this.onDeath();
+    }
   }
 }
