@@ -12,7 +12,7 @@ class PlayerSelect implements IScreen {
   private playerImage4: p5.Image;
   private prevIsKeyPressed: boolean;
   private lastPlayerButtonIndex: number | null;
-  // private isStartGameHighlighted: boolean;
+  private selectedPlayers: number;
 
   constructor() {
     this.playerSelectButton1 = new Button(
@@ -23,6 +23,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       0,
+      sound.chooseSound // Use preloaded sound
     );
     this.playerSelectButton2 = new Button(
       "2 PLAYER",
@@ -32,6 +33,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       1,
+      sound.chooseSound
     );
     this.playerSelectButton3 = new Button(
       "3 PLAYER",
@@ -41,6 +43,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       2,
+      sound.chooseSound
     );
     this.playerSelectButton4 = new Button(
       "4 PLAYER",
@@ -50,6 +53,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       3,
+      sound.chooseSound
     );
     this.gameStartButton = new Button(
       "START GAME",
@@ -59,13 +63,15 @@ class PlayerSelect implements IScreen {
       350,
       150,
       4,
+      sound.enterSound // Use a different sound for the start button
     );
+ 
 
     this.activeButtonIndex = 0;
     this.lastKeyPressed = null;
     this.prevIsKeyPressed = keyIsPressed;
     this.lastPlayerButtonIndex = null;
-    // this.isStartGameHighlighted = false;
+    this.selectedPlayers = 0;
 
     this.playerImage1 = loadImage("/assets/images/cats/Player1Head.png");
     this.playerImage2 = loadImage("/assets/images/cats/Player2Head.png");
@@ -90,36 +96,142 @@ class PlayerSelect implements IScreen {
   }
 
   private drawPlayerImages() {
+    // 1 player
     image(this.playerImage1, 160, 160, 120, 100);
+    // 2 player
     image(this.playerImage1, 460, 160, 120, 100);
     image(this.playerImage2, 530, 185, 120, 100);
+    // 3 player
     image(this.playerImage1, 780, 160, 120, 100);
     image(this.playerImage2, 850, 185, 120, 100);
     image(this.playerImage3, 760, 220, 120, 100);
+    // 4 player
     image(this.playerImage1, 1105, 160, 120, 100);
     image(this.playerImage2, 1175, 185, 120, 100);
     image(this.playerImage3, 1085, 220, 120, 100);
     image(this.playerImage4, 1170, 240, 130, 110);
   }
 
+  // private activateButton(index: number) {
+  //   if (index === 0) {
+  //     console.log("1 PLAYER selected");
+  //   } else if (index === 1) {
+  //     console.log("2 PLAYER selected");
+  //   } else if (index === 2) {
+  //     console.log("3 PLAYER selected");
+  //   } else if (index === 3) {
+  //     console.log("4 PLAYER selected");
+  //   } else if (index === 4) {
+  //     console.log("START GAME selected");
+  //     game.changeScreen(new GameBoard());
+  //   }
+  // }
+
   private activateButton(index: number) {
-    if (index === 0) {
-      console.log("1 PLAYER selected");
-    } else if (index === 1) {
-      console.log("2 PLAYER selected");
-    } else if (index === 2) {
-      console.log("3 PLAYER selected");
-    } else if (index === 3) {
-      console.log("4 PLAYER selected");
-    } else if (index === 4) {
-      console.log("START GAME selected");
-      game.changeScreen(new GameBoard());
+    switch (index) {
+      case 0:
+        this.playerSelectButton1.handleActivate();
+        this.selectedPlayers = 1;
+        console.log("1 PLAYER selected");
+        break;
+      case 1:
+        this.playerSelectButton2.handleActivate();
+        this.selectedPlayers = 2;
+        console.log("2 PLAYER selected");
+        break;
+      case 2:
+        this.playerSelectButton3.handleActivate();
+        this.selectedPlayers = 3;
+        console.log("3 PLAYER selected");
+        break;
+      case 3:
+        this.playerSelectButton4.handleActivate();
+        this.selectedPlayers = 4;
+        console.log("4 PLAYER selected");
+        break;
+      case 4:
+        this.gameStartButton.handleActivate();
+        console.log("START GAME selected");
+  
+        if (this.selectedPlayers > 0) {
+          const playerImages: p5.Image[][] = [
+            [
+              loadImage("/assets/images/cats/Player11.png"),
+              loadImage("/assets/images/cats/Player12.png"),
+              loadImage("/assets/images/cats/Player13.png"),
+              loadImage("/assets/images/cats/Player14.png"),
+              loadImage("/assets/images/cats/Player11M.png"),
+              loadImage("/assets/images/cats/Player12M.png"),
+              loadImage("/assets/images/cats/Player13M.png"),
+              loadImage("/assets/images/cats/Player14M.png"),
+            ],
+            [
+              loadImage("/assets/images/cats/Player21.png"),
+              loadImage("/assets/images/cats/Player22.png"),
+              loadImage("/assets/images/cats/Player23.png"),
+              loadImage("/assets/images/cats/Player24.png"),
+              loadImage("/assets/images/cats/Player21M.png"),
+              loadImage("/assets/images/cats/Player22M.png"),
+              loadImage("/assets/images/cats/Player23M.png"),
+              loadImage("/assets/images/cats/Player24M.png"),
+            ],
+            [
+              loadImage("/assets/images/cats/Player31.png"),
+              loadImage("/assets/images/cats/Player32.png"),
+              loadImage("/assets/images/cats/Player33.png"),
+              loadImage("/assets/images/cats/Player34.png"),
+              loadImage("/assets/images/cats/Player31M.png"),
+              loadImage("/assets/images/cats/Player32M.png"),
+              loadImage("/assets/images/cats/Player33M.png"),
+              loadImage("/assets/images/cats/Player34M.png"),
+            ],
+            [
+              loadImage("assets/images/cats/Player41.png"),
+              loadImage("assets/images/cats/Player42.png"),
+              loadImage("assets/images/cats/Player43.png"),
+              loadImage("assets/images/cats/Player44.png"),
+              loadImage("assets/images/cats/Player41M.png"),
+              loadImage("assets/images/cats/Player42M.png"),
+              loadImage("assets/images/cats/Player43M.png"),
+              loadImage("assets/images/cats/Player44M.png"),
+            ]
+          ];
+  
+          const controls = [
+            { left: 37, right: 39, action: 38 }, // LeftArrow, RightArrow, UpArrow
+            { left: 81, right: 69, action: 87 }, // Q, E, W
+            { left: 73, right: 80, action: 79 }, // I, P, O
+            { left: 90, right: 67, action: 88 }, // Z, C, X
+          ];
+  
+          const players: Player[] = [];
+          for (let i = 0; i < this.selectedPlayers; i++) {
+            players.push(
+              new Player(
+                75,
+                100,
+                (width - this.selectedPlayers * 250) / 2 + i * 250,
+                300,
+                playerImages[i],
+                playerImages[i],
+                0,
+                controls[i],
+              ),
+            );
+          }
+          const gameBoard = new GameBoard(players);
+          game.changeScreen(gameBoard);
+        } 
+        break;
+      default:
+        console.error("Invalid button index");
     }
+
   }
 
   public update() {
     const pressedThisFrame = keyIsPressed && !this.prevIsKeyPressed;
-
+  
     if (pressedThisFrame) {
       if (keyCode === LEFT_ARROW && this.lastKeyPressed !== "LEFT") {
         if (this.activeButtonIndex !== 4) {
@@ -132,21 +244,31 @@ class PlayerSelect implements IScreen {
         }
         this.lastKeyPressed = "RIGHT";
       } else if (keyCode === ENTER) {
+        // Always activate the button, regardless of the index
+        this.activateButton(this.activeButtonIndex);
+  
+        // If the active button is not the START GAME button, move to it after activation
         if (this.activeButtonIndex !== 4) {
+          // activeIndexButton has values 0-3 for the players, this sets the selectedPlayers based on which option is selected, + 1 cause selectedPlayers starts with 0 and for each player its + 1
+          this.selectedPlayers = this.activeButtonIndex + 1;
           this.lastPlayerButtonIndex = this.activeButtonIndex;
           this.activeButtonIndex = 4;
         } else {
-          this.activateButton(this.activeButtonIndex);
+          // Start game with the amount of chosen players
+          if (this.selectedPlayers > 0) {
+            this.activateButton(4);
+          } 
         }
       }
     }
-
+  
     if (!keyIsPressed && this.prevIsKeyPressed) {
       this.lastKeyPressed = null;
     }
-
+  
     this.prevIsKeyPressed = keyIsPressed;
   }
+  
 
   public draw() {
     fill("#F0DEB5");
