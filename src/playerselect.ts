@@ -23,7 +23,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       0,
-      sound.chooseSound // Use preloaded sound
+      sound.chooseSound 
     );
     this.playerSelectButton2 = new Button(
       "2 PLAYER",
@@ -63,7 +63,7 @@ class PlayerSelect implements IScreen {
       350,
       150,
       4,
-      sound.enterSound // Use a different sound for the start button
+      sound.enterSound 
     );
  
 

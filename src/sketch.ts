@@ -2,7 +2,9 @@
 let game: Game;
 let sound: { 
   chooseSound: p5.SoundFile; 
-  enterSound: p5.SoundFile 
+  enterSound: p5.SoundFile;
+  retrySound: p5.SoundFile;
+  menuSound: p5.SoundFile; 
 };
 // let playerImages: p5.Image[];
 let playerSelect: PlayerSelect;
@@ -19,6 +21,12 @@ function preload() {
    console.log('Choose sound loaded:', sound.chooseSound.isLoaded())
    ),
    enterSound: loadSound("/assets/sounds/button-pressed.mp3", () =>
+   console.log('Enter sound loaded:', sound.enterSound.isLoaded())
+   ),
+   retrySound: loadSound("/assets/sounds/button-pressed.mp3", () =>
+   console.log('Choose sound loaded:', sound.chooseSound.isLoaded())
+   ),
+   menuSound: loadSound("/assets/sounds/button-pressed.mp3", () =>
    console.log('Enter sound loaded:', sound.enterSound.isLoaded())
    ),
  };
