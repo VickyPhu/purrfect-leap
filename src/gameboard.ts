@@ -36,10 +36,10 @@ class GameBoard implements IScreen {
     );
     this.playerImages[100] = loadImage("/assets/images/platforms/Platform.png");
     this.playerImages[101] = loadImage(
-      "/assets/images/platforms/starting-platform.png",
+      "/assets/images/platforms/startPlatform.png",
     );
     this.playerImages[102] = loadImage(
-      "/assets/images/platforms/startPlatformGif.gif",
+      "/assets/images/platforms/startPlatformFlashing.gif",
     );
   }
 
@@ -167,7 +167,7 @@ class GameBoard implements IScreen {
       this.startPlatformSpawned = true;
     }
 
-    if (this.startPlatform && millis() - this.startPlatformSpawnTime > 4000) {
+    if (this.startPlatform && millis() - this.startPlatformSpawnTime > 5000) {
       this.startPlatform.imageIndex = 102;
     }
 
@@ -192,7 +192,6 @@ class GameBoard implements IScreen {
     this.speedUpGame();
 
     this.checkForWinner();
-
   }
 
   private removeOffScreenPlatforms() {
