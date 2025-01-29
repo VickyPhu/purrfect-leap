@@ -25,7 +25,6 @@ class Button {
     this.width = width;
     this.height = height;
     this.buttonIndex = buttonIndex;
-    this.buttonIndex = buttonIndex;
     this.sound = sound; // Assign the sound file
   }
 
