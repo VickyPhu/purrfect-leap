@@ -202,24 +202,26 @@ class PlayerSelect implements IScreen {
           ];
   
           const players: Player[] = [];
-          for (let i = 0; i < this.selectedPlayers; i++) {
-            players.push(
-              new Player(
-                75,
-                100,
-                (width - this.selectedPlayers * 250) / 2 + i * 250,
-                300,
-                playerImages[i],
-                playerImages[i],
-                0,
-                controls[i],
-              ),
-            );
-          }
-          const gameBoard = new GameBoard(players);
-          game.changeScreen(gameBoard);
-        } 
-        break;
+            for (let i = 0; i < this.selectedPlayers; i++) {
+              players.push(
+                new Player(
+                  75,
+                  100,
+                  (width - this.selectedPlayers * 250) / 2 + i * 250,
+                  300,
+                  playerImages[i],
+                  playerImages[i],
+                  0,
+                  controls[i],
+                )
+              );
+            }
+            
+            // ✅ Pass selectedPlayers to GameBoard
+            const gameBoard = new GameBoard(players, this.selectedPlayers);
+            game.changeScreen(gameBoard);
+          } 
+          break;
     case 5: 
       this.returnButton.handleActivate();
       console.log("RETURN to Start Menu");

@@ -2,6 +2,7 @@ class GameBoard implements IScreen {
   private backgroundImage!: p5.Image;
   private playerImages: p5.Image[];
   private players: Player[];
+  private selectedPlayers: number;
   private platforms: Platform[];
   private platformSpawnTimer: number;
   private platformSpawnInterval: number;
@@ -13,10 +14,15 @@ class GameBoard implements IScreen {
   private startPlatformSpawned: boolean;
   private speedUpCounter: number;
   private gameStartTime: number;
+  private playerImage1: p5.Image;
+  private playerImage2: p5.Image;
+  private playerImage3: p5.Image;
+  private playerImage4: p5.Image;
 
-  constructor(players: Player[]) {
+  constructor(players: Player[], selectedPlayers: number) {
     this.playerImages = [];
     this.players = players;
+    this.selectedPlayers = selectedPlayers;
     this.platforms = [];
     this.platformSpawnTimer = millis();
     this.platformSpawnInterval = 500;
@@ -28,6 +34,11 @@ class GameBoard implements IScreen {
     this.loadImages();
     this.speedUpCounter = 2;
     this.gameStartTime = millis();
+
+    this.playerImage1 = loadImage("/assets/images/cats/Player1Head.png");
+    this.playerImage2 = loadImage("/assets/images/cats/Player2Head.png");
+    this.playerImage3 = loadImage("/assets/images/cats/Player3Head.png");
+    this.playerImage4 = loadImage("/assets/images/cats/Player4Head.png");
   }
 
   private loadImages() {
@@ -203,18 +214,29 @@ class GameBoard implements IScreen {
   }
 
   private drawTimerBorder() {
-    // Example: Line across the top of the screen under the timer
-    // stroke(255);
-    // strokeWeight(5);
-    // line(0, 60, 1400, 50);
-
-    // Example: Border around the timer area
+    // Draw the border
     noFill();
     rectMode(CORNER);
     stroke(255);
     strokeWeight(5);
     rect(2, 1, 1396, 55);
-  }
+
+    // Only draw images for active players
+    let imgWidth = 45;
+    let imgHeight = 35;
+    let padding = 10;
+
+    // Calculate position inside the border
+    let startX = 1396 - (imgWidth * this.selectedPlayers + padding * (this.selectedPlayers - 1)) - 30;
+    let startY = 1 + (55 - imgHeight) / 2; 
+
+    // Draw only the images for selected players
+    if (this.selectedPlayers >= 1) image(this.playerImage1, startX, startY, imgWidth, imgHeight);
+    if (this.selectedPlayers >= 2) image(this.playerImage2, startX + imgWidth + padding, startY, imgWidth, imgHeight);
+    if (this.selectedPlayers >= 3) image(this.playerImage3, startX + (imgWidth + padding) * 2, startY, imgWidth, imgHeight);
+    if (this.selectedPlayers >= 4) image(this.playerImage4, startX + (imgWidth + padding) * 3, startY, imgWidth, imgHeight);
+}
+
 
   public draw() {
     push();
