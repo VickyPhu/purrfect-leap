@@ -126,13 +126,21 @@ class GameBoard implements IScreen {
 
   private spawnPlatform() {
     if (millis() - this.platformSpawnTimer > this.platformSpawnInterval) {
+      // create a new array that excludes start-platform image and gif
+      const platformOnlyImages = this.platformImages.slice(2);
+      const isBreakable = random() < 0.2;
+      // if isBreakable = true then use imageIndex 1 or else 0
+      const imageIndex = isBreakable ? 1 : 0;
+
       const newPlatform = new Platform(
         30,
         100,
         random(100, 1300),
         50 - this.translateY,
-        this.playerImages,
-        100,
+        platformOnlyImages,
+        imageIndex,
+        isBreakable,
+        isBreakable ? 1 : 0,
       );
       this.platforms.push(newPlatform);
 
@@ -147,8 +155,10 @@ class GameBoard implements IScreen {
       1200,
       100,
       600,
-      this.playerImages,
-      101,
+      this.platformImages,
+      0,
+      false,
+      1,
     );
     this.startPlatformSpawnTime = millis();
   }
@@ -217,20 +227,18 @@ class GameBoard implements IScreen {
       this.time.updateTimer();
       this.spawnPlatform();
     }
-
     if (!this.startPlatformSpawned) {
       this.spawnStartPlatform();
       this.startPlatformSpawned = true;
     }
 
     if (this.startPlatform && millis() - this.startPlatformSpawnTime > 5000) {
-      this.startPlatform.imageIndex = 102;
+      this.startPlatform.imageIndex = 1;
     }
 
     if (this.startPlatform && millis() - this.startPlatformSpawnTime > 7000) {
       this.startPlatform = null;
     }
-
     this.players.forEach((player) => {
       player.update();
       // when player falls off the screen they die, player.die in player class = true
@@ -245,9 +253,9 @@ class GameBoard implements IScreen {
 
     this.removeOffScreenPlatforms();
     this.spawnPowerUp();
-
+    
     this.speedUpGame();
-
+    
     this.checkForWinner();
   }
 
@@ -279,7 +287,7 @@ class GameBoard implements IScreen {
     this.time.drawCountdown();
     this.time.drawTimer();
     if (this.startPlatform) {
-      this.startPlatform.spawnPlatform();
+      this.startPlatform.drawPlatform();
     }
 
     this.drawTimerBorder();
