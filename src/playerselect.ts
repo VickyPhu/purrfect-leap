@@ -217,7 +217,6 @@ class PlayerSelect implements IScreen {
               );
             }
             
-            // ✅ Pass selectedPlayers to GameBoard
             const gameBoard = new GameBoard(players, this.selectedPlayers);
             game.changeScreen(gameBoard);
           } 
