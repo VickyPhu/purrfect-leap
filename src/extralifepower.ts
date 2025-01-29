@@ -1,3 +1,5 @@
+/// <reference path="gameentity.ts" />
+
 class ExtraLifePower extends GameEntity {
   // private name: string;
   //   private soundFX: string;
