@@ -214,28 +214,36 @@ class GameBoard implements IScreen {
   }
 
   private drawTimerBorder() {
-    // Draw the border
     noFill();
     rectMode(CORNER);
     stroke(255);
     strokeWeight(5);
     rect(2, 1, 1396, 55);
-
-    // Only draw images for active players
+  
     let imgWidth = 45;
     let imgHeight = 35;
     let padding = 10;
-
-    // Calculate position inside the border
+    
+    // Calculate the position inside the border for player icons
     let startX = 1396 - (imgWidth * this.selectedPlayers + padding * (this.selectedPlayers - 1)) - 30;
     let startY = 1 + (55 - imgHeight) / 2; 
-
-    // Draw only the images for selected players
-    if (this.selectedPlayers >= 1) image(this.playerImage1, startX, startY, imgWidth, imgHeight);
-    if (this.selectedPlayers >= 2) image(this.playerImage2, startX + imgWidth + padding, startY, imgWidth, imgHeight);
-    if (this.selectedPlayers >= 3) image(this.playerImage3, startX + (imgWidth + padding) * 2, startY, imgWidth, imgHeight);
-    if (this.selectedPlayers >= 4) image(this.playerImage4, startX + (imgWidth + padding) * 3, startY, imgWidth, imgHeight);
-}
+  
+    // Draw player images and apply opacity if they are dead
+    this.players.forEach((player, index) => {
+      if (!player.isAlive) {
+        tint(255, 100); // Reduce opacity for dead players
+      }
+  
+      if (index === 0 && this.selectedPlayers >= 1) image(this.playerImage1, startX, startY, imgWidth, imgHeight);
+      if (index === 1 && this.selectedPlayers >= 2) image(this.playerImage2, startX + imgWidth + padding, startY, imgWidth, imgHeight);
+      if (index === 2 && this.selectedPlayers >= 3) image(this.playerImage3, startX + (imgWidth + padding) * 2, startY, imgWidth, imgHeight);
+      if (index === 3 && this.selectedPlayers >= 4) image(this.playerImage4, startX + (imgWidth + padding) * 3, startY, imgWidth, imgHeight);
+  
+      if (!player.isAlive) {
+        noTint(); // Reset tint for other players
+      }
+    });
+  }
 
 
   public draw() {
