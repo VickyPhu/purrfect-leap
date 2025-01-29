@@ -1,7 +1,15 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
-let music: {
-  mystery: p5.SoundFile;
+let sound: {
+  chooseSound: p5.SoundFile;
+  enterSound: p5.SoundFile;
+  retrySound: p5.SoundFile;
+  menuSound: p5.SoundFile;
+  menuMusic: p5.SoundFile;
+  catSound1: p5.SoundFile;
+  catSound2: p5.SoundFile;
+  catSound3: p5.SoundFile;
+  catSound4: p5.SoundFile;
 };
 // let playerImages: p5.Image[];
 let playerSelect: PlayerSelect;
@@ -12,8 +20,34 @@ let playerSelect: PlayerSelect;
  * sound files, images etc...
  */
 function preload() {
-  music = {
-    mystery: loadSound("/assets/music/mystery.mp3"),
+  sound = {
+    chooseSound: loadSound("/assets/sounds/button-pressed.mp3", () =>
+      console.log("Choose sound loaded:", sound.chooseSound.isLoaded()),
+    ),
+    enterSound: loadSound("/assets/sounds/button-pressed.mp3", () =>
+      console.log("Enter sound loaded:", sound.enterSound.isLoaded()),
+    ),
+    retrySound: loadSound("/assets/sounds/button-pressed.mp3", () =>
+      console.log("Choose sound loaded:", sound.chooseSound.isLoaded()),
+    ),
+    menuSound: loadSound("/assets/sounds/boing.mp3", () =>
+      console.log("Enter sound loaded:", sound.enterSound.isLoaded()),
+    ),
+    catSound1: loadSound("/assets/sounds/1playerCat.mp3", () =>
+      console.log("Choose sound loaded:", sound.chooseSound.isLoaded()),
+    ),
+    catSound2: loadSound("/assets/sounds/2playerCat.mp3", () =>
+      console.log("Enter sound loaded:", sound.enterSound.isLoaded()),
+    ),
+    catSound3: loadSound("/assets/sounds/3playerCat.mp3", () =>
+      console.log("Choose sound loaded:", sound.chooseSound.isLoaded()),
+    ),
+    catSound4: loadSound("/assets/sounds/4playerCat.mp3", () =>
+      console.log("Enter sound loaded:", sound.enterSound.isLoaded()),
+    ),
+    menuMusic: loadSound("/assets/music/menuMusic.mp3", () =>
+      console.log("Enter sound loaded:", sound.enterSound.isLoaded()),
+    ),
   };
 }
 
@@ -26,7 +60,15 @@ function preload() {
 function setup() {
   createCanvas(1400, 700);
   frameRate(60);
-  music.mystery.setVolume(0.8);
+  sound.chooseSound.setVolume(0.5);
+  sound.enterSound.setVolume(0.5);
+  sound.retrySound.setVolume(0.5);
+  sound.menuSound.setVolume(0.5);
+  sound.catSound1.setVolume(0.5);
+  sound.catSound2.setVolume(0.5);
+  sound.catSound3.setVolume(0.5);
+  sound.catSound4.setVolume(0.5);
+  sound.menuMusic.setVolume(0.5);
   game = new Game();
 }
 

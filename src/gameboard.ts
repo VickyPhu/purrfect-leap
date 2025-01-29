@@ -15,13 +15,15 @@ class GameBoard implements IScreen {
   private powerUpTimer: number;
   private powerUpInterval: number;
   private powerUps: (HighJumpPower | ExtraLifePower | ThrowYarnPower)[] = [];
+  private speedUpCounter: number;
+  private gameStartTime: number;
 
-  constructor() {
+  constructor(players: Player[]) {
     this.playerImages = [];
-    this.players = [];
+    this.players = players;
     this.platforms = [];
     this.platformSpawnTimer = millis();
-    this.platformSpawnInterval = 700;
+    this.platformSpawnInterval = 500;
     this.translateY = 0;
     this.time = new Time();
     this.startPlatform = null;
@@ -29,26 +31,22 @@ class GameBoard implements IScreen {
     this.startPlatformSpawned = false;
     this.powerUpImages = [];
     this.loadImages();
-    this.spawnPlayer();
     this.powerUpTimer = 0;
     this.powerUpInterval = 2000;
+    this.speedUpCounter = 2;
+    this.gameStartTime = millis();
   }
 
   private loadImages() {
     this.backgroundImage = loadImage(
       "/assets/images/background/purrfectLeapBackground.jpg",
     );
-    this.playerImages[0] = loadImage("/assets/images/cats/Player11.png");
-    this.playerImages[1] = loadImage("/assets/images/cats/Player12.png");
-    this.playerImages[2] = loadImage("/assets/images/cats/Player13.png");
-    this.playerImages[3] = loadImage("/assets/images/cats/Player14.png");
-    this.playerImages[4] = loadImage("/assets/images/cats/Player11M.png");
-    this.playerImages[5] = loadImage("/assets/images/cats/Player12M.png");
-    this.playerImages[6] = loadImage("/assets/images/cats/Player13M.png");
-    this.playerImages[7] = loadImage("/assets/images/cats/Player14M.png");
-    this.playerImages[8] = loadImage("/assets/images/platforms/Platform.png");
-    this.playerImages[9] = loadImage(
-      "/assets/images/platforms/starting-platform.png",
+    this.playerImages[100] = loadImage("/assets/images/platforms/Platform.png");
+    this.playerImages[101] = loadImage(
+      "/assets/images/platforms/startPlatform.png",
+    );
+    this.playerImages[102] = loadImage(
+      "/assets/images/platforms/startPlatformFlashing.gif",
     );
     this.powerUpImages[0] = loadImage(
       "/assets/images/powerups/catnip-power.png",
@@ -83,11 +81,12 @@ class GameBoard implements IScreen {
             platform.posY + platform.height + this.translateY;
 
           if (
-            player.velocity > 0 &&
+            player.velocity > 2 &&
             playerLeft < platformRight &&
             playerRight > platformLeft &&
-            playerTop < platformBottom &&
-            playerBottom > platformTop
+            playerBottom >= platformTop &&
+            playerBottom < platformBottom &&
+            playerTop < platformTop
           ) {
             player.automaticBounce(platformTop);
 
@@ -104,6 +103,17 @@ class GameBoard implements IScreen {
     }
   }
 
+  private speedUpGame() {
+    const gameTime = millis() - this.gameStartTime;
+    if (gameTime >= 40 * 1000) {
+      this.speedUpCounter = 5;
+    } else if (gameTime >= 30 * 1000) {
+      this.speedUpCounter = 3.5;
+    } else if (gameTime >= 20 * 1000) {
+      this.speedUpCounter = 2.5;
+    }
+  }
+
   private drawBackground() {
     image(this.backgroundImage, 0, 0, 1400, 700);
   }
@@ -116,7 +126,7 @@ class GameBoard implements IScreen {
         random(100, 1300),
         50 - this.translateY,
         this.playerImages,
-        8,
+        100,
       );
       this.platforms.push(newPlatform);
 
@@ -126,12 +136,35 @@ class GameBoard implements IScreen {
   }
 
   private spawnStartPlatform() {
-    this.startPlatform = new Platform(100, 900, 250, 600, this.playerImages, 9);
+    this.startPlatform = new Platform(
+      70,
+      1200,
+      100,
+      600,
+      this.playerImages,
+      101,
+    );
     this.startPlatformSpawnTime = millis();
   }
 
-  private spawnPlayer() {
-    this.players.push(new Player(75, 100, 200, 300, this.playerImages, 0));
+  private checkForWinner() {
+    const alivePlayers = this.players.filter((player) => player.isAlive);
+
+    if (this.players.length === 1) {
+      // Singleplayer-logik
+      if (alivePlayers.length === 0) {
+        game.changeScreen(new GameEnd(null));
+      }
+    } else {
+      // Multiplayer-logik
+      if (alivePlayers.length === 1) {
+        const lastPlayerStanding = alivePlayers[0];
+        lastPlayerStanding.onDeath = () => {
+          const winnerIndex = this.players.indexOf(lastPlayerStanding);
+          game.changeScreen(new GameEnd(winnerIndex));
+        };
+      }
+    }
   }
 
   private spawnPowerUp() {
@@ -184,18 +217,32 @@ class GameBoard implements IScreen {
       this.startPlatformSpawned = true;
     }
 
+    if (this.startPlatform && millis() - this.startPlatformSpawnTime > 5000) {
+      this.startPlatform.imageIndex = 102;
+    }
+
     if (this.startPlatform && millis() - this.startPlatformSpawnTime > 7000) {
       this.startPlatform = null;
     }
 
-    this.players.forEach((player) => player.update());
+    this.players.forEach((player) => {
+      player.update();
+      // when player falls off the screen they die, player.die in player class = true
+      if (player.posY > height) {
+        player.die();
+      }
+    });
 
-    this.translateY += 2;
+    this.translateY += this.speedUpCounter;
 
     this.detectHit();
 
     this.removeOffScreenPlatforms();
     this.spawnPowerUp();
+
+    this.speedUpGame();
+
+    this.checkForWinner();
   }
 
   private removeOffScreenPlatforms() {
