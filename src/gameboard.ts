@@ -1,6 +1,6 @@
 class GameBoard implements IScreen {
   private backgroundImage!: p5.Image;
-  private playerImages: p5.Image[];
+  private platformImages: p5.Image[];
   private players: Player[];
   private platforms: Platform[];
   private platformSpawnTimer: number;
@@ -19,9 +19,9 @@ class GameBoard implements IScreen {
   private gameStartTime: number;
 
   constructor(players: Player[]) {
-    this.playerImages = [];
     this.players = players;
     this.platforms = [];
+    this.platformImages = [];
     this.platformSpawnTimer = millis();
     this.platformSpawnInterval = 500;
     this.translateY = 0;
@@ -41,20 +41,26 @@ class GameBoard implements IScreen {
     this.backgroundImage = loadImage(
       "/assets/images/background/purrfectLeapBackground.jpg",
     );
-    this.playerImages[100] = loadImage("/assets/images/platforms/Platform.png");
-    this.playerImages[101] = loadImage(
+
+    (this.platformImages[0] = loadImage(
       "/assets/images/platforms/startPlatform.png",
-    );
-    this.playerImages[102] = loadImage(
-      "/assets/images/platforms/startPlatformFlashing.gif",
-    );
-    this.powerUpImages[0] = loadImage(
-      "/assets/images/powerups/catnip-power.png",
-    );
-    this.powerUpImages[1] = loadImage(
-      "/assets/images/powerups/extralife-power.png",
-    );
-    this.powerUpImages[2] = loadImage("/assets/images/powerups/yarnpower.png");
+    )),
+      (this.platformImages[1] = loadImage(
+        "/assets/images/platforms/startPlatformFlashing.gif",
+      )),
+      (this.platformImages[2] = loadImage(
+        "/assets/images/platforms/Platform.png",
+      )),
+      (this.platformImages[3] = loadImage(
+        "/assets/images/platforms/PlatformBroken.png",
+      ));
+      this.powerUpImages[0] = loadImage(
+        "/assets/images/powerups/catnip-power.png",
+      );
+      this.powerUpImages[1] = loadImage(
+        "/assets/images/powerups/extralife-power.png",
+      );
+      this.powerUpImages[2] = loadImage("/assets/images/powerups/yarnpower.png");
   }
 
   private detectHit() {
