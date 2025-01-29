@@ -2,12 +2,32 @@ class StartMenu implements IScreen {
   private buttons: Button[];
   private activeButtonIndex: number;
   private enterKeyHasBeenReleased: boolean;
+  // private sound: p5.SoundFile | null;
 
   constructor() {
     this.enterKeyHasBeenReleased = false;
     this.buttons = [
-      new Button("START", "#F96B6B", width * 0.5, 280, 350, 100, 0, sound.chooseSound),
-      new Button("HOW TO PLAY", "#F0AB63", width * 0.5, 410, 350, 100, 1, sound.chooseSound),
+      new Button(
+        "START",
+        "#F96B6B",
+        width * 0.5,
+        280,
+        350,
+        100,
+        0,
+        sound.chooseSound,
+      ),
+      new Button(
+        "HOW TO PLAY",
+        "#F0AB63",
+        width * 0.5,
+        410,
+        350,
+        100,
+        1,
+        sound.chooseSound,
+      ),
+      new Button("Music", "#F0AB63", 125, 75, 200, 70, 2, sound.menuMusic),
     ];
 
     this.activeButtonIndex = 0;
@@ -44,16 +64,29 @@ class StartMenu implements IScreen {
       }
     }
 
-    if (keyIsDown(DOWN_ARROW)) {
-      this.activeButtonIndex = +1;
-    } else if (keyIsDown(UP_ARROW)) {
-      this.activeButtonIndex = 0;
+    if (keyIsDown(DOWN_ARROW) && this.enterKeyHasBeenReleased) {
+      this.activeButtonIndex =
+        (this.activeButtonIndex + 1) % this.buttons.length;
+      this.enterKeyHasBeenReleased = false;
+    } else if (keyIsDown(UP_ARROW) && this.enterKeyHasBeenReleased) {
+      this.activeButtonIndex =
+        (this.activeButtonIndex - 1 + this.buttons.length) %
+        this.buttons.length;
+      this.enterKeyHasBeenReleased = false;
     }
 
-    if (!keyIsDown(ENTER)) {
+    if (!keyIsDown(DOWN_ARROW) && !keyIsDown(UP_ARROW)) {
       this.enterKeyHasBeenReleased = true;
     }
   }
+
+  // private playMusic() {
+  //   if (sound.menuMusic.isLoaded()) {
+  //     sound.menuMusic.play();
+  //   } else {
+  //     console.error("Menu music is not loaded yet.");
+  //   }
+  // }
 
   public draw() {
     push();
