@@ -115,9 +115,24 @@ class GameBoard implements IScreen {
     this.startPlatformSpawnTime = millis();
   }
 
-  private playersAreDead() {
-    // checks if all the players are dead
-    return this.players.every((player) => player.isDead);
+  private checkForWinner() {
+    const alivePlayers = this.players.filter((player) => player.isAlive);
+
+    if (this.players.length === 1) {
+      // Singleplayer-logik
+      if (alivePlayers.length === 0) {
+        game.changeScreen(new GameEnd(null));
+      }
+    } else {
+      // Multiplayer-logik
+      if (alivePlayers.length === 1) {
+        const lastPlayerStanding = alivePlayers[0];
+        lastPlayerStanding.onDeath = () => {
+          const winnerIndex = this.players.indexOf(lastPlayerStanding);
+          game.changeScreen(new GameEnd(winnerIndex));
+        };
+      }
+    }
   }
 
   public update() {
@@ -145,16 +160,14 @@ class GameBoard implements IScreen {
         player.die();
       }
     });
-    // if all players are dead change screen to GameEnd
-    if (this.playersAreDead()) {
-      game.changeScreen(new GameEnd());
-    }
 
     this.translateY += 2;
 
     this.detectHit();
 
     this.removeOffScreenPlatforms();
+
+    this.checkForWinner();
   }
 
   private removeOffScreenPlatforms() {

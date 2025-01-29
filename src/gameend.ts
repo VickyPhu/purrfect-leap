@@ -3,8 +3,11 @@ class GameEnd implements IScreen {
   private activeButtonIndex: number;
   private deadCat: p5.Image;
   private enterKeyHasBeenReleased: boolean;
+  private winnerCats: p5.Image[];
+  private winnerPlayerIndex: number | null;
 
-  constructor() {
+  constructor(winnerPlayerIndex: number | null) {
+    this.winnerPlayerIndex = winnerPlayerIndex;
     this.enterKeyHasBeenReleased = false;
     this.buttons = [
       new Button("PLAY AGAIN", "#c2e1b5", 450, 500, 300, 100, 0, sound.retrySound),
@@ -12,6 +15,12 @@ class GameEnd implements IScreen {
     ];
     this.activeButtonIndex = 0;
     this.deadCat = loadImage("/assets/images/cats/skeletonHead.png");
+    this.winnerCats = [
+      loadImage("/assets/images/cats/Player1Winner.png"),
+      loadImage("/assets/images/cats/Player2Winner.png"),
+      loadImage("/assets/images/cats/Player3Winner.png"),
+      loadImage("/assets/images/cats/Player4Winner.png"),
+    ];
   }
 
   public update() {
@@ -44,12 +53,30 @@ class GameEnd implements IScreen {
     textAlign("center", "center");
 
     fill("#F96B6B");
-    text("GAME OVER", 700, 150);
-    pop();
+    if (this.winnerPlayerIndex === 0) {
+      text("Player 1 Wins!", 700, 150);
+      pop();
+    } else if (this.winnerPlayerIndex === 1) {
+      text("Player 2 Wins!", 700, 150);
+      pop();
+    } else if (this.winnerPlayerIndex === 2) {
+      text("Player 3 Wins!", 700, 150);
+      pop();
+    } else if (this.winnerPlayerIndex === 3) {
+      text("Player 4 Wins!", 700, 150);
+      pop();
+    } else {
+      text("GAME OVER", 700, 150);
+      pop();
+    }
   }
 
   private drawImage() {
-    image(this.deadCat, 600, 250, 200, 150);
+    if (this.winnerPlayerIndex !== null) {
+      image(this.winnerCats[this.winnerPlayerIndex], 600, 200, 200, 250);
+    } else {
+      image(this.deadCat, 600, 200, 200, 250);
+    }
   }
 
   private drawButtons() {
