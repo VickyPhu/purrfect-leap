@@ -49,18 +49,19 @@ class GameBoard implements IScreen {
         "/assets/images/platforms/startPlatformFlashing.gif",
       )),
       (this.platformImages[2] = loadImage(
-        "/assets/images/platforms/Platform.png",
+        "/assets/images/platforms/PlatformBroken.png",
       )),
       (this.platformImages[3] = loadImage(
-        "/assets/images/platforms/PlatformBroken.png",
+        "/assets/images/platforms/Platform.png",
       ));
-      this.powerUpImages[0] = loadImage(
-        "/assets/images/powerups/catnip-power.png",
-      );
-      this.powerUpImages[1] = loadImage(
-        "/assets/images/powerups/extralife-power.png",
-      );
-      this.powerUpImages[2] = loadImage("/assets/images/powerups/yarnpower.png");
+
+    this.powerUpImages[0] = loadImage(
+      "/assets/images/powerups/catnip-power.png",
+    );
+    this.powerUpImages[1] = loadImage(
+      "/assets/images/powerups/extralife-power.png",
+    );
+    this.powerUpImages[2] = loadImage("/assets/images/powerups/yarnpower.png");
   }
 
   private detectHit() {
@@ -96,6 +97,14 @@ class GameBoard implements IScreen {
           ) {
             player.automaticBounce(platformTop);
 
+            // If durability is 0, remove the platform from the platform array
+            if (platform.durability <= 0) {
+              const index = this.platforms.indexOf(platform);
+              if (index > -1) {
+                this.platforms.splice(index, 1); // Remove the broken platform from the array
+              }
+            }
+
             // if (gameObject instanceof Platform) {
             // Avgör om man föll ner på plattformen först
             // 1. flytta spelaren till ovanpå platformen
@@ -130,7 +139,7 @@ class GameBoard implements IScreen {
       const platformOnlyImages = this.platformImages.slice(2);
       const isBreakable = random() < 0.2;
       // if isBreakable = true then use imageIndex 1 or else 0
-      const imageIndex = isBreakable ? 1 : 0;
+      const imageIndex = isBreakable ? 0 : 1;
 
       const newPlatform = new Platform(
         30,
@@ -140,7 +149,7 @@ class GameBoard implements IScreen {
         platformOnlyImages,
         imageIndex,
         isBreakable,
-        isBreakable ? 1 : 0,
+        isBreakable ? 0 : 1,
       );
       this.platforms.push(newPlatform);
 
@@ -253,9 +262,9 @@ class GameBoard implements IScreen {
 
     this.removeOffScreenPlatforms();
     this.spawnPowerUp();
-    
+
     this.speedUpGame();
-    
+
     this.checkForWinner();
   }
 
