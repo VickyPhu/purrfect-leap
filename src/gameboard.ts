@@ -31,7 +31,7 @@ class GameBoard implements IScreen {
     this.loadImages();
     this.spawnPlayer();
     this.powerUpTimer = 0;
-    this.powerUpInterval = 100;
+    this.powerUpInterval = 2000;
   }
 
   private loadImages() {
@@ -138,27 +138,27 @@ class GameBoard implements IScreen {
     this.powerUpTimer += deltaTime;
     if (this.powerUpTimer > this.powerUpInterval) {
       const powerUps = [
+        new HighJumpPower(
+          60,
+          42,
+          random(100, 1300),
+          -this.translateY - 50,
+          this.powerUpImages,
+          0,
+        ),
         new ExtraLifePower(
-          50,
-          50,
+          40,
+          80,
           random(100, 1300),
           -this.translateY - 50,
           this.powerUpImages,
           1,
         ),
-        new HighJumpPower(
-          50,
-          50,
-          random(100, 1300),
-          random(100, 600),
-          this.powerUpImages,
-          0,
-        ),
         new ThrowYarnPower(
-          50,
-          50,
+          45,
+          60,
           random(100, 1300),
-          random(100, 600),
+          -this.translateY - 50,
           this.powerUpImages,
           2,
         ),
@@ -169,16 +169,6 @@ class GameBoard implements IScreen {
       this.powerUpTimer = 0;
     }
   }
-
-  //   if (millis() - this.powerUpSpawnTimer > this.powerUpSpawnInterval) {
-  //     const NewPowerUps = new powerUps [random(0,2)]
-
-  //     this.platforms.push(NewPowerUps);
-
-  //     // Reset timer
-  //     this.powerUpSpawnInterval = millis();
-  //   }
-  // }
 
   public update() {
     // Updates the countdown and when countdown is over runs the else condition (starts timer)
