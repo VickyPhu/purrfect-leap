@@ -97,11 +97,11 @@ class GameBoard implements IScreen {
           ) {
             player.automaticBounce(platformTop);
 
-            // If durability is 0, remove the platform from the platform array
+            // If durability is 0, remove the broken platform from the platform array
             if (platform.durability <= 0) {
               const index = this.platforms.indexOf(platform);
               if (index > -1) {
-                this.platforms.splice(index, 1); // Remove the broken platform from the array
+                this.platforms.splice(index, 1);
               }
             }
 
@@ -138,7 +138,7 @@ class GameBoard implements IScreen {
       // create a new array that excludes start-platform image and gif
       const platformOnlyImages = this.platformImages.slice(2);
       const isBreakable = random() < 0.2;
-      // if isBreakable = true then use imageIndex 1 or else 0
+      // if isBreakable = true then use imageIndex 0 or else 1
       const imageIndex = isBreakable ? 0 : 1;
 
       const newPlatform = new Platform(
@@ -250,7 +250,7 @@ class GameBoard implements IScreen {
     }
     this.players.forEach((player) => {
       player.update();
-      // when player falls off the screen they die, player.die in player class = true
+      // when player falls off the screen they die
       if (player.posY > height) {
         player.die();
       }
