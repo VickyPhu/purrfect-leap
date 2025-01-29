@@ -11,19 +11,23 @@ class GameBoard implements IScreen {
   private startPlatform: Platform | null;
   private startPlatformSpawnTime: number;
   private startPlatformSpawned: boolean;
+  private speedUpCounter: number;
+  private gameStartTime: number;
 
   constructor(players: Player[]) {
     this.playerImages = [];
     this.players = players;
     this.platforms = [];
     this.platformSpawnTimer = millis();
-    this.platformSpawnInterval = 700;
+    this.platformSpawnInterval = 500;
     this.translateY = 0;
     this.time = new Time();
     this.startPlatform = null;
     this.startPlatformSpawnTime = 0;
     this.startPlatformSpawned = false;
     this.loadImages();
+    this.speedUpCounter = 2;
+    this.gameStartTime = millis();
   }
 
   private loadImages() {
@@ -33,6 +37,9 @@ class GameBoard implements IScreen {
     this.playerImages[100] = loadImage("/assets/images/platforms/Platform.png");
     this.playerImages[101] = loadImage(
       "/assets/images/platforms/starting-platform.png",
+    );
+    this.playerImages[102] = loadImage(
+      "/assets/images/platforms/startPlatformGif.gif",
     );
   }
 
@@ -82,6 +89,17 @@ class GameBoard implements IScreen {
     }
   }
 
+  private speedUpGame() {
+    const gameTime = millis() - this.gameStartTime;
+    if (gameTime >= 40 * 1000) {
+      this.speedUpCounter = 5;
+    } else if (gameTime >= 30 * 1000) {
+      this.speedUpCounter = 3.5;
+    } else if (gameTime >= 20 * 1000) {
+      this.speedUpCounter = 2.5;
+    }
+  }
+
   private drawBackground() {
     image(this.backgroundImage, 0, 0, 1400, 700);
   }
@@ -105,9 +123,9 @@ class GameBoard implements IScreen {
 
   private spawnStartPlatform() {
     this.startPlatform = new Platform(
+      70,
+      1200,
       100,
-      900,
-      250,
       600,
       this.playerImages,
       101,
@@ -134,6 +152,10 @@ class GameBoard implements IScreen {
       this.startPlatformSpawned = true;
     }
 
+    if (this.startPlatform && millis() - this.startPlatformSpawnTime > 4000) {
+      this.startPlatform.imageIndex = 102;
+    }
+
     if (this.startPlatform && millis() - this.startPlatformSpawnTime > 7000) {
       this.startPlatform = null;
     }
@@ -150,11 +172,13 @@ class GameBoard implements IScreen {
       game.changeScreen(new GameEnd());
     }
 
-    this.translateY += 2;
+    this.translateY += this.speedUpCounter;
 
     this.detectHit();
 
     this.removeOffScreenPlatforms();
+
+    this.speedUpGame();
   }
 
   private removeOffScreenPlatforms() {
