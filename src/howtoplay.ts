@@ -16,7 +16,9 @@ class HowToPlay implements IScreen {
       0,
       sound.menuSound,
     );
-    this.controlImage = loadImage("/assets/images/control-image/keyboard.png");
+    this.controlImage = loadImage(
+      "/assets/images/control-image/keyboard-2.png",
+    );
     this.activeButtonIndex = 0;
   }
 
@@ -26,13 +28,13 @@ class HowToPlay implements IScreen {
     textFont("Fredoka", 50);
     textStyle(BOLD);
     textAlign("center", "center");
-    text("HOW TO PLAY", width / 2, 100);
+    text("HOW TO PLAY", width / 2, 75);
     pop();
   }
 
   private drawText() {
-    const marginX = 200; // Marginal från vänster och höger
-    const marginY = 150; // Marginal från toppen
+    const marginX = 150; // Marginal från vänster och höger
+    const marginY = 125; // Marginal från toppen
     const textWidth = width - marginX * 2;
 
     push();

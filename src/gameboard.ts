@@ -12,6 +12,10 @@ class GameBoard implements IScreen {
   private startPlatform: Platform | null;
   private startPlatformSpawnTime: number;
   private startPlatformSpawned: boolean;
+  private powerUpImages: p5.Image[];
+  private powerUpTimer: number;
+  private powerUpInterval: number;
+  private powerUps: (HighJumpPower | ExtraLifePower | ThrowYarnPower)[] = [];
   private speedUpCounter: number;
   private gameStartTime: number;
   private playerImage1: p5.Image;
@@ -31,7 +35,10 @@ class GameBoard implements IScreen {
     this.startPlatform = null;
     this.startPlatformSpawnTime = 0;
     this.startPlatformSpawned = false;
+    this.powerUpImages = [];
     this.loadImages();
+    this.powerUpTimer = 0;
+    this.powerUpInterval = 2000;
     this.speedUpCounter = 2;
     this.gameStartTime = millis();
 
@@ -52,6 +59,13 @@ class GameBoard implements IScreen {
     this.playerImages[102] = loadImage(
       "/assets/images/platforms/startPlatformFlashing.gif",
     );
+    this.powerUpImages[0] = loadImage(
+      "/assets/images/powerups/catnip-power.png",
+    );
+    this.powerUpImages[1] = loadImage(
+      "/assets/images/powerups/extralife-power.png",
+    );
+    this.powerUpImages[2] = loadImage("/assets/images/powerups/yarnpower.png");
   }
 
   private detectHit() {
@@ -164,6 +178,42 @@ class GameBoard implements IScreen {
     }
   }
 
+  private spawnPowerUp() {
+    this.powerUpTimer += deltaTime;
+    if (this.powerUpTimer > this.powerUpInterval) {
+      const powerUps = [
+        new HighJumpPower(
+          60,
+          42,
+          random(100, 1300),
+          -this.translateY - 50,
+          this.powerUpImages,
+          0,
+        ),
+        new ExtraLifePower(
+          40,
+          80,
+          random(100, 1300),
+          -this.translateY - 50,
+          this.powerUpImages,
+          1,
+        ),
+        new ThrowYarnPower(
+          45,
+          60,
+          random(100, 1300),
+          -this.translateY - 50,
+          this.powerUpImages,
+          2,
+        ),
+      ];
+      this.powerUps.push(powerUps[floor(random(0, 3))]);
+
+      // Reset timer
+      this.powerUpTimer = 0;
+    }
+  }
+
   public update() {
     // Updates the countdown and when countdown is over runs the else condition (starts timer)
     if (!this.time.countdownEnd) {
@@ -199,6 +249,7 @@ class GameBoard implements IScreen {
     this.detectHit();
 
     this.removeOffScreenPlatforms();
+    this.spawnPowerUp();
 
     this.speedUpGame();
 
@@ -259,6 +310,7 @@ class GameBoard implements IScreen {
 
     translate(0, this.translateY);
     this.platforms.forEach((platform) => platform.draw());
+    this.powerUps.forEach((powerUp) => powerUp.draw());
     pop();
   }
 }
