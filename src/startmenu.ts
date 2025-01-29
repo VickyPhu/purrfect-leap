@@ -2,10 +2,12 @@ class StartMenu implements IScreen {
   private buttons: Button[];
   private activeButtonIndex: number;
   private enterKeyHasBeenReleased: boolean;
+  private ignoreInputUntil: number;
   // private sound: p5.SoundFile | null;
 
   constructor() {
     this.enterKeyHasBeenReleased = false;
+    this.ignoreInputUntil = millis() + 200;
     this.buttons = [
       new Button(
         "START",
@@ -53,10 +55,12 @@ class StartMenu implements IScreen {
   }
 
   public update() {
+    if (millis() < this.ignoreInputUntil) return; // Ignorera input tills fördröjningen passerat
+
     if (keyIsDown(ENTER) && this.enterKeyHasBeenReleased) {
       this.enterKeyHasBeenReleased = false;
-      // Play sound for the active button
       this.buttons[this.activeButtonIndex].handleActivate();
+
       if (this.activeButtonIndex === 0) {
         game.changeScreen(new PlayerSelect());
       } else if (this.activeButtonIndex === 1) {
@@ -75,7 +79,7 @@ class StartMenu implements IScreen {
       this.enterKeyHasBeenReleased = false;
     }
 
-    if (!keyIsDown(DOWN_ARROW) && !keyIsDown(UP_ARROW)) {
+    if (!keyIsDown(DOWN_ARROW) && !keyIsDown(UP_ARROW) && !keyIsDown(ENTER)) {
       this.enterKeyHasBeenReleased = true;
     }
   }
