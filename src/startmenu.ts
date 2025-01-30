@@ -36,7 +36,7 @@ class StartMenu implements IScreen {
       sound.menuMusic.play();
     }
     this.activeButtonIndex = 0;
-    this.isMusicMuted = true;
+    this.isMusicMuted = globalMusicMuted; // Get global music state
   }
 
   private drawButtons() {
@@ -70,17 +70,13 @@ class StartMenu implements IScreen {
       } else if (this.activeButtonIndex === 1) {
         game.changeScreen(new HowToPlay());
       } else if (this.activeButtonIndex === 2) {
-        if (this.isMusicMuted) {
-          this.isMusicMuted = false;
-          sound.gameMusic.setVolume(0.5);
-          sound.menuMusic.setVolume(0.3);
-          sound.gameOverMusic.setVolume(0.2);
-        } else {
-          this.isMusicMuted = true;
-          sound.gameMusic.setVolume(0);
-          sound.menuMusic.setVolume(0);
-          sound.gameOverMusic.setVolume(0);
-        }
+        // Toggle music state
+        this.isMusicMuted = !this.isMusicMuted;
+        globalMusicMuted = this.isMusicMuted; // Store globally
+
+        sound.gameMusic.setVolume(this.isMusicMuted ? 0 : 0.5);
+        sound.menuMusic.setVolume(this.isMusicMuted ? 0 : 0.3);
+        sound.gameOverMusic.setVolume(this.isMusicMuted ? 0 : 0.2);
       }
     }
 
