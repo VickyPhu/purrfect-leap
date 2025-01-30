@@ -326,6 +326,12 @@ class GameBoard implements IScreen {
     }
   }
 
+  private removeOffScreenPowerUps() {
+    this.powerUps = this.powerUps.filter(
+      (powerUp) => powerUp.posY < height + this.translateY,
+    );
+  }
+
   public update() {
     // Updates the countdown and when countdown is over runs the else condition (starts timer)
     if (!this.time.countdownEnd) {
@@ -360,7 +366,7 @@ class GameBoard implements IScreen {
     this.playerCollision();
     this.removeOffScreenPlatforms();
     this.spawnPowerUp();
-
+    this.removeOffScreenPowerUps();
     this.speedUpGame();
 
     this.checkForWinner();
@@ -375,7 +381,7 @@ class GameBoard implements IScreen {
 
   private drawTimerBorder() {
     fill("#F0AB63");
-    rectMode(CORNER);  
+    rectMode(CORNER);
     stroke(0);
     strokeWeight(0);
     rect(0, 0, 1400, 55);
@@ -383,7 +389,7 @@ class GameBoard implements IScreen {
     let imgWidth = 55;
     let imgHeight = 45;
     let padding = 150;
-    let powerUpSpace = 350; 
+    let powerUpSpace = 350;
 
     // Calculate available space for player icons
     let availableWidth = 1396 - powerUpSpace;
@@ -393,7 +399,7 @@ class GameBoard implements IScreen {
       imgWidth * this.selectedPlayers + padding * (this.selectedPlayers - 1);
 
     // Center the players in the available space
-    let startX = (availableWidth - totalPlayersWidth);
+    let startX = availableWidth - totalPlayersWidth;
     let startY = 1 + (55 - imgHeight) / 2;
 
     // Draw player images and apply opacity if they are dead
@@ -408,7 +414,7 @@ class GameBoard implements IScreen {
           startX + (imgWidth + padding) * index,
           startY,
           imgWidth,
-          imgHeight
+          imgHeight,
         );
       }
 
@@ -416,8 +422,7 @@ class GameBoard implements IScreen {
         noTint(); // Reset tint for other players
       }
     });
-}
-
+  }
 
   public draw() {
     push();
