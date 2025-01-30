@@ -4,9 +4,11 @@ class GameEnd implements IScreen {
   private deadCat: p5.Image;
   private enterKeyHasBeenReleased: boolean;
   private winnerCats: p5.Image[];
+  private playerTimes: { playerNumber: number, time: number}[];
   private winnerPlayerIndex: number | null;
 
-  constructor(winnerPlayerIndex: number | null) {
+  constructor(playerTimes: { playerNumber: number, time: number }[], winnerPlayerIndex: number | null) {
+    this.playerTimes = playerTimes;
     this.winnerPlayerIndex = winnerPlayerIndex;
     this.enterKeyHasBeenReleased = false;
     this.buttons = [
@@ -66,9 +68,14 @@ class GameEnd implements IScreen {
       text("Player 4 Wins!", 700, 150);
       pop();
     } else {
-      text("GAME OVER", 700, 150);
-      pop();
+      text('"GAME OVER"', 700, 150);
     }
+    textFont('Fredoka', 30);
+    this.playerTimes.forEach((playerTime, index) => {
+      const playerText = `Player ${playerTime.playerNumber}: ${(playerTime.time).toFixed(2)}s`;
+      text(playerText, 700, 200 + index * 40);
+    })
+    pop();
   }
 
   private drawImage() {
