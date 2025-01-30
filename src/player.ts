@@ -12,6 +12,7 @@ class Player extends GameEntity {
   public isAlive: boolean;
   public onDeath: (() => void) | null = null;
   private highJumpActive: boolean = false;
+  public deathTime: number | null = null;
 
   constructor(
     height: number,
@@ -37,6 +38,7 @@ class Player extends GameEntity {
     this.playerImages = playerImages;
     this.controls = controls;
     this.isAlive = true;
+    this.deathTime = null;
   }
 
   private bounceAnimation() {
@@ -145,6 +147,9 @@ class Player extends GameEntity {
   }
 
   public die() {
+    if (this.deathTime === null) {
+      this.deathTime = millis(); // Save the time when player dies
+    }
     // game.changeScreen(new GameEnd());
     this.isAlive = false;
     if (this.onDeath) {

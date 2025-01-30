@@ -4,9 +4,14 @@ class GameEnd implements IScreen {
   private deadCat: p5.Image;
   private enterKeyHasBeenReleased: boolean;
   private winnerCats: p5.Image[];
+  private playerTimes: { playerNumber: number; time: number }[];
   private winnerPlayerIndex: number | null;
 
-  constructor(winnerPlayerIndex: number | null) {
+  constructor(
+    playerTimes: { playerNumber: number; time: number }[],
+    winnerPlayerIndex: number | null,
+  ) {
+    this.playerTimes = playerTimes;
     this.winnerPlayerIndex = winnerPlayerIndex;
     this.enterKeyHasBeenReleased = false;
     this.buttons = [
@@ -14,7 +19,7 @@ class GameEnd implements IScreen {
         "PLAY AGAIN",
         "#c2e1b5",
         450,
-        500,
+        550,
         300,
         100,
         0,
@@ -24,7 +29,7 @@ class GameEnd implements IScreen {
         "MAIN MENU",
         "#f0ab63",
         950,
-        500,
+        550,
         300,
         100,
         1,
@@ -67,35 +72,55 @@ class GameEnd implements IScreen {
 
   private drawTitle() {
     push();
-    fill("#8B8985");
+    fill("#F96B6B");
     textFont("Fredoka", 80);
     textStyle(BOLD);
-    textAlign("center", "center");
+    textAlign(CENTER, CENTER);
 
-    fill("#F96B6B");
     if (this.winnerPlayerIndex === 0) {
       text("Player 1 Wins!", 700, 150);
-      pop();
     } else if (this.winnerPlayerIndex === 1) {
       text("Player 2 Wins!", 700, 150);
-      pop();
     } else if (this.winnerPlayerIndex === 2) {
       text("Player 3 Wins!", 700, 150);
-      pop();
     } else if (this.winnerPlayerIndex === 3) {
       text("Player 4 Wins!", 700, 150);
-      pop();
     } else {
       text("GAME OVER", 700, 150);
-      pop();
     }
+    pop();
+
+    push();
+    fill("#000");
+    textFont("Fredoka", 30);
+    textAlign(CENTER, CENTER);
+
+    // Adjust startX based on number of players
+    let startX: number;
+    if (this.playerTimes.length === 1) {
+      startX = width / 2; // one player
+    } else if (this.playerTimes.length === 2) {
+      startX = width / 2 - 150; // two players
+    } else if (this.playerTimes.length === 3) {
+      startX = width / 2 - 250; // three players
+    } else if (this.playerTimes.length === 4) {
+      startX = width * 0.25 - 35; // four players
+    }
+
+    // Text for every player
+    this.playerTimes.forEach((playerTime) => {
+      const playerText = `Player ${playerTime.playerNumber}: ${playerTime.time.toFixed(2)}s`;
+      text(playerText, startX, 220);
+      startX += textWidth(playerText) + 50; // Move startposition for next text
+    });
+    pop();
   }
 
   private drawImage() {
     if (this.winnerPlayerIndex !== null) {
-      image(this.winnerCats[this.winnerPlayerIndex], 600, 200, 200, 250);
+      image(this.winnerCats[this.winnerPlayerIndex], 600, 250, 200, 240);
     } else {
-      image(this.deadCat, 600, 200, 200, 250);
+      image(this.deadCat, 600, 250, 200, 220);
     }
   }
 

@@ -36,7 +36,6 @@ class Button {
     // Draw button rectangle
     push();
     rectMode(CENTER);
-    rectMode(CENTER);
     fill(this.color);
     noStroke();
     rect(this.posX, this.posY, this.width, this.height, 20);
@@ -45,9 +44,7 @@ class Button {
     fill("#000");
     textFont("Fredoka", 45);
     textStyle(BOLD);
-    textAlign("center", "center");
-    text(this.text, this.posX, this.posY);
-    textAlign("center", "center");
+    textAlign(CENTER, CENTER);
     text(this.text, this.posX, this.posY);
     pop();
 

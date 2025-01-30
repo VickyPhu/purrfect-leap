@@ -278,7 +278,7 @@ class GameBoard implements IScreen {
     if (this.players.length === 1) {
       // Singleplayer-logik
       if (alivePlayers.length === 0) {
-        game.changeScreen(new GameEnd(null));
+        game.changeScreen(new GameEnd(this.getPlayerTimes(), null));
       }
     } else {
       // Multiplayer-logik
@@ -286,10 +286,17 @@ class GameBoard implements IScreen {
         const lastPlayerStanding = alivePlayers[0];
         lastPlayerStanding.onDeath = () => {
           const winnerIndex = this.players.indexOf(lastPlayerStanding);
-          game.changeScreen(new GameEnd(winnerIndex));
+          game.changeScreen(new GameEnd(this.getPlayerTimes(), winnerIndex));
         };
       }
     }
+  }
+
+  private getPlayerTimes() {
+    return this.players.map((player, index) => ({
+      playerNumber: index + 1,
+      time: player.deathTime ? player.deathTime / 1000 : 0,
+    }));
   }
 
   private spawnPowerUp() {
