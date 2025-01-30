@@ -84,16 +84,5 @@ class Button {
       rect(this.posX, this.posY, this.width, this.height, 20);
       pop();
     }
-
-    //If active button
-    if (isActive) {
-      push();
-      rectMode(CENTER);
-      stroke("#449ea1");
-      noFill();
-      strokeWeight(10);
-      rect(this.posX, this.posY, this.width, this.height, 20);
-      pop();
-    }
   }
 }
