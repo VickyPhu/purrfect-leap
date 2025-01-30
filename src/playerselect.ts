@@ -24,7 +24,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       0,
-      sound.catSound1 
+      sound.catSound1,
     );
     this.playerSelectButton2 = new Button(
       "2 PLAYER",
@@ -34,7 +34,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       1,
-      sound.catSound2
+      sound.catSound2,
     );
     this.playerSelectButton3 = new Button(
       "3 PLAYER",
@@ -44,7 +44,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       2,
-      sound.catSound3
+      sound.catSound3,
     );
     this.playerSelectButton4 = new Button(
       "4 PLAYER",
@@ -54,7 +54,7 @@ class PlayerSelect implements IScreen {
       250,
       100,
       3,
-      sound.catSound4
+      sound.catSound4,
     );
     this.gameStartButton = new Button(
       "START GAME",
@@ -64,7 +64,7 @@ class PlayerSelect implements IScreen {
       350,
       150,
       4,
-      sound.enterSound 
+      sound.enterSound,
     );
     this.returnButton = new Button(
       "RETURN",
@@ -76,7 +76,6 @@ class PlayerSelect implements IScreen {
       5,
       sound.menuSound,
     );
- 
 
     this.activeButtonIndex = 0;
     this.lastKeyPressed = null;
@@ -88,6 +87,10 @@ class PlayerSelect implements IScreen {
     this.playerImage2 = loadImage("/assets/images/cats/Player2Head.png");
     this.playerImage3 = loadImage("/assets/images/cats/Player3Head.png");
     this.playerImage4 = loadImage("/assets/images/cats/Player4Head.png");
+    if (!sound.menuMusic.isPlaying()) {
+      sound.gameOverMusic.stop();
+      sound.menuMusic.play();
+    }
   }
 
   private drawButtons() {
@@ -149,7 +152,7 @@ class PlayerSelect implements IScreen {
       case 4:
         this.gameStartButton.handleActivate();
         console.log("START GAME selected");
-    
+
         if (this.selectedPlayers > 0) {
           const playerImages: p5.Image[][] = [
             [
@@ -191,60 +194,58 @@ class PlayerSelect implements IScreen {
               loadImage("assets/images/cats/Player42M.png"),
               loadImage("assets/images/cats/Player43M.png"),
               loadImage("assets/images/cats/Player44M.png"),
-            ]
+            ],
           ];
-  
+
           const controls = [
             { left: 37, right: 39, action: 38 }, // LeftArrow, RightArrow, UpArrow
             { left: 81, right: 69, action: 87 }, // Q, E, W
             { left: 73, right: 80, action: 79 }, // I, P, O
             { left: 90, right: 67, action: 88 }, // Z, C, X
           ];
-  
-          const players: Player[] = [];
-            for (let i = 0; i < this.selectedPlayers; i++) {
-              players.push(
-                new Player(
-                  75,
-                  100,
-                  (width - this.selectedPlayers * 250) / 2 + i * 250,
-                  300,
-                  playerImages[i],
-                  playerImages[i],
-                  0,
-                  controls[i],
-                )
-              );
-            }
-            
-            const gameBoard = new GameBoard(players, this.selectedPlayers);
-            game.changeScreen(gameBoard);
-          } 
-          break;
-    case 5: 
-      this.returnButton.handleActivate();
-      console.log("RETURN to Start Menu");
-      game.changeScreen(new StartMenu());
-      break;
-    default:
-      console.error("Invalid button index");
-  }
 
+          const players: Player[] = [];
+          for (let i = 0; i < this.selectedPlayers; i++) {
+            players.push(
+              new Player(
+                75,
+                100,
+                (width - this.selectedPlayers * 250) / 2 + i * 250,
+                300,
+                playerImages[i],
+                playerImages[i],
+                0,
+                controls[i],
+              ),
+            );
+          }
+
+          const gameBoard = new GameBoard(players, this.selectedPlayers);
+          game.changeScreen(gameBoard);
+        }
+        break;
+      case 5:
+        this.returnButton.handleActivate();
+        console.log("RETURN to Start Menu");
+        game.changeScreen(new StartMenu());
+        break;
+      default:
+        console.error("Invalid button index");
+    }
   }
 
   public update() {
     const pressedThisFrame = keyIsPressed && !this.prevIsKeyPressed;
-  
+
     if (pressedThisFrame) {
-      
       if (keyCode === LEFT_ARROW && this.lastKeyPressed !== "LEFT") {
-        if (this.activeButtonIndex !== 4 && this.activeButtonIndex !== 5) {        
-          this.activeButtonIndex = (this.activeButtonIndex - 1 + 4) % 4; 
+        if (this.activeButtonIndex !== 4 && this.activeButtonIndex !== 5) {
+          this.activeButtonIndex = (this.activeButtonIndex - 1 + 4) % 4;
         }
         this.lastKeyPressed = "LEFT";
       } else if (keyCode === RIGHT_ARROW && this.lastKeyPressed !== "RIGHT") {
-        if (this.activeButtonIndex !== 4 && this.activeButtonIndex !== 5) {   
-          this.activeButtonIndex = (this.activeButtonIndex + 1) % 4; 
+        if (this.activeButtonIndex !== 4 && this.activeButtonIndex !== 5) {
+          this.activeButtonIndex = (this.activeButtonIndex + 1) % 4;
         }
         this.lastKeyPressed = "RIGHT";
       }
@@ -261,8 +262,7 @@ class PlayerSelect implements IScreen {
           this.activeButtonIndex = 4;
         }
         this.lastKeyPressed = "UP";
-      }
-      else if (keyCode === ENTER) {
+      } else if (keyCode === ENTER) {
         this.activateButton(this.activeButtonIndex);
 
         if (this.activeButtonIndex >= 0 && this.activeButtonIndex <= 3) {
@@ -273,15 +273,13 @@ class PlayerSelect implements IScreen {
         }
       }
     }
-  
+
     if (!keyIsPressed && this.prevIsKeyPressed) {
       this.lastKeyPressed = null;
     }
-  
+
     this.prevIsKeyPressed = keyIsPressed;
   }
-  
-  
 
   public draw() {
     fill("#F0DEB5");

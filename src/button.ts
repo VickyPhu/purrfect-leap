@@ -6,7 +6,7 @@ class Button {
   private width: number;
   private height: number;
   public buttonIndex: number;
-  private sound: p5.SoundFile | null; // Explicitly allow null for safety
+  private sound: p5.SoundFile; // Explicitly allow null for safety
 
   constructor(
     text: string,
@@ -16,7 +16,7 @@ class Button {
     width: number,
     height: number,
     buttonIndex: number,
-    sound: p5.SoundFile | null, // Allow null in case no sound is passed
+    sound: p5.SoundFile, // Allow null in case no sound is passed
   ) {
     this.text = text;
     this.color = color;
@@ -28,31 +28,8 @@ class Button {
     this.sound = sound; // Assign the sound file
   }
 
-  private playSound(): void {
-    console.log(`Attempting to play sound for button: ${this.text}`);
-    if (this.sound) {
-      if (this.sound.isLoaded()) {
-        this.sound.play();
-      } else {
-        console.error(`Sound file not loaded for button: ${this.text}`);
-      }
-    } else {
-      console.error(`No sound assigned for button: ${this.text}`);
-    }
-  }
-
   public handleActivate() {
-    if (this.sound) {
-      if (this.sound.isPlaying()) {
-        this.sound.stop(); // Stoppa musiken om den spelar
-        console.log(`Music stopped: ${this.text}`);
-      } else {
-        this.sound.play(); // Spela musiken om den inte redan spelas
-        console.log(`Music started: ${this.text}`);
-      }
-    } else {
-      console.error(`No sound assigned for button: ${this.text}`);
-    }
+    this.sound.play();
   }
 
   public draw(isActive: boolean) {
