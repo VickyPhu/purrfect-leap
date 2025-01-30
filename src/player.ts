@@ -1,6 +1,7 @@
 class Player extends GameEntity {
   private name: string;
   public velocity: number;
+  public horizontalVelocity: number;
   private gravity: number;
   private bounceVelocity: number;
   private soundFX: string;
@@ -26,6 +27,7 @@ class Player extends GameEntity {
 
     this.name = "Player1";
     this.velocity = 0;
+    this.horizontalVelocity = 0;
     this.gravity = 0.5;
     this.soundFX = "";
     this.bounceVelocity = -15;

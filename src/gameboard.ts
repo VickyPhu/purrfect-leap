@@ -57,6 +57,72 @@ class GameBoard implements IScreen {
     this.powerUpImages[2] = loadImage("/assets/images/powerups/yarnpower.png");
   }
 
+  private playerCollision() {
+    // Loop through all players
+    for (let i = 0; i < this.players.length; i++) {
+      // Compare with remaining players
+      for (let j = i + 1; j < this.players.length; j++) {
+        const player1 = this.players[i];
+        const player2 = this.players[j];
+
+        // Calculate boundaries
+        const player1Left = player1.posX;
+        const player1Right = player1.posX + player1.width;
+        const player1Top = player1.posY;
+        const player1Bottom = player1.posY + player1.height;
+
+        const player2Left = player2.posX;
+        const player2Right = player2.posX + player2.width;
+        const player2Top = player2.posY;
+        const player2Bottom = player2.posY + player2.height;
+
+        // First check if there's any collision at all
+        if (
+          player1Left < player2Right &&
+          player1Right > player2Left &&
+          player1Top < player2Bottom &&
+          player1Bottom > player2Top
+        ) {
+          // Find if collision is more horizontal or vertical
+          //Math.min returns the lowest number in the list
+          const horizontalOverlap = Math.min(
+            player1Right - player2Left,
+            player2Right - player1Left,
+          );
+          const verticalOverlap = Math.min(
+            player1Bottom - player2Top,
+            player2Bottom - player1Top,
+          );
+
+          if (horizontalOverlap < verticalOverlap) {
+            if (player1Left < player2Left) {
+              player1.posX -= horizontalOverlap / 2;
+              player2.posX += horizontalOverlap / 2;
+
+              player1.horizontalVelocity = -10;
+              player2.horizontalVelocity = 10;
+            } else {
+              player1.posX += horizontalOverlap / 2;
+              player2.posX -= horizontalOverlap / 2;
+
+              player1.horizontalVelocity = 10;
+              player2.horizontalVelocity = -10;
+            }
+          } else {
+            if (player1.velocity > 0 && player1Bottom > player2Top) {
+              player1.velocity -= 15;
+              player2.velocity += 5;
+            }
+            if (player2.velocity > 0 && player2Bottom > player1Top) {
+              player2.velocity -= 15;
+              player2.velocity += 5;
+            }
+          }
+        }
+      }
+    }
+  }
+
   private detectHit() {
     for (const player of this.players) {
       if (this.startPlatform) {
@@ -236,7 +302,7 @@ class GameBoard implements IScreen {
     this.translateY += this.speedUpCounter;
 
     this.detectHit();
-
+    this.playerCollision();
     this.removeOffScreenPlatforms();
     this.spawnPowerUp();
 
