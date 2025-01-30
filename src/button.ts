@@ -25,7 +25,6 @@ class Button {
     this.width = width;
     this.height = height;
     this.buttonIndex = buttonIndex;
-    this.buttonIndex = buttonIndex;
     this.sound = sound; // Assign the sound file
   }
 
@@ -80,17 +79,6 @@ class Button {
       push();
       rectMode(CENTER);
       stroke("#449ea1"); // Highlight border color
-      noFill();
-      strokeWeight(10);
-      rect(this.posX, this.posY, this.width, this.height, 20);
-      pop();
-    }
-
-    //If active button
-    if (isActive) {
-      push();
-      rectMode(CENTER);
-      stroke("#449ea1");
       noFill();
       strokeWeight(10);
       rect(this.posX, this.posY, this.width, this.height, 20);
