@@ -3,7 +3,7 @@ class StartMenu implements IScreen {
   private activeButtonIndex: number;
   private enterKeyHasBeenReleased: boolean;
   private ignoreInputUntil: number;
-  // private sound: p5.SoundFile | null;
+  private isMusicMuted: boolean;
 
   constructor() {
     this.enterKeyHasBeenReleased = false;
@@ -29,10 +29,14 @@ class StartMenu implements IScreen {
         1,
         sound.chooseSound,
       ),
-      new Button("Music", "#F0AB63", 125, 75, 200, 70, 2, sound.menuMusic),
+      new Button("Music", "#F0AB63", 125, 75, 200, 70, 2, sound.chooseSound),
     ];
-
+    sound.gameOverMusic.stop();
+    if (!sound.menuMusic.isPlaying()) {
+      sound.menuMusic.play();
+    }
     this.activeButtonIndex = 0;
+    this.isMusicMuted = globalMusicMuted; // Get global music state
   }
 
   private drawButtons() {
@@ -65,6 +69,14 @@ class StartMenu implements IScreen {
         game.changeScreen(new PlayerSelect());
       } else if (this.activeButtonIndex === 1) {
         game.changeScreen(new HowToPlay());
+      } else if (this.activeButtonIndex === 2) {
+        // Toggle music state
+        this.isMusicMuted = !this.isMusicMuted;
+        globalMusicMuted = this.isMusicMuted; // Store globally
+
+        sound.gameMusic.setVolume(this.isMusicMuted ? 0 : 0.5);
+        sound.menuMusic.setVolume(this.isMusicMuted ? 0 : 0.3);
+        sound.gameOverMusic.setVolume(this.isMusicMuted ? 0 : 0.2);
       }
     }
 
@@ -83,14 +95,6 @@ class StartMenu implements IScreen {
       this.enterKeyHasBeenReleased = true;
     }
   }
-
-  // private playMusic() {
-  //   if (sound.menuMusic.isLoaded()) {
-  //     sound.menuMusic.play();
-  //   } else {
-  //     console.error("Menu music is not loaded yet.");
-  //   }
-  // }
 
   public draw() {
     push();

@@ -10,9 +10,12 @@ let sound: {
   catSound2: p5.SoundFile;
   catSound3: p5.SoundFile;
   catSound4: p5.SoundFile;
+  gameMusic: p5.SoundFile;
+  gameOverMusic: p5.SoundFile;
 };
 // let playerImages: p5.Image[];
 let playerSelect: PlayerSelect;
+let globalMusicMuted = true; // Store global music state
 
 /**
  * Built in preload function in P5
@@ -21,24 +24,17 @@ let playerSelect: PlayerSelect;
  */
 function preload() {
   sound = {
-    chooseSound: loadSound("/assets/sounds/button-pressed.mp3"
-    ),
-    enterSound: loadSound("/assets/sounds/button-pressed.mp3"
-    ),
-    retrySound: loadSound("/assets/sounds/button-pressed.mp3"
-    ),
-    menuSound: loadSound("/assets/sounds/boing.mp3"
-    ),
-    catSound1: loadSound("/assets/sounds/1playerCat.mp3"
-    ),
-    catSound2: loadSound("/assets/sounds/2playerCat.mp3"
-    ),
-    catSound3: loadSound("/assets/sounds/3playerCat.mp3"
-    ),
-    catSound4: loadSound("/assets/sounds/4playerCat.mp3"
-    ),
-    menuMusic: loadSound("/assets/music/menuMusic.mp3"
-    ),
+    chooseSound: loadSound("/assets/sounds/button-pressed.mp3"),
+    enterSound: loadSound("/assets/sounds/button-pressed.mp3"),
+    retrySound: loadSound("/assets/sounds/button-pressed.mp3"),
+    menuSound: loadSound("/assets/sounds/boing.mp3"),
+    catSound1: loadSound("/assets/sounds/1playerCat.mp3"),
+    catSound2: loadSound("/assets/sounds/2playerCat.mp3"),
+    catSound3: loadSound("/assets/sounds/3playerCat.mp3"),
+    catSound4: loadSound("/assets/sounds/4playerCat.mp3"),
+    menuMusic: loadSound("/assets/music/menuMusic.mp3"),
+    gameMusic: loadSound("/assets/music/Mirisongtest.mp3"),
+    gameOverMusic: loadSound("/assets/music/gameOver.mp3"),
   };
 }
 
@@ -51,15 +47,18 @@ function preload() {
 function setup() {
   createCanvas(1400, 700);
   frameRate(60);
-  sound.chooseSound.setVolume(0.5);
-  sound.enterSound.setVolume(0.5);
-  sound.retrySound.setVolume(0.5);
-  sound.menuSound.setVolume(0.5);
-  sound.catSound1.setVolume(0.5);
-  sound.catSound2.setVolume(0.5);
-  sound.catSound3.setVolume(0.5);
-  sound.catSound4.setVolume(0.5);
-  sound.menuMusic.setVolume(0.5);
+  sound.chooseSound.setVolume(0.2);
+  sound.enterSound.setVolume(0.2);
+  sound.retrySound.setVolume(0.2);
+  sound.menuSound.setVolume(0.2);
+  sound.catSound1.setVolume(0.2);
+  sound.catSound2.setVolume(0.2);
+  sound.catSound3.setVolume(0.2);
+  sound.catSound4.setVolume(0.2);
+
+  sound.menuMusic.setVolume(globalMusicMuted ? 0 : 0.3);
+  sound.gameMusic.setVolume(globalMusicMuted ? 0 : 0.5);
+  sound.gameOverMusic.setVolume(globalMusicMuted ? 0 : 0.2);
   game = new Game();
 }
 
@@ -71,4 +70,12 @@ function setup() {
 function draw() {
   game.update();
   game.draw();
+}
+
+function keyPressed() {
+  userStartAudio();
+}
+
+function mousePressed() {
+  userStartAudio();
 }
