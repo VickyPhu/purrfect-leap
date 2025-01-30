@@ -1,4 +1,6 @@
 /// <reference path="gameentity.ts" />
+/// <reference path="gameboard.ts" />
+/// <reference path="player.ts" />
 
 class ExtraLifePower extends GameEntity {
   // private name: string;

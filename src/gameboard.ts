@@ -206,10 +206,14 @@ class GameBoard implements IScreen {
             playerBottom >= powerUpTop &&
             playerTop < powerUpBottom
           ) {
+            this.powerUps = this.powerUps.filter((p) => p !== powerUp);
             if (powerUp instanceof HighJumpPower) {
               player.activateHighJump();
             }
-            this.powerUps = this.powerUps.filter((p) => p !== powerUp);
+
+            if (powerUp instanceof ExtraLifePower) {
+              player.activateExtraLife();
+            }
           }
         }
       }
@@ -415,6 +419,19 @@ class GameBoard implements IScreen {
           startY,
           imgWidth,
           imgHeight,
+        );
+      }
+
+      if (player.hasExtraLife) {
+        let lifeIconX = startX + (imgWidth + padding) * index + imgWidth + 5;
+        let lifeIconY = startY;
+        let lifeIconSize = 30;
+        image(
+          this.powerUpImages[1],
+          lifeIconX,
+          lifeIconY,
+          lifeIconSize,
+          lifeIconSize,
         );
       }
 
