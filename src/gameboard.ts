@@ -433,15 +433,6 @@ class GameBoard implements IScreen {
     });
   }
 
-  public restartGame() {
-    // Återställ alla spelare när spelet startar om
-    this.players.forEach(player => {
-      player.resetPlayer();
-    });
-    this.gameStartTime = millis(); // Återställ spelets starttid
-
-  }
-
   public draw() {
     push();
     this.drawBackground();

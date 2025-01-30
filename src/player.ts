@@ -165,10 +165,4 @@ class Player extends GameEntity {
       this.onDeath();
     }
   }
-  
-  public resetPlayer() {
-    this.startTime = null;
-    this.deathTime = null;
-    this.isAlive = true;
-  }
 }
