@@ -113,7 +113,7 @@ class Player extends GameEntity {
     }
     this.bounceAnimation();
     if (this.highJumpActive) {
-      this.velocity = this.bounceVelocity * 2;
+      this.velocity = Math.max(this.bounceVelocity * 2, -25); // Prevents extreme jumps
       this.highJumpActive = false;
     }
   }
