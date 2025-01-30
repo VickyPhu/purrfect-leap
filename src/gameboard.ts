@@ -189,6 +189,29 @@ class GameBoard implements IScreen {
             // }
           }
         }
+        for (const powerUp of this.powerUps) {
+          const playerLeft = player.posX;
+          const playerRight = player.posX + player.width;
+          const playerTop = player.posY;
+          const playerBottom = player.posY + player.height;
+
+          const powerUpLeft = powerUp.posX;
+          const powerUpRight = powerUp.posX + powerUp.width;
+          const powerUpTop = powerUp.posY + this.translateY;
+          const powerUpBottom = powerUp.posY + powerUp.height + this.translateY;
+
+          if (
+            playerLeft < powerUpRight &&
+            playerRight > powerUpLeft &&
+            playerBottom >= powerUpTop &&
+            playerTop < powerUpBottom
+          ) {
+            if (powerUp instanceof HighJumpPower) {
+              player.activateHighJump();
+            }
+            this.powerUps = this.powerUps.filter((p) => p !== powerUp);
+          }
+        }
       }
     }
   }
