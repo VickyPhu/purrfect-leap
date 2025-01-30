@@ -13,6 +13,8 @@ class Player extends GameEntity {
   public onDeath: (() => void) | null = null;
   private highJumpActive: boolean = false;
   public deathTime: number | null = null;
+  public hasExtraLife: boolean = false;
+  private isReviving: boolean = false;
 
   constructor(
     height: number,
@@ -107,6 +109,10 @@ class Player extends GameEntity {
     this.highJumpActive = true;
   }
 
+  public activateExtraLife() {
+    this.hasExtraLife = true;
+  }
+
   public automaticBounce(platformTop: number) {
     const originalPlatformTop = platformTop;
     if (this.posY + this.height > originalPlatformTop) {
@@ -151,9 +157,44 @@ class Player extends GameEntity {
       this.deathTime = millis(); // Save the time when player dies
     }
     // game.changeScreen(new GameEnd());
-    this.isAlive = false;
-    if (this.onDeath) {
-      this.onDeath();
+    if (this.hasExtraLife) {
+      this.revive();
+    } else {
+      this.isAlive = false;
+      if (this.onDeath) {
+        this.onDeath();
+      }
     }
+  }
+
+  private revive() {
+    console.log("Player revived! Jumping to top.");
+
+    this.hasExtraLife = false;
+    this.isReviving = true;
+
+    this.velocity = -height / 40;
+    this.gravity = 0.1;
+
+    let targetHeight = height * 0.1;
+
+    let jumpInterval = setInterval(() => {
+      if (this.posY > targetHeight) {
+        this.velocity += this.gravity;
+        this.posY += this.velocity;
+      } else {
+        clearInterval(jumpInterval);
+        console.log("Player reached top. Staying for 2 seconds.");
+
+        this.velocity = 0;
+        this.gravity = 0;
+
+        setTimeout(() => {
+          console.log("Player resumes normal gravity.");
+          this.gravity = 0.5;
+          this.isReviving = false;
+        }, 1000);
+      }
+    }, 30);
   }
 }
