@@ -132,26 +132,22 @@ class PlayerSelect implements IScreen {
       case 0:
         this.playerSelectButton1.handleActivate();
         this.selectedPlayers = 1;
-        console.log("1 PLAYER selected");
         break;
       case 1:
         this.playerSelectButton2.handleActivate();
         this.selectedPlayers = 2;
-        console.log("2 PLAYER selected");
         break;
       case 2:
         this.playerSelectButton3.handleActivate();
         this.selectedPlayers = 3;
-        console.log("3 PLAYER selected");
         break;
       case 3:
         this.playerSelectButton4.handleActivate();
         this.selectedPlayers = 4;
-        console.log("4 PLAYER selected");
         break;
       case 4:
         this.gameStartButton.handleActivate();
-        console.log("START GAME selected");
+  
 
         if (this.selectedPlayers > 0) {
           const playerImages: p5.Image[][] = [
@@ -226,11 +222,10 @@ class PlayerSelect implements IScreen {
         break;
       case 5:
         this.returnButton.handleActivate();
-        console.log("RETURN to Start Menu");
         game.changeScreen(new StartMenu());
         break;
       default:
-        console.error("Invalid button index");
+  
     }
   }
 
