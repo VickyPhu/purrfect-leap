@@ -45,7 +45,7 @@ class GameBoard implements IScreen {
 
   private loadImages() {
     this.backgroundImage = loadImage(
-      "/assets/images/background/purrfectLeapBackground.jpg",
+      "/assets/images/background/backgroundMoving.gif",
     );
 
     (this.platformImages[0] = loadImage(
