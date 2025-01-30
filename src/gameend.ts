@@ -12,8 +12,8 @@ class GameEnd implements IScreen {
     this.winnerPlayerIndex = winnerPlayerIndex;
     this.enterKeyHasBeenReleased = false;
     this.buttons = [
-      new Button("PLAY AGAIN", "#c2e1b5", 450, 500, 300, 100, 0, sound.retrySound),
-      new Button("MAIN MENU", "#f0ab63", 950, 500, 300, 100, 1, sound.menuSound),   
+      new Button("PLAY AGAIN", "#c2e1b5", 450, 550, 300, 100, 0, sound.retrySound),
+      new Button("MAIN MENU", "#f0ab63", 950, 550, 300, 100, 1, sound.menuSound),   
     ];
     this.activeButtonIndex = 0;
     this.deadCat = loadImage("/assets/images/cats/skeletonHead.png");
@@ -49,40 +49,43 @@ class GameEnd implements IScreen {
 
   private drawTitle() {
     push();
-    fill("#8B8985");
+    fill("#F96B6B");
     textFont("Fredoka", 80);
     textStyle(BOLD);
-    textAlign("center", "center");
+    textAlign(CENTER, CENTER);
 
-    fill("#F96B6B");
     if (this.winnerPlayerIndex === 0) {
       text("Player 1 Wins!", 700, 150);
-      pop();
     } else if (this.winnerPlayerIndex === 1) {
       text("Player 2 Wins!", 700, 150);
-      pop();
     } else if (this.winnerPlayerIndex === 2) {
       text("Player 3 Wins!", 700, 150);
-      pop();
     } else if (this.winnerPlayerIndex === 3) {
       text("Player 4 Wins!", 700, 150);
-      pop();
     } else {
-      text('"GAME OVER"', 700, 150);
+      text("GAME OVER", 700, 150);
     }
+    pop();
+
+    push();
+    fill('#000');
     textFont('Fredoka', 30);
+    textAlign(LEFT, CENTER);
+    let currentX = 220;
+
     this.playerTimes.forEach((playerTime, index) => {
       const playerText = `Player ${playerTime.playerNumber}: ${(playerTime.time).toFixed(2)}s`;
-      text(playerText, 700, 200 + index * 40);
+      text(playerText, currentX, 220);
+      currentX += textWidth(playerText) + 40;
     })
     pop();
   }
 
   private drawImage() {
     if (this.winnerPlayerIndex !== null) {
-      image(this.winnerCats[this.winnerPlayerIndex], 600, 200, 200, 250);
+      image(this.winnerCats[this.winnerPlayerIndex], 600, 250, 200, 220);
     } else {
-      image(this.deadCat, 600, 200, 200, 250);
+      image(this.deadCat, 600, 250, 200, 220);
     }
   }
 
