@@ -45,7 +45,16 @@ class GameEnd implements IScreen {
       loadImage("/assets/images/cats/Player4Winner.png"),
     ];
     sound.gameMusic.stop();
-    sound.gameOverMusic.loop();
+    if (this.winnerPlayerIndex !== null) {
+      // If there's a winner, play the menu music instead of game over music
+      sound.gameOverMusic.stop();
+      if (!sound.menuMusic.isPlaying()) {
+        sound.menuMusic.loop();
+      }
+    } else {
+      // If no winner, it's a regular game over, so play gameOverMusic
+      sound.gameOverMusic.loop();
+    }
   }
 
   public update() {
@@ -118,7 +127,7 @@ class GameEnd implements IScreen {
 
   private drawImage() {
     if (this.winnerPlayerIndex !== null) {
-      image(this.winnerCats[this.winnerPlayerIndex], 600, 250, 200, 240);
+      image(this.winnerCats[this.winnerPlayerIndex], 600, 250, 200, 270);
     } else {
       image(this.deadCat, 600, 250, 200, 220);
     }
