@@ -70,20 +70,32 @@ class GameEnd implements IScreen {
     push();
     fill('#000');
     textFont('Fredoka', 30);
-    textAlign(LEFT, CENTER);
-    let currentX = 220;
-
-    this.playerTimes.forEach((playerTime, index) => {
+    textAlign(CENTER, CENTER);
+    
+    // Adjust startX based on number of players
+    let startX: number;
+    if (this.playerTimes.length === 1) {
+      startX = width / 2; // one player
+    } else if (this.playerTimes.length === 2) {
+      startX = width / 2 - 150; // two players
+    } else if (this.playerTimes.length === 3) {
+      startX = width / 2 - 250; // three players
+    } else if (this.playerTimes.length === 4) {
+      startX = width * 0.25 - 35; // four players
+    }
+    
+    // Text for every player
+    this.playerTimes.forEach((playerTime) => {
       const playerText = `Player ${playerTime.playerNumber}: ${(playerTime.time).toFixed(2)}s`;
-      text(playerText, currentX, 220);
-      currentX += textWidth(playerText) + 40;
-    })
+      text(playerText, startX, 220);
+      startX += textWidth(playerText) + 50; // Move startposition for next text
+    });
     pop();
   }
 
   private drawImage() {
     if (this.winnerPlayerIndex !== null) {
-      image(this.winnerCats[this.winnerPlayerIndex], 600, 250, 200, 220);
+      image(this.winnerCats[this.winnerPlayerIndex], 600, 250, 200, 240);
     } else {
       image(this.deadCat, 600, 250, 200, 220);
     }
