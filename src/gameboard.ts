@@ -374,21 +374,26 @@ class GameBoard implements IScreen {
   }
 
   private drawTimerBorder() {
-    noFill();
-    rectMode(CORNER);
-    stroke(255);
-    strokeWeight(5);
-    rect(2, 1, 1396, 55);
+    fill("#F0AB63");
+    rectMode(CORNER);  
+    stroke(0);
+    strokeWeight(0);
+    rect(0, 0, 1400, 55);
 
-    let imgWidth = 45;
-    let imgHeight = 35;
-    let padding = 10;
+    let imgWidth = 55;
+    let imgHeight = 45;
+    let padding = 150;
+    let powerUpSpace = 350; 
 
-    // Calculate the position inside the border for player icons
-    let startX =
-      1396 -
-      (imgWidth * this.selectedPlayers + padding * (this.selectedPlayers - 1)) -
-      30;
+    // Calculate available space for player icons
+    let availableWidth = 1396 - powerUpSpace;
+
+    // Calculate total width of all player icons
+    let totalPlayersWidth =
+      imgWidth * this.selectedPlayers + padding * (this.selectedPlayers - 1);
+
+    // Center the players in the available space
+    let startX = (availableWidth - totalPlayersWidth);
     let startY = 1 + (55 - imgHeight) / 2;
 
     // Draw player images and apply opacity if they are dead
@@ -403,7 +408,7 @@ class GameBoard implements IScreen {
           startX + (imgWidth + padding) * index,
           startY,
           imgWidth,
-          imgHeight,
+          imgHeight
         );
       }
 
@@ -411,19 +416,20 @@ class GameBoard implements IScreen {
         noTint(); // Reset tint for other players
       }
     });
-  }
+}
+
 
   public draw() {
     push();
     this.drawBackground();
     this.players.forEach((player) => player.draw());
     this.time.drawCountdown();
-    this.time.drawTimer();
     if (this.startPlatform) {
       this.startPlatform.drawPlatform();
     }
 
     this.drawTimerBorder();
+    this.time.drawTimer();
 
     translate(0, this.translateY);
     this.platforms.forEach((platform) => platform.draw());
