@@ -1,6 +1,6 @@
 class GameBoard implements IScreen {
   private backgroundImage!: p5.Image;
-  private playerImages: p5.Image[];
+  private platformImages: p5.Image[];
   private players: Player[];
   private selectedPlayers: number;
   private platforms: Platform[];
@@ -21,10 +21,10 @@ class GameBoard implements IScreen {
   private playerHeadImages: p5.Image[];
 
   constructor(players: Player[], selectedPlayers: number) {
-    this.playerImages = [];
     this.players = players;
     this.selectedPlayers = selectedPlayers;
     this.platforms = [];
+    this.platformImages = [];
     this.platformSpawnTimer = millis();
     this.platformSpawnInterval = 500;
     this.translateY = 0;
@@ -45,13 +45,20 @@ class GameBoard implements IScreen {
     this.backgroundImage = loadImage(
       "/assets/images/background/purrfectLeapBackground.jpg",
     );
-    this.playerImages[100] = loadImage("/assets/images/platforms/Platform.png");
-    this.playerImages[101] = loadImage(
+
+    (this.platformImages[0] = loadImage(
       "/assets/images/platforms/startPlatform.png",
-    );
-    this.playerImages[102] = loadImage(
-      "/assets/images/platforms/startPlatformFlashing.gif",
-    );
+    )),
+      (this.platformImages[1] = loadImage(
+        "/assets/images/platforms/startPlatformFlashing.gif",
+      )),
+      (this.platformImages[2] = loadImage(
+        "/assets/images/platforms/PlatformBroken.png",
+      )),
+      (this.platformImages[3] = loadImage(
+        "/assets/images/platforms/Platform.png",
+      ));
+
     this.powerUpImages[0] = loadImage(
       "/assets/images/powerups/catnip-power.png",
     );
@@ -99,6 +106,14 @@ class GameBoard implements IScreen {
           ) {
             player.automaticBounce(platformTop);
 
+            // If durability is 0, remove the broken platform from the platform array
+            if (platform.durability <= 0) {
+              const index = this.platforms.indexOf(platform);
+              if (index > -1) {
+                this.platforms.splice(index, 1);
+              }
+            }
+
             // if (gameObject instanceof Platform) {
             // Avgör om man föll ner på plattformen först
             // 1. flytta spelaren till ovanpå platformen
@@ -129,13 +144,21 @@ class GameBoard implements IScreen {
 
   private spawnPlatform() {
     if (millis() - this.platformSpawnTimer > this.platformSpawnInterval) {
+      // create a new array that excludes start-platform image and gif
+      const platformOnlyImages = this.platformImages.slice(2);
+      const isBreakable = random() < 0.2;
+      // if isBreakable = true then use imageIndex 0 or else 1
+      const imageIndex = isBreakable ? 0 : 1;
+
       const newPlatform = new Platform(
         30,
         100,
         random(100, 1300),
         50 - this.translateY,
-        this.playerImages,
-        100,
+        platformOnlyImages,
+        imageIndex,
+        isBreakable,
+        isBreakable ? 0 : 1,
       );
       this.platforms.push(newPlatform);
 
@@ -150,8 +173,10 @@ class GameBoard implements IScreen {
       1200,
       100,
       600,
-      this.playerImages,
-      101,
+      this.platformImages,
+      0,
+      false,
+      1,
     );
     this.startPlatformSpawnTime = millis();
   }
@@ -220,23 +245,21 @@ class GameBoard implements IScreen {
       this.time.updateTimer();
       this.spawnPlatform();
     }
-
     if (!this.startPlatformSpawned) {
       this.spawnStartPlatform();
       this.startPlatformSpawned = true;
     }
 
     if (this.startPlatform && millis() - this.startPlatformSpawnTime > 5000) {
-      this.startPlatform.imageIndex = 102;
+      this.startPlatform.imageIndex = 1;
     }
 
     if (this.startPlatform && millis() - this.startPlatformSpawnTime > 7000) {
       this.startPlatform = null;
     }
-
     this.players.forEach((player) => {
       player.update();
-      // when player falls off the screen they die, player.die in player class = true
+      // when player falls off the screen they die
       if (player.posY > height) {
         player.die();
       }
@@ -308,7 +331,7 @@ class GameBoard implements IScreen {
     this.time.drawCountdown();
     this.time.drawTimer();
     if (this.startPlatform) {
-      this.startPlatform.spawnPlatform();
+      this.startPlatform.drawPlatform();
     }
 
     this.drawTimerBorder();
