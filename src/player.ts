@@ -10,6 +10,7 @@ class Player extends GameEntity {
   public controls: { left: number; right: number; action: number };
   public isAlive: boolean;
   public onDeath: (() => void) | null = null;
+  private highJumpActive: boolean = false;
 
   constructor(
     height: number,
@@ -98,6 +99,10 @@ class Player extends GameEntity {
     }
   }
 
+  public activateHighJump() {
+    this.highJumpActive = true;
+  }
+
   public automaticBounce(platformTop: number) {
     const originalPlatformTop = platformTop;
     if (this.posY + this.height > originalPlatformTop) {
@@ -105,6 +110,10 @@ class Player extends GameEntity {
       this.velocity = this.bounceVelocity;
     }
     this.bounceAnimation();
+    if (this.highJumpActive) {
+      this.velocity = this.bounceVelocity * 2;
+      this.highJumpActive = false;
+    }
   }
 
   private leftAndRight() {
