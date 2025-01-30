@@ -31,7 +31,6 @@ class GameEntity {
         this.width,
         this.height,
       );
-      // rita ut entitet med p5 metoder
     }
   }
   public update() {}

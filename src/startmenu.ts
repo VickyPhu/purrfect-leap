@@ -4,7 +4,6 @@ class StartMenu implements IScreen {
   private enterKeyHasBeenReleased: boolean;
   private ignoreInputUntil: number;
   private isMusicMuted: boolean;
-  // private sound: p5.SoundFile | null;
 
   constructor() {
     this.enterKeyHasBeenReleased = false;
@@ -100,14 +99,6 @@ class StartMenu implements IScreen {
       this.enterKeyHasBeenReleased = true;
     }
   }
-
-  // private playMusic() {
-  //   if (sound.menuMusic.isLoaded()) {
-  //     sound.menuMusic.play();
-  //   } else {
-  //     console.error("Menu music is not loaded yet.");
-  //   }
-  // }
 
   public draw() {
     push();

@@ -252,13 +252,13 @@ class PlayerSelect implements IScreen {
       // Handle up/down navigation between gameStartButton and returnButton
       else if (keyCode === DOWN_ARROW && this.lastKeyPressed !== "DOWN") {
         if (this.activeButtonIndex === 4) {
-          // Move from "START GAME" to "RETURN"
+    
           this.activeButtonIndex = 5;
         }
         this.lastKeyPressed = "DOWN";
       } else if (keyCode === UP_ARROW && this.lastKeyPressed !== "UP") {
         if (this.activeButtonIndex === 5) {
-          // Move from "RETURN" back to "START GAME"
+          
           this.activeButtonIndex = 4;
         }
         this.lastKeyPressed = "UP";
@@ -266,10 +266,10 @@ class PlayerSelect implements IScreen {
         this.activateButton(this.activeButtonIndex);
 
         if (this.activeButtonIndex >= 0 && this.activeButtonIndex <= 3) {
-          // Update selected players and move focus to START GAME button
+         
           this.selectedPlayers = this.activeButtonIndex + 1;
           this.lastPlayerButtonIndex = this.activeButtonIndex;
-          this.activeButtonIndex = 4; // Focus on START GAME after selection
+          this.activeButtonIndex = 4; 
         }
       }
     }
