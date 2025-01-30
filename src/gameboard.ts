@@ -39,6 +39,8 @@ class GameBoard implements IScreen {
     this.powerUpInterval = 2000;
     this.speedUpCounter = 2;
     this.gameStartTime = millis();
+    sound.menuMusic.stop();
+    sound.gameMusic.play();
   }
 
   private loadImages() {

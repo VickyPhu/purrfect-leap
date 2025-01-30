@@ -3,6 +3,7 @@ class StartMenu implements IScreen {
   private activeButtonIndex: number;
   private enterKeyHasBeenReleased: boolean;
   private ignoreInputUntil: number;
+  private isMusicMuted: boolean;
   // private sound: p5.SoundFile | null;
 
   constructor() {
@@ -29,10 +30,14 @@ class StartMenu implements IScreen {
         1,
         sound.chooseSound,
       ),
-      new Button("Music", "#F0AB63", 125, 75, 200, 70, 2, sound.menuMusic),
+      new Button("Music", "#F0AB63", 125, 75, 200, 70, 2, sound.chooseSound),
     ];
-
+    sound.gameOverMusic.stop();
+    if (!sound.menuMusic.isPlaying()) {
+      sound.menuMusic.play();
+    }
     this.activeButtonIndex = 0;
+    this.isMusicMuted = true;
   }
 
   private drawButtons() {
@@ -65,6 +70,18 @@ class StartMenu implements IScreen {
         game.changeScreen(new PlayerSelect());
       } else if (this.activeButtonIndex === 1) {
         game.changeScreen(new HowToPlay());
+      } else if (this.activeButtonIndex === 2) {
+        if (this.isMusicMuted) {
+          this.isMusicMuted = false;
+          sound.gameMusic.setVolume(0.5);
+          sound.menuMusic.setVolume(0.3);
+          sound.gameOverMusic.setVolume(0.2);
+        } else {
+          this.isMusicMuted = true;
+          sound.gameMusic.setVolume(0);
+          sound.menuMusic.setVolume(0);
+          sound.gameOverMusic.setVolume(0);
+        }
       }
     }
 
