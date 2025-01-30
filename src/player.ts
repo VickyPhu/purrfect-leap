@@ -155,9 +155,6 @@ class Player extends GameEntity {
   public die() {
     if (this.deathTime === null && this.startTime !== null) {
       this.deathTime = millis();
-      // Logga tiden från starttiden till dödstiden
-      const playTime = (this.deathTime - this.startTime) / 1000; // i sekunder
-      console.log(`Player ${this.name} died at ${playTime} seconds.`);
     }
     // game.changeScreen(new GameEnd());
     this.isAlive = false;
