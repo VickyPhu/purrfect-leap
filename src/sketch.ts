@@ -21,32 +21,23 @@ let playerSelect: PlayerSelect;
  */
 function preload() {
   sound = {
-    chooseSound: loadSound("/assets/sounds/button-pressed.mp3", () =>
-      console.log("Choose sound loaded:", sound.chooseSound.isLoaded()),
+    chooseSound: loadSound("/assets/sounds/button-pressed.mp3"
     ),
-    enterSound: loadSound("/assets/sounds/button-pressed.mp3", () =>
-      console.log("Enter sound loaded:", sound.enterSound.isLoaded()),
+    enterSound: loadSound("/assets/sounds/button-pressed.mp3"
     ),
-    retrySound: loadSound("/assets/sounds/button-pressed.mp3", () =>
-      console.log("Choose sound loaded:", sound.chooseSound.isLoaded()),
+    retrySound: loadSound("/assets/sounds/button-pressed.mp3"
     ),
-    menuSound: loadSound("/assets/sounds/boing.mp3", () =>
-      console.log("Enter sound loaded:", sound.enterSound.isLoaded()),
+    menuSound: loadSound("/assets/sounds/boing.mp3"
     ),
-    catSound1: loadSound("/assets/sounds/1playerCat.mp3", () =>
-      console.log("Choose sound loaded:", sound.chooseSound.isLoaded()),
+    catSound1: loadSound("/assets/sounds/1playerCat.mp3"
     ),
-    catSound2: loadSound("/assets/sounds/2playerCat.mp3", () =>
-      console.log("Enter sound loaded:", sound.enterSound.isLoaded()),
+    catSound2: loadSound("/assets/sounds/2playerCat.mp3"
     ),
-    catSound3: loadSound("/assets/sounds/3playerCat.mp3", () =>
-      console.log("Choose sound loaded:", sound.chooseSound.isLoaded()),
+    catSound3: loadSound("/assets/sounds/3playerCat.mp3"
     ),
-    catSound4: loadSound("/assets/sounds/4playerCat.mp3", () =>
-      console.log("Enter sound loaded:", sound.enterSound.isLoaded()),
+    catSound4: loadSound("/assets/sounds/4playerCat.mp3"
     ),
-    menuMusic: loadSound("/assets/music/menuMusic.mp3", () =>
-      console.log("Enter sound loaded:", sound.enterSound.isLoaded()),
+    menuMusic: loadSound("/assets/music/menuMusic.mp3"
     ),
   };
 }

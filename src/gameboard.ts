@@ -2,6 +2,7 @@ class GameBoard implements IScreen {
   private backgroundImage!: p5.Image;
   private platformImages: p5.Image[];
   private players: Player[];
+  private selectedPlayers: number;
   private platforms: Platform[];
   private platformSpawnTimer: number;
   private platformSpawnInterval: number;
@@ -17,9 +18,11 @@ class GameBoard implements IScreen {
   private powerUps: (HighJumpPower | ExtraLifePower | ThrowYarnPower)[] = [];
   private speedUpCounter: number;
   private gameStartTime: number;
+  private playerHeadImages: p5.Image[];
 
-  constructor(players: Player[]) {
+  constructor(players: Player[], selectedPlayers: number) {
     this.players = players;
+    this.selectedPlayers = selectedPlayers;
     this.platforms = [];
     this.platformImages = [];
     this.platformSpawnTimer = millis();
@@ -30,6 +33,7 @@ class GameBoard implements IScreen {
     this.startPlatformSpawnTime = 0;
     this.startPlatformSpawned = false;
     this.powerUpImages = [];
+    this.playerHeadImages = [];
     this.loadImages();
     this.powerUpTimer = 0;
     this.powerUpInterval = 2000;
@@ -62,6 +66,11 @@ class GameBoard implements IScreen {
       "/assets/images/powerups/extralife-power.png",
     );
     this.powerUpImages[2] = loadImage("/assets/images/powerups/yarnpower.png");
+
+    this.playerHeadImages[0] = loadImage("assets/images/cats/Player1Head.png");
+    this.playerHeadImages[1] = loadImage("assets/images/cats/Player2Head.png");
+    this.playerHeadImages[2] = loadImage("assets/images/cats/Player3Head.png");
+    this.playerHeadImages[3] = loadImage("assets/images/cats/Player4Head.png");
   }
 
   private playerCollision() {
@@ -342,17 +351,43 @@ class GameBoard implements IScreen {
   }
 
   private drawTimerBorder() {
-    // Example: Line across the top of the screen under the timer
-    // stroke(255);
-    // strokeWeight(5);
-    // line(0, 60, 1400, 50);
-
-    // Example: Border around the timer area
     noFill();
     rectMode(CORNER);
     stroke(255);
     strokeWeight(5);
     rect(2, 1, 1396, 55);
+
+    let imgWidth = 45;
+    let imgHeight = 35;
+    let padding = 10;
+
+    // Calculate the position inside the border for player icons
+    let startX =
+      1396 -
+      (imgWidth * this.selectedPlayers + padding * (this.selectedPlayers - 1)) -
+      30;
+    let startY = 1 + (55 - imgHeight) / 2;
+
+    // Draw player images and apply opacity if they are dead
+    this.players.forEach((player, index) => {
+      if (!player.isAlive) {
+        tint(255, 100); // Reduce opacity for dead players
+      }
+
+      if (index < this.selectedPlayers) {
+        image(
+          this.playerHeadImages[index],
+          startX + (imgWidth + padding) * index,
+          startY,
+          imgWidth,
+          imgHeight,
+        );
+      }
+
+      if (!player.isAlive) {
+        noTint(); // Reset tint for other players
+      }
+    });
   }
 
   public draw() {
