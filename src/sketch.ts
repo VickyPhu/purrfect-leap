@@ -15,6 +15,7 @@ let sound: {
 };
 // let playerImages: p5.Image[];
 let playerSelect: PlayerSelect;
+let globalMusicMuted = true; // Store global music state
 
 /**
  * Built in preload function in P5
@@ -55,9 +56,9 @@ function setup() {
   sound.catSound3.setVolume(0.2);
   sound.catSound4.setVolume(0.2);
 
-  sound.menuMusic.setVolume(0);
-  sound.gameMusic.setVolume(0);
-  sound.gameOverMusic.setVolume(0);
+  sound.menuMusic.setVolume(globalMusicMuted ? 0 : 0.3);
+  sound.gameMusic.setVolume(globalMusicMuted ? 0 : 0.5);
+  sound.gameOverMusic.setVolume(globalMusicMuted ? 0 : 0.2);
   game = new Game();
 }
 
