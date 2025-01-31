@@ -1,5 +1,5 @@
 class ThrowYarnPower extends GameEntity {
-  private name: string;
+  // private name: string;
   // private soundFX: string;
 
   constructor(
@@ -11,7 +11,7 @@ class ThrowYarnPower extends GameEntity {
     imageIndex: number,
   ) {
     super(height, width, posX, posY, img, imageIndex);
-    this.name = "ThrowYarn";
+    // this.name = "ThrowYarn";
   }
 
   public update() {}
