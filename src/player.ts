@@ -1,10 +1,8 @@
 class Player extends GameEntity {
-  private name: string;
   public velocity: number;
   public horizontalVelocity: number;
   private gravity: number;
   private bounceVelocity: number;
-  private soundFX: string;
   private keyReleased: boolean;
   private lastDirection: string;
   public playerImages: p5.Image[];
@@ -15,7 +13,7 @@ class Player extends GameEntity {
   public deathTime: number | null = null;
   public startTime: number | null = null;
   public hasExtraLife: boolean = false;
-  private isReviving: boolean = false;
+  // private isReviving: boolean = false;
 
   constructor(
     height: number,
@@ -30,11 +28,9 @@ class Player extends GameEntity {
     super(height, width, posX, posY, img, imageIndex);
     this.isAlive = true;
 
-    this.name = "Player1";
     this.velocity = 0;
     this.horizontalVelocity = 0;
     this.gravity = 0.5;
-    this.soundFX = "";
     this.bounceVelocity = -15;
     this.keyReleased = false;
     this.lastDirection = "right";
@@ -176,7 +172,7 @@ class Player extends GameEntity {
     console.log("Player revived! Jumping to top.");
 
     this.hasExtraLife = false;
-    this.isReviving = true;
+    // this.isReviving = true;
 
     this.velocity = -height / 40;
     this.gravity = 0.1;
@@ -197,7 +193,7 @@ class Player extends GameEntity {
         setTimeout(() => {
           console.log("Player resumes normal gravity.");
           this.gravity = 0.5;
-          this.isReviving = false;
+          // this.isReviving = false;
         }, 1000);
       }
     }, 30);
