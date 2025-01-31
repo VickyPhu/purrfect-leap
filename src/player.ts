@@ -13,6 +13,7 @@ class Player extends GameEntity {
   public onDeath: (() => void) | null = null;
   private highJumpActive: boolean = false;
   public deathTime: number | null = null;
+  public startTime: number | null = null;
   public hasExtraLife: boolean = false;
   private isReviving: boolean = false;
 
@@ -145,6 +146,11 @@ class Player extends GameEntity {
   }
 
   public update() {
+        // Om starttiden inte är satt, sätt den till nuvarande tid
+        if (this.startTime === null) {
+          this.startTime = millis();
+        }
+
     this.velocity += this.gravity;
     this.posY += this.velocity;
     this.bounceAnimation();
@@ -153,13 +159,12 @@ class Player extends GameEntity {
   }
 
   public die() {
-    if (this.deathTime === null) {
-      this.deathTime = millis(); // Save the time when player dies
-    }
-    // game.changeScreen(new GameEnd());
     if (this.hasExtraLife) {
       this.revive();
     } else {
+      if (this.deathTime === null && this.startTime !== null) {
+        this.deathTime = millis() - 3000;
+      }
       this.isAlive = false;
       if (this.onDeath) {
         this.onDeath();

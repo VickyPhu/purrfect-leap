@@ -296,11 +296,11 @@ class GameBoard implements IScreen {
   }
 
   private getPlayerTimes() {
-    return this.players.map((player, index) => ({
-      playerNumber: index + 1,
-      time: player.deathTime ? player.deathTime / 1000 : 0,
-    }));
-  }
+      return this.players.map((player, index) => ({
+        playerNumber: index + 1,
+        time: player.deathTime && player.startTime ? (player.deathTime - player.startTime) / 1000 : 0,
+      }));
+    }
 
   private spawnPowerUp() {
     this.powerUpTimer += deltaTime;
