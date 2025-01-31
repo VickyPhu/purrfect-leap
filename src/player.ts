@@ -13,6 +13,8 @@ class Player extends GameEntity {
   public onDeath: (() => void) | null = null;
   private highJumpActive: boolean = false;
   public deathTime: number | null = null;
+  public hasExtraLife: boolean = false;
+  private isReviving: boolean = false;
 
   constructor(
     height: number,
@@ -155,9 +157,13 @@ class Player extends GameEntity {
       this.deathTime = millis(); // Save the time when player dies
     }
     // game.changeScreen(new GameEnd());
-    this.isAlive = false;
-    if (this.onDeath) {
-      this.onDeath();
+    if (this.hasExtraLife) {
+      this.revive();
+    } else {
+      this.isAlive = false;
+      if (this.onDeath) {
+        this.onDeath();
+      }
     }
   }
 
@@ -187,7 +193,7 @@ class Player extends GameEntity {
           console.log("Player resumes normal gravity.");
           this.gravity = 0.5;
           this.isReviving = false;
-        }, 2000);
+        }, 1000);
       }
     }, 30);
   }
