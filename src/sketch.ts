@@ -47,14 +47,14 @@ function preload() {
 function setup() {
   createCanvas(1400, 700);
   frameRate(60);
-  sound.chooseSound.setVolume(0.2);
-  sound.enterSound.setVolume(0.2);
-  sound.retrySound.setVolume(0.2);
-  sound.menuSound.setVolume(0.2);
-  sound.catSound1.setVolume(0.2);
-  sound.catSound2.setVolume(0.2);
-  sound.catSound3.setVolume(0.2);
-  sound.catSound4.setVolume(0.2);
+  sound.chooseSound.setVolume(0.5);
+  sound.enterSound.setVolume(0.5);
+  sound.retrySound.setVolume(0.5);
+  sound.menuSound.setVolume(0.5);
+  sound.catSound1.setVolume(0.5);
+  sound.catSound2.setVolume(0.5);
+  sound.catSound3.setVolume(0.5);
+  sound.catSound4.setVolume(0.5);
 
   sound.menuMusic.setVolume(globalMusicMuted ? 0 : 0.3);
   sound.gameMusic.setVolume(globalMusicMuted ? 0 : 0.5);
