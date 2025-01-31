@@ -36,7 +36,7 @@ class GameBoard implements IScreen {
     this.playerHeadImages = [];
     this.loadImages();
     this.powerUpTimer = 0;
-    this.powerUpInterval = 2000;
+    this.powerUpInterval = 4000;
     this.speedUpCounter = 2;
     this.gameStartTime = millis();
     sound.menuMusic.stop();
@@ -212,10 +212,10 @@ class GameBoard implements IScreen {
             if (powerUp instanceof HighJumpPower) {
               player.activateHighJump();
             }
-
             if (powerUp instanceof ExtraLifePower) {
               player.activateExtraLife();
             }
+            this.powerUps = this.powerUps.filter((p) => p !== powerUp);
           }
         }
       }
@@ -432,16 +432,11 @@ class GameBoard implements IScreen {
       }
 
       if (player.hasExtraLife) {
+        let imgWidth = 60;
+        let imgHeight = 30;
         let lifeIconX = startX + (imgWidth + padding) * index + imgWidth + 5;
         let lifeIconY = startY;
-        let lifeIconSize = 30;
-        image(
-          this.powerUpImages[1],
-          lifeIconX,
-          lifeIconY,
-          lifeIconSize,
-          lifeIconSize,
-        );
+        image(this.powerUpImages[1], lifeIconX, lifeIconY, imgWidth, imgHeight);
       }
 
       if (!player.isAlive) {
