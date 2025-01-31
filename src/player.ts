@@ -159,13 +159,12 @@ class Player extends GameEntity {
   }
 
   public die() {
-    if (this.deathTime === null && this.startTime !== null) {
-      this.deathTime = millis() - 3000;
-    }
-    // game.changeScreen(new GameEnd());
     if (this.hasExtraLife) {
       this.revive();
     } else {
+      if (this.deathTime === null && this.startTime !== null) {
+        this.deathTime = millis() - 3000;
+      }
       this.isAlive = false;
       if (this.onDeath) {
         this.onDeath();
