@@ -7,7 +7,6 @@ class GameBoard implements IScreen {
   private platformSpawnTimer: number;
   private platformSpawnInterval: number;
   private translateY: number;
-  private backgroundMusic?: string;
   private time: Time;
   private startPlatform: Platform | null;
   private startPlatformSpawnTime: number;
