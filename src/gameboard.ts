@@ -208,7 +208,6 @@ class GameBoard implements IScreen {
             playerBottom >= powerUpTop &&
             playerTop < powerUpBottom
           ) {
-            this.powerUps = this.powerUps.filter((p) => p !== powerUp);
             if (powerUp instanceof HighJumpPower) {
               player.activateHighJump();
             }
